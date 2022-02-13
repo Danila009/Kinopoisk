@@ -38,11 +38,7 @@ fun SortingScreen(
                 title = { Text(text = "Sorting")},
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route){
-                            popUpTo(Screen.Main.route){
-                                inclusive = true
-                            }
-                        }
+                        navController.navigate(Screen.Main.route)
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -91,16 +87,57 @@ fun SortingScreen(
                             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                         )
                     }
+
+                    Text(
+                        text = "Год",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        textAlign = TextAlign.Center,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        OutlinedTextField(
+                            value = yearFrom.value,
+                            onValueChange = { yearFrom.value = it },
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .width(170.dp),
+                            shape = AbsoluteRoundedCornerShape(20.dp),
+                            label = { Text(text = "минимальный год")},
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        )
+                        OutlinedTextField(
+                            value = yearTo.value,
+                            onValueChange = { yearTo.value = it },
+                            modifier = Modifier
+                                .padding(10.dp)
+                                .width(170.dp),
+                            shape = AbsoluteRoundedCornerShape(20.dp),
+                            label = { Text(text = "максимальный год")},
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+                        )
+                    }
+
                     OutlinedButton(
                         onClick = {
-                            if (SortingValidate().sorting(
+                            if (SortingValidate().ratingSorting(
                                   min = ratingFrom.value,
                                   max = ratingTo.value,
                                   context = context
+                            )&& SortingValidate().yearSorting(
+                                    min = yearFrom.value,
+                                    max = yearTo.value,
+                                    context = context
                             )){
                                 navController.navigate(Screen.ResultSorting.base(
                                     ratingTo = ratingTo.value,
-                                    ratingFrom = ratingFrom.value
+                                    ratingFrom = ratingFrom.value,
+                                    yearTo = yearTo.value,
+                                    yearFrom = yearFrom.value
                                 ))
                             }
                         },

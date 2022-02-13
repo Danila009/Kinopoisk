@@ -1,6 +1,11 @@
 package com.example.kinopoisk.api
 
 import com.example.kinopoisk.api.model.Film
+import com.example.kinopoisk.api.model.FilmInfo
+import com.example.kinopoisk.api.model.filmInfo.Budget
+import com.example.kinopoisk.api.model.filmInfo.Fact
+import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.staff.Staff
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -26,4 +31,14 @@ class ApiRepository @Inject constructor(
         keyword = keyword,
         page = page
     )
+
+    suspend fun getFilmInfo(id:Int):Response<FilmInfo> = apiKinopoisk.getFilmInfo(id)
+
+    suspend fun getBudget(id: Int):Response<Budget> = apiKinopoisk.getBudget(id)
+
+    suspend fun getFact(id: Int):Response<Fact> = apiKinopoisk.getFact(id)
+
+    suspend fun getStaff(id: Int):Response<List<Staff>> = apiKinopoisk.getStaff(id)
+
+    suspend fun getSimilar(id: Int):Response<Similar> = apiKinopoisk.getSimilar(id)
 }

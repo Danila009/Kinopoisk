@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
 import com.example.kinopoisk.navigation.navGraph.host.Host
 import com.example.kinopoisk.ui.theme.KinopoiskTheme
@@ -18,6 +19,7 @@ class MainActivity : ComponentActivity() {
             KinopoiskTheme {
                 Host(
                     navHostController = rememberNavController(),
+                    lifecycleScope = lifecycleScope
                 )
             }
         }

@@ -3,13 +3,13 @@ package com.example.kinopoisk.api.model
 data class FilmItem(
     val kinopoiskId:Int,
     val imdbId:String,
-    val nameRu:String?,
-    val nameEn:String?,
-    val nameOriginal:String?,
-    val ratingKinopoisk:Float?,
-    val ratingImdb:Float?,
-    val year:Int?,
-    val type:String?,
-    val posterUrl:String?,
-    val posterUrlPreview:String?
+    val nameRu:String? = null,
+    val nameEn:String? = null,
+    val nameOriginal:String? = null,
+    val ratingKinopoisk:Float? = null,
+    val ratingImdb:Float? = null,
+    val year:Int? = null,
+    val type:String? = null,
+    val posterUrl:String? = null,
+    val posterUrlPreview:String? = null
 )

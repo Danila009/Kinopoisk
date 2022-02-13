@@ -26,7 +26,7 @@ class MainViewModel @Inject constructor(
         yearTo:Int = 3000,
         keyword:String = ""
     ):Flow<PagingData<FilmItem>>  {
-         return  Pager(PagingConfig(pageSize = 25)){
+         return  Pager(PagingConfig(pageSize = 1)){
             FilmPagingSource(
                 order = order,
                 type = type,

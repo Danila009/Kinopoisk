@@ -65,7 +65,9 @@ fun MainScreen(
             ) {
                 when(idBar.value){
                     "Home" -> HomeScreen()
-                    "Films" -> FilmsScreen()
+                    "Films" -> FilmsScreen(
+                        navController = navController
+                    )
                 }
             }
         }

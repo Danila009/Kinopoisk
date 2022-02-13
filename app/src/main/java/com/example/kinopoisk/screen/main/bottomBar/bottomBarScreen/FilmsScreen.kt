@@ -2,6 +2,7 @@ package com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
@@ -20,10 +21,12 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.kinopoisk.R
+import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -34,6 +37,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun FilmsScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
+    navController: NavController,
     order:String = "RATING",
     type:String = "ALL",
     ratingFrom:Int = 0,
@@ -71,7 +75,14 @@ fun FilmsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(140.dp)
-                        .padding(horizontal = 9.dp, vertical = 5.dp),
+                        .padding(horizontal = 9.dp, vertical = 5.dp)
+                        .clickable {
+                            navController.navigate(
+                                Screen.FilmInfo.base(
+                                    item?.kinopoiskId.toString()
+                                )
+                            )
+                        },
                     shape = AbsoluteRoundedCornerShape(15.dp),
                     backgroundColor = primaryBackground,
                     elevation = 8.dp

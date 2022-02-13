@@ -11,6 +11,7 @@ import coil.request.SuccessResult
 import com.example.kinopoisk.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import java.lang.Exception
 
 fun <T>Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope){
     lifecycleScope.launchWhenStarted {
@@ -34,12 +35,16 @@ class Converters {
         url:String,
         context: Context
     ): Bitmap {
-        val loading = ImageLoader(context)
-        val request = ImageRequest.Builder(context)
-            .data(url)
-            .error(R.drawable.image)
-            .build()
-        val result = (loading.execute(request) as SuccessResult).drawable
-        return (result as BitmapDrawable).bitmap
+        return try {
+            val loading = ImageLoader(context)
+            val request = ImageRequest.Builder(context)
+                .data(url)
+                .error(R.drawable.image)
+                .build()
+            val result = (loading.execute(request) as SuccessResult).drawable
+            (result as BitmapDrawable).bitmap
+        }catch (e:Exception){
+            Converters().toBitmap(R.drawable.image, context)
+        }
     }
 }
