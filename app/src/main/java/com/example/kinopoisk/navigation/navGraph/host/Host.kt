@@ -22,7 +22,8 @@ fun Host(
         route = ROUTE,
         builder = {
             mainNavGraph(
-                navController = navHostController
+                navController = navHostController,
+                lifecycleScope
             )
             filmInfoNavGraph(
                 navController = navHostController,

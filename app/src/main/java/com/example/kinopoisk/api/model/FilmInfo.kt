@@ -1,7 +1,7 @@
 package com.example.kinopoisk.api.model
 
-import com.example.kinopoisk.api.model.filmInfo.Countries
-import com.example.kinopoisk.api.model.filmInfo.Genres
+import com.example.kinopoisk.api.model.filmInfo.Countrie
+import com.example.kinopoisk.api.model.filmInfo.Genre
 
 data class FilmInfo(
     val kinopoiskId:Int = 0,
@@ -10,7 +10,7 @@ data class FilmInfo(
     val nameEn:String = "",
     val nameOriginal:String = "",
     val posterUrl:String? = null,
-    val posterUrlPreview:String? = null,
+    val posterUrlPreview:String = "",
     val reviewsCount:Int = 0,
     val ratingGoodReview:Float = 0f,
     val ratingGoodReviewVoteCount:Int = 0,
@@ -39,8 +39,8 @@ data class FilmInfo(
     val hasImax:Boolean = false,
     val has3D:Boolean = false,
     val lastSync:String = "",
-    val countries:List<Countries> = listOf(),
-    val genres:List<Genres> = listOf(),
+    val countries:List<Countrie> = listOf(),
+    val genres:List<Genre> = listOf(),
     val startYear:Int = 0,
     val endYear:Int = 0,
     val serial:Boolean = false,

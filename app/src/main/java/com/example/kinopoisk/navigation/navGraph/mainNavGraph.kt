@@ -1,6 +1,7 @@
 package com.example.kinopoisk.navigation.navGraph
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -15,6 +16,7 @@ import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 @ExperimentalFoundationApi
 fun NavGraphBuilder.mainNavGraph(
     navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
         startDestination = Screen.Main.route,
@@ -22,7 +24,8 @@ fun NavGraphBuilder.mainNavGraph(
         builder = {
             composable(Screen.Main.route){
                 MainScreen(
-                    navController = navController
+                    navController = navController,
+                    lifecycleScope = lifecycleScope
                 )
             }
             composable(Screen.Sorting.route){

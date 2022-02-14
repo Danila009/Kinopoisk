@@ -6,12 +6,14 @@ import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.utils.Constants.BUDGET_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
+import com.example.kinopoisk.utils.Constants.PREMIERE_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
@@ -69,4 +71,10 @@ interface ApiKinopoisk {
     suspend fun getSeason(
         @Path("id") id: Int
     ):Response<Season>
+
+    @GET(PREMIERE_URL)
+    suspend fun getPremiere(
+        @Query("year") year:Int,
+        @Query("month") month: String
+    ):Response<Premiere>
 }

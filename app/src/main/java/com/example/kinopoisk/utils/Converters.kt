@@ -1,17 +1,13 @@
 package com.example.kinopoisk.utils
 
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
+import android.annotation.SuppressLint
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LifecycleCoroutineScope
-import coil.ImageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import com.example.kinopoisk.R
+import com.example.kinopoisk.utils.viewState.ViewStatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
-import java.lang.Exception
+import java.text.SimpleDateFormat
+import java.util.*
 
 fun <T>Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope){
     lifecycleScope.launchWhenStarted {
@@ -21,34 +17,60 @@ fun <T>Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope){
 
 class Converters {
 
-    fun toBitmap(
-        int: Int,
-        context: Context
-    ):Bitmap{
+    @SuppressLint("SimpleDateFormat")
+    fun getTime(string: String):String{
+        return SimpleDateFormat("dd.MM.yyyy")
+            .parseTime(string)
+    }
+
+    @Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+    @SuppressLint("SimpleDateFormat")
+    private fun SimpleDateFormat.parseTime(string: String):String{
         return try {
-            BitmapFactory.decodeResource(
-                context.resources,
-                int
-            )
+            val format = SimpleDateFormat("yyyy-MM-dd")
+            val time = format.parse(string)
+            format(time)
         }catch (e:Exception){
-            Converters().toBitmap(R.drawable.image, context)
+            ""
         }
     }
 
-    suspend fun bitmapCoil(
-        url:String,
-        context: Context
-    ): Bitmap {
-        return try {
-            val loading = ImageLoader(context)
-            val request = ImageRequest.Builder(context)
-                .data(url)
-                .error(R.drawable.image)
-                .build()
-            val result = (loading.execute(request) as SuccessResult).drawable
-            (result as BitmapDrawable).bitmap
-        }catch (e:Exception){
-            Converters().toBitmap(R.drawable.image, context)
+    fun getDatePremiere(
+        viewStatePremiere: ViewStatePremiere
+    ):String{
+        val time = Calendar.getInstance().time
+        return when(viewStatePremiere){
+            ViewStatePremiere.YEAR -> {
+                val formatter = SimpleDateFormat("yyyy", Locale.getDefault())
+                formatter.format(time)
+            }
+            ViewStatePremiere.MONTH -> {
+                val formatter = SimpleDateFormat("MM", Locale.getDefault())
+                return when(formatter.format(time).toInt()){
+                    1-> "JANUARY"
+                    2-> "FEBRUARY"
+                    3-> "MARCH"
+                    4-> "APRIL"
+                    5-> "MAY"
+                    6-> "JUNE"
+                    7-> "JULY"
+                    8-> "AUGUST"
+                    9-> "SEPTEMBER"
+                    10-> "OCTOBER"
+                    11-> "NOVEMBER"
+                    12-> "DECEMBER"
+                    else -> ""
+                }
+            }
         }
     }
+
+    fun rating(rating: Float): Color {
+        if (rating <= 4.9f)
+            return Color.Red
+        if (rating <= 6.9f || rating == 0f)
+            return Color.White
+        return Color.Green
+    }
+
 }

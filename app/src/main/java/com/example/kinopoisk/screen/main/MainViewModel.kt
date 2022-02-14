@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.main
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -8,15 +9,21 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.kinopoisk.api.ApiRepository
 import com.example.kinopoisk.api.model.FilmItem
+import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
+import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository
 ):ViewModel() {
+    private val _responsePremiere:MutableStateFlow<Premiere> = MutableStateFlow(Premiere())
+    val responsePremiere:StateFlow<Premiere> = _responsePremiere.asStateFlow()
+
     fun getFilm(
         order:String = "RATING",
         type:String = "ALL",
@@ -38,5 +45,18 @@ class MainViewModel @Inject constructor(
                 apiRepository = apiRepository
             )
         }.flow.cachedIn(viewModelScope)
+    }
+
+    fun getPremiere(year:Int,month:String){
+        viewModelScope.launch {
+            try {
+                _responsePremiere.value = apiRepository.getPremiere(
+                    year = year,
+                    month = month
+                ).body()!!
+            }catch (e: Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
     }
 }

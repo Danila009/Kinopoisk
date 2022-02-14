@@ -10,6 +10,7 @@ object Constants {
     const val SIMILAR_ID_URL = "/api/v2.2/films/{id}/similars"
     const val SEQUEL_AND_PREQUEL_ID_URL = "/api/v2.1/films/{id}/sequels_and_prequels"
     const val SEASONS_ID_URL = "/api/v2.2/films/{id}/seasons"
+    const val PREMIERE_URL = "/api/v2.2/films/premieres"
 
     const val TOKEN_KEY = "ab67ce7d-90cf-4d1b-b354-7474b82c9f38"
 }

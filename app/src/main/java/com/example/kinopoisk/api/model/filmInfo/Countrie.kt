@@ -1,5 +1,5 @@
 package com.example.kinopoisk.api.model.filmInfo
 
-data class Genres(
-    val genre:String
+data class Countrie(
+    val country:String
 )

@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.bottomBar.BottomBar
@@ -22,7 +23,8 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 @ExperimentalFoundationApi
 @Composable
 fun MainScreen(
-    navController: NavController
+    navController: NavController,
+    lifecycleScope:LifecycleCoroutineScope
 ) {
     val idBar = remember { mutableStateOf("Home") }
 
@@ -64,7 +66,10 @@ fun MainScreen(
                 color = primaryBackground
             ) {
                 when(idBar.value){
-                    "Home" -> HomeScreen()
+                    "Home" -> HomeScreen(
+                        lifecycleScope = lifecycleScope,
+                        navController = navController
+                    )
                     "Films" -> FilmsScreen(
                         navController = navController
                     )

@@ -13,25 +13,20 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.example.kinopoisk.R
+import coil.compose.rememberImagePainter
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
-import kotlinx.coroutines.launch
 
 @ExperimentalFoundationApi
 @Composable
@@ -46,8 +41,6 @@ fun FilmsScreen(
     yearTo:Int = 3000,
     keyword:String = ""
 ) {
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val check = remember { mutableStateOf(false) }
     val filmList = mainViewModel.getFilm(
         order = order,
@@ -65,12 +58,6 @@ fun FilmsScreen(
     ) {
         LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
             items(filmList){ item ->
-                val bitmapImageState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image,context)) }
-                scope.launch {
-                    item?.posterUrl?.let {
-                        bitmapImageState.value = Converters().bitmapCoil(it,context)
-                    }
-                }
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -93,7 +80,12 @@ fun FilmsScreen(
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Image(
-                            bitmap = bitmapImageState.value.asImageBitmap(),
+                            painter = rememberImagePainter(
+                                data = item?.posterUrl,
+                                builder = {
+                                    crossfade(true)
+                                }
+                            ),
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(5.dp)

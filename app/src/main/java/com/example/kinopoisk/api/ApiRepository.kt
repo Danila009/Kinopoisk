@@ -6,6 +6,7 @@ import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import retrofit2.Response
@@ -47,4 +48,12 @@ class ApiRepository @Inject constructor(
     suspend fun getSequelAndPrequel(id: Int):Response<List<SequelAndPrequel>> = apiKinopoisk.getSequelAndPrequel(id)
 
     suspend fun getSeason(id: Int):Response<Season> = apiKinopoisk.getSeason(id)
+
+    suspend fun getPremiere(
+        year:Int,
+        month:String
+    ):Response<Premiere> = apiKinopoisk.getPremiere(
+        year = year,
+        month = month
+    )
 }

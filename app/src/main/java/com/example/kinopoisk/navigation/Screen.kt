@@ -35,4 +35,9 @@ sealed class Screen(val route:String) {
             filmId:String
         ):String = "film_info_screen?filmId=$filmId"
     }
+    object SerialInfoSeason:Screen("serial_info_season?filmId={filmId}"){
+        fun base(
+            filmId:String
+        ):String = "serial_info_season?filmId=$filmId"
+    }
 }

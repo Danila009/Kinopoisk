@@ -38,7 +38,6 @@ class FilmInfoViewModel @Inject constructor(
     private val _responseSeason:MutableStateFlow<Season> = MutableStateFlow(Season())
     val responseSeason:StateFlow<Season> = _responseSeason.asStateFlow()
 
-
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
             try {

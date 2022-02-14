@@ -14,17 +14,17 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.R
+import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
@@ -39,7 +39,6 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -49,8 +48,6 @@ fun FilmInfoScreen(
     navController: NavController,
     filmId: Int,
 ) {
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
     val checkWeb = remember { mutableStateOf(false) }
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
     val budget = remember { mutableStateOf(Budget()) }
@@ -59,11 +56,6 @@ fun FilmInfoScreen(
     val similar = remember { mutableStateOf(Similar()) }
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
-    val imageBitmapState = remember { mutableStateOf(
-        Converters().toBitmap(
-            R.drawable.image,context
-        )
-    ) }
 
     filmInfoViewModel.getFilmInfo(filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
@@ -100,12 +92,6 @@ fun FilmInfoScreen(
         season.value = it
     }.launchWhenStarted(lifecycleScope)
 
-    scope.launch {
-        filmInfo.value.posterUrlPreview?.let {
-            imageBitmapState.value = Converters().bitmapCoil(it,context)
-        }
-    }
-
     if (checkWeb.value){
         WebView(url = filmInfo.value.webUrl!!)
     }else{
@@ -139,10 +125,20 @@ fun FilmInfoScreen(
                                     modifier = Modifier.fillMaxSize(),
                                     horizontalAlignment = Alignment.CenterHorizontally
                                 ) {
-                                    Image(
-                                        bitmap = imageBitmapState.value.asImageBitmap(),
-                                        contentDescription = null
-                                    )
+                                    if (filmInfo.value.posterUrlPreview != ""){
+                                        Image(
+                                            painter = rememberImagePainter(
+                                                data = filmInfo.value.posterUrlPreview,
+                                                builder = {
+                                                    crossfade(true)
+                                                }
+                                            ),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .height(350.dp)
+                                                .width(250.dp)
+                                        )
+                                    }
                                     LazyRow(content = {
                                         items(filmInfo.value.genres){
                                             Text(
@@ -180,7 +176,7 @@ fun FilmInfoScreen(
                                                 )
                                             }
                                             TextButton(
-                                                onClick = { /*TODO*/ },
+                                                onClick = { navController.navigate(Screen.SerialInfoSeason.base(filmId.toString())) },
                                                 modifier = Modifier.padding(5.dp)
                                             ) {
                                                 Text(
@@ -208,7 +204,7 @@ fun FilmInfoScreen(
 
                                 filmInfo.value.description?.let {
                                     Text(
-                                        text = "Description:",
+                                        text = "Описание:",
                                         modifier = Modifier.padding(5.dp),
                                         fontWeight = FontWeight.Bold,
                                         color = secondaryBackground
@@ -218,6 +214,149 @@ fun FilmInfoScreen(
                                         modifier = Modifier.padding(5.dp)
                                     )
                                 }
+
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    Text(
+                                        text = "Райтинг",
+                                        modifier = Modifier.padding(5.dp),
+                                        fontWeight = FontWeight.Bold,
+                                        color = secondaryBackground
+                                    )
+
+                                    TextButton(
+                                        onClick = { /*TODO*/ },
+                                        modifier = Modifier.padding(5.dp)
+                                    ) {
+                                        Text(
+                                            text = "Все ->",
+                                            color = secondaryBackground
+                                        )
+                                    }
+                                }
+                                LazyRow(content = {
+                                    items(6) { item ->
+                                        Card(
+                                            shape = AbsoluteRoundedCornerShape(7.dp),
+                                            modifier = Modifier.padding(5.dp)
+                                        ) {
+                                            Column {
+                                                when(item){
+                                                    1->{
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = secondaryBackground
+                                                                    )
+                                                                ){
+                                                                    append("КиноПоиск: ")
+                                                                }
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = Converters().rating(
+                                                                            rating = filmInfo.value.ratingKinopoisk
+                                                                        )
+                                                                    )
+                                                                ){
+                                                                    append(filmInfo.value.ratingKinopoisk.toString())
+                                                                }
+                                                            },modifier = Modifier.padding(5.dp)
+                                                        )
+                                                        Text(
+                                                            text = "${filmInfo.value.ratingKinopoiskVoteCount} оценки",
+                                                            modifier = Modifier.padding(5.dp)
+                                                        )
+                                                    }
+                                                    2->{
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = secondaryBackground
+                                                                    )
+                                                                ){
+                                                                    append("IMDB: ")
+                                                                }
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = Converters().rating(
+                                                                            rating = filmInfo.value.ratingImdb
+                                                                        )
+                                                                    )
+                                                                ){
+                                                                    append(filmInfo.value.ratingImdb.toString())
+                                                                }
+                                                            },modifier = Modifier.padding(5.dp)
+                                                        )
+                                                        Text(
+                                                            text = "${filmInfo.value.ratingImdbVoteCount} оценки",
+                                                            modifier = Modifier.padding(5.dp)
+                                                        )
+                                                    }
+                                                    3->{
+                                                        Text(
+                                                            buildAnnotatedString {
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = secondaryBackground
+                                                                    )
+                                                                ){
+                                                                    append("Райтинг мировых критиков: ")
+                                                                }
+                                                                withStyle(
+                                                                    style = SpanStyle(
+                                                                        fontWeight = FontWeight.Bold,
+                                                                        color = Converters().rating(
+                                                                            rating = filmInfo.value.ratingFilmCritics
+                                                                        )
+                                                                    )
+                                                                ){
+                                                                    append(filmInfo.value.ratingFilmCritics.toString())
+                                                                }
+                                                            },modifier = Modifier.padding(5.dp)
+                                                        )
+                                                        Text(
+                                                            text = "${filmInfo.value.ratingFilmCriticsVoteCount} оценки",
+                                                            modifier = Modifier.padding(5.dp)
+                                                        )
+                                                    }
+                                                    4->{
+                                                        Text(
+                                                            text = "Райтинг российских критиков: ${filmInfo.value.ratingRfCritics}",
+                                                            modifier = Modifier.padding(5.dp),
+                                                            fontWeight = FontWeight.Bold,
+                                                            color = secondaryBackground
+                                                        )
+                                                        Text(
+                                                            text = "${filmInfo.value.ratingRfCriticsVoteCount} оценки",
+                                                            modifier = Modifier.padding(5.dp)
+                                                        )
+                                                    }
+                                                    5->{
+                                                        Text(
+                                                            text = "Положительных рецензий: ${filmInfo.value.ratingGoodReview}%",
+                                                            modifier = Modifier.padding(5.dp),
+                                                            fontWeight = FontWeight.Bold,
+                                                            color = secondaryBackground
+                                                        )
+                                                        Text(
+                                                            text = "${filmInfo.value.ratingGoodReviewVoteCount} оценки",
+                                                            modifier = Modifier.padding(5.dp)
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                })
 
                                 if (staff.value.isNotEmpty()){
                                     Row(
@@ -244,12 +383,6 @@ fun FilmInfoScreen(
                                     LazyRow(content = {
                                         items(staff.value){ item ->
                                             if (item.professionKey == "ACTOR"){
-                                                val bitmapIconState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image, context)) }
-                                                scope.launch {
-                                                    item.posterUrl?.let {
-                                                        bitmapIconState.value = Converters().bitmapCoil(it, context)
-                                                    }
-                                                }
                                                 Card(
                                                     shape = AbsoluteRoundedCornerShape(7.dp),
                                                     modifier = Modifier.padding(5.dp)
@@ -258,7 +391,12 @@ fun FilmInfoScreen(
                                                         modifier = Modifier.padding(5.dp)
                                                     ) {
                                                         Image(
-                                                            bitmap = bitmapIconState.value.asImageBitmap(),
+                                                            painter = rememberImagePainter(
+                                                                data = item.posterUrl,
+                                                                builder = {
+                                                                    crossfade(true)
+                                                                }
+                                                            ),
                                                             contentDescription = null,
                                                             modifier = Modifier
                                                                 .padding(5.dp)
@@ -313,12 +451,6 @@ fun FilmInfoScreen(
                                                 || item.professionKey == "VOICE_DIRECTOR"
                                                 || item.professionKey == "PRODUCER"
                                             ){
-                                                val bitmapIconState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image, context)) }
-                                                scope.launch {
-                                                    item.posterUrl?.let {
-                                                        bitmapIconState.value = Converters().bitmapCoil(it, context)
-                                                    }
-                                                }
                                                 Card(
                                                     shape = AbsoluteRoundedCornerShape(7.dp),
                                                     modifier = Modifier.padding(5.dp)
@@ -327,7 +459,12 @@ fun FilmInfoScreen(
                                                         modifier = Modifier.padding(5.dp)
                                                     ) {
                                                         Image(
-                                                            bitmap = bitmapIconState.value.asImageBitmap(),
+                                                            painter = rememberImagePainter(
+                                                                data = item.posterUrl,
+                                                                builder = {
+                                                                    crossfade(true)
+                                                                }
+                                                            ),
                                                             contentDescription = null,
                                                             modifier = Modifier
                                                                 .padding(5.dp)
@@ -471,12 +608,6 @@ fun FilmInfoScreen(
                                     }
                                     LazyRow(content = {
                                         items(sequelAndPrequel.value){ item ->
-                                            val bitmapIconState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image, context)) }
-                                            scope.launch {
-                                                item.posterUrl?.let {
-                                                    bitmapIconState.value = Converters().bitmapCoil(it, context)
-                                                }
-                                            }
                                             Column(
                                                 modifier = Modifier.clickable {
                                                     navController.navigate(
@@ -487,7 +618,12 @@ fun FilmInfoScreen(
                                                 }
                                             ) {
                                                 Image(
-                                                    bitmap = bitmapIconState.value.asImageBitmap(),
+                                                    painter = rememberImagePainter(
+                                                        data = item.posterUrl,
+                                                        builder = {
+                                                            crossfade(true)
+                                                        }
+                                                    ),
                                                     contentDescription = null,
                                                     modifier = Modifier
                                                         .padding(5.dp)
@@ -522,12 +658,6 @@ fun FilmInfoScreen(
                                     }
                                     LazyRow(content = {
                                         items(similar.value.items){ item ->
-                                            val bitmapIconState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image, context)) }
-                                            scope.launch {
-                                                item.posterUrl?.let {
-                                                    bitmapIconState.value = Converters().bitmapCoil(it, context)
-                                                }
-                                            }
                                             Column(
                                                 modifier = Modifier.clickable {
                                                     navController.navigate(
@@ -538,7 +668,12 @@ fun FilmInfoScreen(
                                                 }
                                             ) {
                                                 Image(
-                                                    bitmap = bitmapIconState.value.asImageBitmap(),
+                                                    painter = rememberImagePainter(
+                                                        data = item.posterUrl,
+                                                        builder = {
+                                                            crossfade(true)
+                                                        }
+                                                    ),
                                                     contentDescription = null,
                                                     modifier = Modifier
                                                         .padding(5.dp)
