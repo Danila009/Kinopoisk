@@ -4,7 +4,9 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
+import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import retrofit2.Response
 import javax.inject.Inject
@@ -41,4 +43,8 @@ class ApiRepository @Inject constructor(
     suspend fun getStaff(id: Int):Response<List<Staff>> = apiKinopoisk.getStaff(id)
 
     suspend fun getSimilar(id: Int):Response<Similar> = apiKinopoisk.getSimilar(id)
+
+    suspend fun getSequelAndPrequel(id: Int):Response<List<SequelAndPrequel>> = apiKinopoisk.getSequelAndPrequel(id)
+
+    suspend fun getSeason(id: Int):Response<Season> = apiKinopoisk.getSeason(id)
 }

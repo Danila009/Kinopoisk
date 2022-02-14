@@ -28,7 +28,9 @@ import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
+import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.WebView
@@ -55,6 +57,8 @@ fun FilmInfoScreen(
     val fact = remember { mutableStateOf(Fact()) }
     val staff = remember { mutableStateOf(listOf<Staff>()) }
     val similar = remember { mutableStateOf(Similar()) }
+    val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
+    val season = remember { mutableStateOf(Season()) }
     val imageBitmapState = remember { mutableStateOf(
         Converters().toBitmap(
             R.drawable.image,context
@@ -84,6 +88,16 @@ fun FilmInfoScreen(
     filmInfoViewModel.getSimilar(filmId)
     filmInfoViewModel.responseSimilar.onEach {
         similar.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    filmInfoViewModel.getSequelAndPrequel(filmId)
+    filmInfoViewModel.responseSequelAndPrequel.onEach {
+        sequelAndPrequel.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    filmInfoViewModel.getSeason(filmId)
+    filmInfoViewModel.responseSeason.onEach {
+        season.value = it
     }.launchWhenStarted(lifecycleScope)
 
     scope.launch {
@@ -147,18 +161,43 @@ fun FilmInfoScreen(
                                     })
                                 }
 
-                                Text(
-                                    text = "Сведения о фильме",
-                                    modifier = Modifier.padding(5.dp),
-                                    fontWeight = FontWeight.Bold,
-                                    color = secondaryBackground
-                                )
+                                if (filmInfo.value.serial){
+                                    season.value.total?.let {
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            horizontalArrangement = Arrangement.SpaceBetween
+                                        ) {
+                                            Column {
+                                                Text(
+                                                    text = "Сезоны и серии:",
+                                                    modifier = Modifier.padding(5.dp),
+                                                    fontWeight = FontWeight.Bold,
+                                                    color = secondaryBackground
+                                                )
+                                                Text(
+                                                    text = "${season.value.total} Сезона",
+                                                    modifier = Modifier.padding(5.dp)
+                                                )
+                                            }
+                                            TextButton(
+                                                onClick = { /*TODO*/ },
+                                                modifier = Modifier.padding(5.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Все ->",
+                                                    color = secondaryBackground
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
 
                                 filmInfo.value.slogan?.let {
                                     Text(
                                         text = "Слоган:",
                                         modifier = Modifier.padding(5.dp),
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        color = secondaryBackground
                                     )
 
                                     Text(
@@ -171,7 +210,8 @@ fun FilmInfoScreen(
                                     Text(
                                         text = "Description:",
                                         modifier = Modifier.padding(5.dp),
-                                        fontWeight = FontWeight.Bold
+                                        fontWeight = FontWeight.Bold,
+                                        color = secondaryBackground
                                     )
                                     Text(
                                         text = it,
@@ -187,7 +227,8 @@ fun FilmInfoScreen(
                                         Text(
                                             text = "Актёры",
                                             modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
                                         )
 
                                         TextButton(
@@ -246,7 +287,8 @@ fun FilmInfoScreen(
                                         Text(
                                             text = "Съёмочная группа:",
                                             modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
                                         )
 
                                         TextButton(
@@ -325,7 +367,8 @@ fun FilmInfoScreen(
                                         Text(
                                             text = "Знаете ли вы, что...",
                                             modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
                                         )
 
                                         TextButton(
@@ -370,7 +413,8 @@ fun FilmInfoScreen(
                                         Text(
                                             text = "Прокат",
                                             modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
                                         )
 
                                         TextButton(
@@ -403,7 +447,58 @@ fun FilmInfoScreen(
                                         }
                                     })
                                 }
-                                similar.value.total?.let {
+                                if (sequelAndPrequel.value.isNotEmpty()){
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                        Text(
+                                            text = "Сиквелы и прикелы:",
+                                            modifier = Modifier.padding(5.dp),
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
+                                        )
+
+                                        TextButton(
+                                            onClick = { /*TODO*/ },
+                                            modifier = Modifier.padding(5.dp)
+                                        ) {
+                                            Text(
+                                                text = "Все ->",
+                                                color = secondaryBackground
+                                            )
+                                        }
+                                    }
+                                    LazyRow(content = {
+                                        items(sequelAndPrequel.value){ item ->
+                                            val bitmapIconState = remember { mutableStateOf(Converters().toBitmap(R.drawable.image, context)) }
+                                            scope.launch {
+                                                item.posterUrl?.let {
+                                                    bitmapIconState.value = Converters().bitmapCoil(it, context)
+                                                }
+                                            }
+                                            Column(
+                                                modifier = Modifier.clickable {
+                                                    navController.navigate(
+                                                        Screen.FilmInfo.base(
+                                                            filmId = item.filmId.toString()
+                                                        )
+                                                    )
+                                                }
+                                            ) {
+                                                Image(
+                                                    bitmap = bitmapIconState.value.asImageBitmap(),
+                                                    contentDescription = null,
+                                                    modifier = Modifier
+                                                        .padding(5.dp)
+                                                        .height(180.dp)
+                                                        .width(140.dp)
+                                                )
+                                            }
+                                        }
+                                    })
+                                }
+                                if (similar.value.total.toString().isNotEmpty()){
                                     Row(
                                         modifier = Modifier.fillMaxWidth(),
                                         horizontalArrangement = Arrangement.SpaceBetween
@@ -411,7 +506,8 @@ fun FilmInfoScreen(
                                         Text(
                                             text = "Похожие фильмы:",
                                             modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold
+                                            fontWeight = FontWeight.Bold,
+                                            color = secondaryBackground
                                         )
 
                                         TextButton(

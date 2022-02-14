@@ -25,10 +25,14 @@ class Converters {
         int: Int,
         context: Context
     ):Bitmap{
-        return BitmapFactory.decodeResource(
-            context.resources,
-            int
-        )
+        return try {
+            BitmapFactory.decodeResource(
+                context.resources,
+                int
+            )
+        }catch (e:Exception){
+            Converters().toBitmap(R.drawable.image, context)
+        }
     }
 
     suspend fun bitmapCoil(

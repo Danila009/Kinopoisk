@@ -4,12 +4,16 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
+import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.utils.Constants.BUDGET_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
+import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
+import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFf_URL
 import retrofit2.Response
@@ -55,4 +59,14 @@ interface ApiKinopoisk {
     suspend fun getSimilar(
         @Path("id") id: Int
     ):Response<Similar>
+
+    @GET(SEQUEL_AND_PREQUEL_ID_URL)
+    suspend fun getSequelAndPrequel(
+        @Path("id") id: Int
+    ):Response<List<SequelAndPrequel>>
+
+    @GET(SEASONS_ID_URL)
+    suspend fun getSeason(
+        @Path("id") id: Int
+    ):Response<Season>
 }
