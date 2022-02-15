@@ -3,15 +3,21 @@ package com.example.kinopoisk.screen.filmInfo
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.kinopoisk.api.ApiRepository
 import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.api.model.filmInfo.Budget
-import com.example.kinopoisk.api.model.filmInfo.Fact
-import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
-import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.filmInfo.*
+import com.example.kinopoisk.api.model.review.ReviewItem
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
+import com.example.kinopoisk.screen.filmInfo.source.ImagePagingSource
+import com.example.kinopoisk.screen.filmInfo.source.ReviewPagingSource
+import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -106,5 +112,29 @@ class FilmInfoViewModel @Inject constructor(
                 Log.d("Retrofit:",e.message.toString())
             }
         }
+    }
+
+    fun getImage(
+        id: Int,
+        type:String
+    ): Flow<PagingData<ImageItem>> {
+        return Pager(PagingConfig(pageSize = 1)){
+            ImagePagingSource(
+                apiRepository = apiRepository,
+                id = id,
+                type = type
+            )
+        }.flow.cachedIn(viewModelScope)
+    }
+
+    fun getReview(
+        id: Int
+    ):Flow<PagingData<ReviewItem>>{
+        return Pager(PagingConfig(pageSize = 1)){
+            ReviewPagingSource(
+                apiRepository = apiRepository,
+                id = id
+            )
+        }.flow.cachedIn(viewModelScope)
     }
 }

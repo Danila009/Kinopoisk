@@ -2,13 +2,14 @@ package com.example.kinopoisk.api
 
 import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.api.model.filmInfo.Budget
-import com.example.kinopoisk.api.model.filmInfo.Fact
-import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
-import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.premiere.Premiere
+import com.example.kinopoisk.api.model.premiere.Release
+import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
+import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.kinopoisk.api.model.topFilm.Top
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -55,5 +56,47 @@ class ApiRepository @Inject constructor(
     ):Response<Premiere> = apiKinopoisk.getPremiere(
         year = year,
         month = month
+    )
+
+    suspend fun getRelease(
+        year: Int,
+        month: String,
+        page: Int = 1
+    ):Response<Release> = apiKinopoisk.getRelease(
+        year = year,
+        month = month,
+        page = page
+    )
+
+    suspend fun getTop(
+        type: String,
+        page: Int = 1
+    ):Response<Top> = apiKinopoisk.getTop(
+        type = type,
+        page = page
+    )
+
+    suspend fun getImage(
+        id: Int,
+        type: String,
+        page: Int = 1
+    ):Response<Image> = apiKinopoisk.getImage(
+        id = id,
+        type = type,
+        page = page
+    )
+
+    suspend fun getReview(
+        id: Int,
+        page: Int = 1
+    ):Response<Review> = apiKinopoisk.getReview(
+        id = id,
+        page = page
+    )
+
+    suspend fun getStaffInfo(
+        id: Int
+    ):Response<StaffInfo> = apiKinopoisk.getStaffInfo(
+        id = id
     )
 }

@@ -10,7 +10,9 @@ import androidx.paging.cachedIn
 import com.example.kinopoisk.api.ApiRepository
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.premiere.Premiere
+import com.example.kinopoisk.api.model.premiere.ReleaseItem
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
+import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -58,5 +60,18 @@ class MainViewModel @Inject constructor(
                 Log.d("Retrofit:",e.message.toString())
             }
         }
+    }
+
+    fun getRelease(
+        year: Int,
+        month: String
+    ):Flow<PagingData<ReleaseItem>>{
+        return Pager(PagingConfig(pageSize = 1)){
+            ReleasePagingSource(
+                apiRepository = apiRepository,
+                year = year,
+                mont = month
+            )
+        }.flow.cachedIn(viewModelScope)
     }
 }

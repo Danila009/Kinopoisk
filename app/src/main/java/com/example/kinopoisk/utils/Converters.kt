@@ -3,9 +3,13 @@ package com.example.kinopoisk.utils
 import android.annotation.SuppressLint
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LifecycleCoroutineScope
+import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.utils.viewState.ViewStatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -16,6 +20,14 @@ fun <T>Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope){
 }
 
 class Converters {
+
+    inline fun<reified T> encodeToString(base:T):String{
+        return Json.encodeToString(base)
+    }
+
+    inline fun<reified T> decodeFromString(string: String):T{
+        return Json.decodeFromString(string)
+    }
 
     @SuppressLint("SimpleDateFormat")
     fun getTime(string: String):String{
@@ -33,6 +45,25 @@ class Converters {
         }catch (e:Exception){
             ""
         }
+    }
+
+    fun getNameTop(
+        nameTopViewState: NameTopViewState
+    ):String{
+        return when(nameTopViewState){
+            NameTopViewState.TOP_250_BEST_FILMS -> "250 лучших фильмов"
+            NameTopViewState.TOP_100_POPULAR_FILMS -> "Популярные фильмы и сериалы"
+            NameTopViewState.TOP_AWAIT_FILMS -> "Ожидаемые фильмы"
+        }
+    }
+
+    fun replaceRange(string: String, int: Int):String{
+        if (string.length < int)
+            return string
+        return string.replaceRange(
+            int until string.length,
+            "..."
+        )
     }
 
     fun getDatePremiere(

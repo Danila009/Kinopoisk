@@ -13,14 +13,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import androidx.paging.compose.collectAsLazyPagingItems
+import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.screen.main.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -36,6 +41,11 @@ fun HomeScreen(
     lifecycleScope: LifecycleCoroutineScope
 ) {
     val premiere = remember { mutableStateOf(Premiere()) }
+
+    val release = mainViewModel.getRelease(
+        year = Converters().getDatePremiere(ViewStatePremiere.YEAR).toInt(),
+        month = Converters().getDatePremiere(ViewStatePremiere.MONTH)
+    ).collectAsLazyPagingItems()
 
     mainViewModel.getPremiere(
         year = Converters().getDatePremiere(ViewStatePremiere.YEAR).toInt(),
@@ -56,12 +66,70 @@ fun HomeScreen(
                     .fillMaxWidth()
                     .height(30.dp)
                 )
+                premiere.value.total?.let {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Премьеры в кино:",
+                            modifier = Modifier.padding(5.dp),
+                            color = secondaryBackground,
+                            fontWeight = FontWeight.Bold
+                        )
+
+                        TextButton(
+                            onClick = { /*TODO*/ },
+                            modifier = Modifier.padding(5.dp)
+                        ) {
+                            Text(
+                                text = "Все ->",
+                                color = secondaryBackground
+                            )
+                        }
+                    }
+                    LazyRow(content = {
+                        items(premiere.value.items) { item ->
+                            Column(
+                                modifier = Modifier.clickable {
+                                    navController.navigate(
+                                        Screen.FilmInfo.base(
+                                            filmId = item.kinopoiskId.toString()
+                                        )
+                                    )
+                                }
+                            ) {
+                                Image(
+                                    painter = rememberImagePainter(
+                                        data = item.posterUrl,
+                                        builder = {
+                                            crossfade(true)
+                                        }
+                                    ),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .padding(5.dp)
+                                        .height(180.dp)
+                                        .width(140.dp)
+                                )
+                                Text(
+                                    text = Converters().getTime(item.premiereRu),
+                                    modifier = Modifier.padding(
+                                        top = 5.dp,
+                                        start = 22.dp,
+                                        bottom = 5.dp
+                                    )
+                                )
+                            }
+                        }
+                    })
+                }
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "Премьеры в кино:",
+                        text = "Цифровые релизы:",
                         modifier = Modifier.padding(5.dp),
                         color = secondaryBackground,
                         fontWeight = FontWeight.Bold
@@ -78,19 +146,19 @@ fun HomeScreen(
                     }
                 }
                 LazyRow(content = {
-                    items(premiere.value.items) { item ->
+                    items(release) { item ->
                         Column(
                             modifier = Modifier.clickable {
                                 navController.navigate(
                                     Screen.FilmInfo.base(
-                                        filmId = item.kinopoiskId.toString()
+                                        filmId = item?.filmId.toString()
                                     )
                                 )
                             }
                         ) {
                             Image(
                                 painter = rememberImagePainter(
-                                    data = item.posterUrl,
+                                    data = item?.posterUrl,
                                     builder = {
                                         crossfade(true)
                                     }
@@ -102,7 +170,7 @@ fun HomeScreen(
                                     .width(140.dp)
                             )
                             Text(
-                                text = Converters().getTime(item.premiereRu),
+                                text = Converters().getTime(item!!.releaseDate),
                                 modifier = Modifier.padding(
                                     top = 5.dp,
                                     start = 22.dp,
@@ -112,6 +180,85 @@ fun HomeScreen(
                         }
                     }
                 })
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Топы:",
+                        modifier = Modifier.padding(5.dp),
+                        color = secondaryBackground,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    TextButton(
+                        onClick = { /*TODO*/ },
+                        modifier = Modifier.padding(5.dp)
+                    ) {
+                        Text(
+                            text = "Все ->",
+                            color = secondaryBackground
+                        )
+                    }
+                }
+                LazyRow(content = {
+                    items(4) {
+                        when(it){
+                            1->{
+                                Image(
+                                    painter = painterResource(id = R.drawable.iamgetopc),
+                                    contentDescription = null,
+                                    Modifier
+                                        .size(150.dp)
+                                        .padding(5.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.FilmTop.base(
+                                                    Converters().encodeToString(NameTopViewState.TOP_100_POPULAR_FILMS)
+                                                )
+                                            )
+                                        }
+                                )
+                            }
+                            2->{
+                                Image(
+                                    painter = painterResource(id = R.drawable.toplmagea),
+                                    contentDescription = null,
+                                    Modifier
+                                        .size(150.dp)
+                                        .padding(5.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.FilmTop.base(
+                                                    Converters().encodeToString(NameTopViewState.TOP_250_BEST_FILMS)
+                                                )
+                                            )
+                                        }
+                                )
+                            }
+                            3->{
+                                Image(
+                                    painter = painterResource(id = R.drawable.orig),
+                                    contentDescription = null,
+                                    Modifier
+                                        .size(150.dp)
+                                        .padding(5.dp)
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.FilmTop.base(
+                                                    Converters().encodeToString(NameTopViewState.TOP_AWAIT_FILMS)
+                                                )
+                                            )
+                                        }
+                                )
+                            }
+                        }
+                    }
+                })
+                Spacer(modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp)
+                )
             }
         })
     }

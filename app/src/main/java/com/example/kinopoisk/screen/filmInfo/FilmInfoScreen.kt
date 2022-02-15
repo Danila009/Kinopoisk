@@ -1,30 +1,21 @@
 package com.example.kinopoisk.screen.filmInfo
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.SpanStyle
-import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
@@ -33,10 +24,10 @@ import com.example.kinopoisk.api.model.filmInfo.Similar
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.navigation.Screen
-import com.example.kinopoisk.screen.filmInfo.view.WebView
+import com.example.kinopoisk.screen.filmInfo.view.*
+import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
@@ -92,6 +83,15 @@ fun FilmInfoScreen(
         season.value = it
     }.launchWhenStarted(lifecycleScope)
 
+    val image = filmInfoViewModel.getImage(
+        id = filmId,
+        type = ImageViewState.STILL.name
+    ).collectAsLazyPagingItems()
+
+    val review = filmInfoViewModel.getReview(
+        id = filmId
+    ).collectAsLazyPagingItems()
+
     if (checkWeb.value){
         WebView(url = filmInfo.value.webUrl!!)
     }else{
@@ -101,7 +101,7 @@ fun FilmInfoScreen(
                     elevation = 8.dp,
                     backgroundColor = primaryBackground,
                     title = {
-                        Text(text = filmInfo.value.nameRu)
+                        Text(text = filmInfo.value.nameRu.toString())
                     }, navigationIcon = {
                         IconButton(onClick = {
                             navController.navigate(Screen.Main.route)
@@ -121,569 +121,52 @@ fun FilmInfoScreen(
                     LazyColumn(content = {
                         item {
                             Column {
-                                Column(
-                                    modifier = Modifier.fillMaxSize(),
-                                    horizontalAlignment = Alignment.CenterHorizontally
-                                ) {
-                                    if (filmInfo.value.posterUrlPreview != ""){
-                                        Image(
-                                            painter = rememberImagePainter(
-                                                data = filmInfo.value.posterUrlPreview,
-                                                builder = {
-                                                    crossfade(true)
-                                                }
-                                            ),
-                                            contentDescription = null,
-                                            modifier = Modifier
-                                                .height(350.dp)
-                                                .width(250.dp)
-                                        )
-                                    }
-                                    LazyRow(content = {
-                                        items(filmInfo.value.genres){
-                                            Text(
-                                                text = it.genre,
-                                                modifier = Modifier.padding(5.dp)
-                                            )
-                                        }
-                                    })
-                                    LazyRow(content = {
-                                        items(filmInfo.value.countries){
-                                            Text(
-                                                text = "${it.country} ",
-                                                modifier = Modifier.padding(bottom =  5.dp)
-                                            )
-                                        }
-                                    })
-                                }
 
-                                if (filmInfo.value.serial){
-                                    season.value.total?.let {
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.SpaceBetween
-                                        ) {
-                                            Column {
-                                                Text(
-                                                    text = "Сезоны и серии:",
-                                                    modifier = Modifier.padding(5.dp),
-                                                    fontWeight = FontWeight.Bold,
-                                                    color = secondaryBackground
-                                                )
-                                                Text(
-                                                    text = "${season.value.total} Сезона",
-                                                    modifier = Modifier.padding(5.dp)
-                                                )
-                                            }
-                                            TextButton(
-                                                onClick = { navController.navigate(Screen.SerialInfoSeason.base(filmId.toString())) },
-                                                modifier = Modifier.padding(5.dp)
-                                            ) {
-                                                Text(
-                                                    text = "Все ->",
-                                                    color = secondaryBackground
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
+                                FilmInfoView(
+                                    filmInfo = filmInfo,
+                                    filmId = filmId,
+                                    navController = navController,
+                                    season = season
+                                )
 
-                                filmInfo.value.slogan?.let {
-                                    Text(
-                                        text = "Слоган:",
-                                        modifier = Modifier.padding(5.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        color = secondaryBackground
-                                    )
+                                RatingView(
+                                    filmInfo = filmInfo
+                                )
 
-                                    Text(
-                                        text = it,
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                }
+                                StaffView(
+                                    staff = staff,
+                                    navController = navController,
+                                    filmId = filmId.toString()
+                                )
 
-                                filmInfo.value.description?.let {
-                                    Text(
-                                        text = "Описание:",
-                                        modifier = Modifier.padding(5.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        color = secondaryBackground
-                                    )
-                                    Text(
-                                        text = it,
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                }
+                                ReviewView(
+                                    navController = navController,
+                                    review = review
+                                )
 
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.SpaceBetween
-                                ) {
-                                    Text(
-                                        text = "Райтинг",
-                                        modifier = Modifier.padding(5.dp),
-                                        fontWeight = FontWeight.Bold,
-                                        color = secondaryBackground
-                                    )
+                                ImageView(
+                                    navController = navController,
+                                    image = image
+                                )
 
-                                    TextButton(
-                                        onClick = { /*TODO*/ },
-                                        modifier = Modifier.padding(5.dp)
-                                    ) {
-                                        Text(
-                                            text = "Все ->",
-                                            color = secondaryBackground
-                                        )
-                                    }
-                                }
-                                LazyRow(content = {
-                                    items(6) { item ->
-                                        Card(
-                                            shape = AbsoluteRoundedCornerShape(7.dp),
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Column {
-                                                when(item){
-                                                    1->{
-                                                        Text(
-                                                            buildAnnotatedString {
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = secondaryBackground
-                                                                    )
-                                                                ){
-                                                                    append("КиноПоиск: ")
-                                                                }
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = Converters().rating(
-                                                                            rating = filmInfo.value.ratingKinopoisk
-                                                                        )
-                                                                    )
-                                                                ){
-                                                                    append(filmInfo.value.ratingKinopoisk.toString())
-                                                                }
-                                                            },modifier = Modifier.padding(5.dp)
-                                                        )
-                                                        Text(
-                                                            text = "${filmInfo.value.ratingKinopoiskVoteCount} оценки",
-                                                            modifier = Modifier.padding(5.dp)
-                                                        )
-                                                    }
-                                                    2->{
-                                                        Text(
-                                                            buildAnnotatedString {
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = secondaryBackground
-                                                                    )
-                                                                ){
-                                                                    append("IMDB: ")
-                                                                }
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = Converters().rating(
-                                                                            rating = filmInfo.value.ratingImdb
-                                                                        )
-                                                                    )
-                                                                ){
-                                                                    append(filmInfo.value.ratingImdb.toString())
-                                                                }
-                                                            },modifier = Modifier.padding(5.dp)
-                                                        )
-                                                        Text(
-                                                            text = "${filmInfo.value.ratingImdbVoteCount} оценки",
-                                                            modifier = Modifier.padding(5.dp)
-                                                        )
-                                                    }
-                                                    3->{
-                                                        Text(
-                                                            buildAnnotatedString {
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = secondaryBackground
-                                                                    )
-                                                                ){
-                                                                    append("Райтинг мировых критиков: ")
-                                                                }
-                                                                withStyle(
-                                                                    style = SpanStyle(
-                                                                        fontWeight = FontWeight.Bold,
-                                                                        color = Converters().rating(
-                                                                            rating = filmInfo.value.ratingFilmCritics
-                                                                        )
-                                                                    )
-                                                                ){
-                                                                    append(filmInfo.value.ratingFilmCritics.toString())
-                                                                }
-                                                            },modifier = Modifier.padding(5.dp)
-                                                        )
-                                                        Text(
-                                                            text = "${filmInfo.value.ratingFilmCriticsVoteCount} оценки",
-                                                            modifier = Modifier.padding(5.dp)
-                                                        )
-                                                    }
-                                                    4->{
-                                                        Text(
-                                                            text = "Райтинг российских критиков: ${filmInfo.value.ratingRfCritics}",
-                                                            modifier = Modifier.padding(5.dp),
-                                                            fontWeight = FontWeight.Bold,
-                                                            color = secondaryBackground
-                                                        )
-                                                        Text(
-                                                            text = "${filmInfo.value.ratingRfCriticsVoteCount} оценки",
-                                                            modifier = Modifier.padding(5.dp)
-                                                        )
-                                                    }
-                                                    5->{
-                                                        Text(
-                                                            text = "Положительных рецензий: ${filmInfo.value.ratingGoodReview}%",
-                                                            modifier = Modifier.padding(5.dp),
-                                                            fontWeight = FontWeight.Bold,
-                                                            color = secondaryBackground
-                                                        )
-                                                        Text(
-                                                            text = "${filmInfo.value.ratingGoodReviewVoteCount} оценки",
-                                                            modifier = Modifier.padding(5.dp)
-                                                        )
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                })
+                                FactView(
+                                    fact = fact
+                                )
 
-                                if (staff.value.isNotEmpty()){
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Актёры",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
+                                BudgetView(
+                                    budget = budget
+                                )
 
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-                                    LazyRow(content = {
-                                        items(staff.value){ item ->
-                                            if (item.professionKey == "ACTOR"){
-                                                Card(
-                                                    shape = AbsoluteRoundedCornerShape(7.dp),
-                                                    modifier = Modifier.padding(5.dp)
-                                                ) {
-                                                    Row(
-                                                        modifier = Modifier.padding(5.dp)
-                                                    ) {
-                                                        Image(
-                                                            painter = rememberImagePainter(
-                                                                data = item.posterUrl,
-                                                                builder = {
-                                                                    crossfade(true)
-                                                                }
-                                                            ),
-                                                            contentDescription = null,
-                                                            modifier = Modifier
-                                                                .padding(5.dp)
-                                                                .height(80.dp)
-                                                                .width(50.dp)
-                                                        )
-                                                        Column {
-                                                            Text(
-                                                                text = item.nameRu,
-                                                                modifier = Modifier.padding(
-                                                                    start = 5.dp,
-                                                                    top = 3.dp,
-                                                                    bottom = 2.dp
-                                                                )
-                                                            )
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    })
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Съёмочная группа:",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
+                                SequelAndPrequelView(
+                                    navController = navController,
+                                    sequelAndPrequel = sequelAndPrequel
+                                )
 
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-                                    LazyRow(content = {
-                                        items(staff.value){ item ->
-                                            if (
-                                                item.professionKey == "DIRECTOR"
-                                                || item.professionKey == "EDITOR"
-                                                || item.professionKey == "DESIGN"
-                                                || item.professionKey == "COMPOSER"
-                                                || item.professionKey == "OPERATOR"
-                                                || item.professionKey == "WRITER"
-                                                || item.professionKey == "VOICE_DIRECTOR"
-                                                || item.professionKey == "PRODUCER"
-                                            ){
-                                                Card(
-                                                    shape = AbsoluteRoundedCornerShape(7.dp),
-                                                    modifier = Modifier.padding(5.dp)
-                                                ) {
-                                                    Row(
-                                                        modifier = Modifier.padding(5.dp)
-                                                    ) {
-                                                        Image(
-                                                            painter = rememberImagePainter(
-                                                                data = item.posterUrl,
-                                                                builder = {
-                                                                    crossfade(true)
-                                                                }
-                                                            ),
-                                                            contentDescription = null,
-                                                            modifier = Modifier
-                                                                .padding(5.dp)
-                                                                .height(80.dp)
-                                                                .width(50.dp)
-                                                        )
-                                                        Column {
-                                                            Text(
-                                                                text = item.nameRu,
-                                                                modifier = Modifier.padding(
-                                                                    start = 5.dp,
-                                                                    top = 3.dp,
-                                                                    bottom = 2.dp
-                                                                )
-                                                            )
-                                                            Text(
-                                                                text = item.professionText,
-                                                                modifier = Modifier.padding(
-                                                                    start = 5.dp,
-                                                                    top = 2.dp,
-                                                                    bottom = 3.dp
-                                                                )
-                                                            )
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    })
-                                }
+                                SimilarView(
+                                    navController = navController,
+                                    similar = similar
+                                )
 
-                                if (fact.value.items.isNotEmpty()){
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Знаете ли вы, что...",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
-
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-
-                                    LazyRow(content = {
-                                        items(fact.value.items){ item ->
-                                            Card(
-                                                shape = AbsoluteRoundedCornerShape(7.dp),
-                                                modifier = Modifier.padding(5.dp)
-                                            ) {
-                                                Column {
-                                                    Text(
-                                                        text = if(item.type == "FACT") "Факт о фильме" else "Ощибка в фильме",
-                                                        fontWeight = FontWeight.Bold,
-                                                        modifier = Modifier.padding(5.dp)
-                                                    )
-
-                                                    Text(
-                                                        text = item.text,
-                                                        modifier = Modifier.padding(5.dp)
-                                                    )
-                                                }
-                                            }
-                                        }
-                                    })
-                                }
-
-                                if (budget.value.items.isNotEmpty()){
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Прокат",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
-
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-                                    LazyRow(content = {
-                                        items(budget.value.items){ item ->
-                                            Card(
-                                                shape = AbsoluteRoundedCornerShape(7.dp),
-                                                modifier = Modifier.padding(5.dp)
-                                            ) {
-                                                Column {
-                                                    Text(
-                                                        text = item.type,
-                                                        modifier = Modifier.padding(5.dp)
-                                                    )
-                                                    Text(
-                                                        text = "${item.amount} ${item.symbol}",
-                                                        modifier = Modifier.padding(5.dp)
-                                                    )
-                                                }
-                                            }
-                                        }
-                                    })
-                                }
-                                if (sequelAndPrequel.value.isNotEmpty()){
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Сиквелы и прикелы:",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
-
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-                                    LazyRow(content = {
-                                        items(sequelAndPrequel.value){ item ->
-                                            Column(
-                                                modifier = Modifier.clickable {
-                                                    navController.navigate(
-                                                        Screen.FilmInfo.base(
-                                                            filmId = item.filmId.toString()
-                                                        )
-                                                    )
-                                                }
-                                            ) {
-                                                Image(
-                                                    painter = rememberImagePainter(
-                                                        data = item.posterUrl,
-                                                        builder = {
-                                                            crossfade(true)
-                                                        }
-                                                    ),
-                                                    contentDescription = null,
-                                                    modifier = Modifier
-                                                        .padding(5.dp)
-                                                        .height(180.dp)
-                                                        .width(140.dp)
-                                                )
-                                            }
-                                        }
-                                    })
-                                }
-                                if (similar.value.total.toString().isNotEmpty()){
-                                    Row(
-                                        modifier = Modifier.fillMaxWidth(),
-                                        horizontalArrangement = Arrangement.SpaceBetween
-                                    ) {
-                                        Text(
-                                            text = "Похожие фильмы:",
-                                            modifier = Modifier.padding(5.dp),
-                                            fontWeight = FontWeight.Bold,
-                                            color = secondaryBackground
-                                        )
-
-                                        TextButton(
-                                            onClick = { /*TODO*/ },
-                                            modifier = Modifier.padding(5.dp)
-                                        ) {
-                                            Text(
-                                                text = "Все ->",
-                                                color = secondaryBackground
-                                            )
-                                        }
-                                    }
-                                    LazyRow(content = {
-                                        items(similar.value.items){ item ->
-                                            Column(
-                                                modifier = Modifier.clickable {
-                                                    navController.navigate(
-                                                        Screen.FilmInfo.base(
-                                                            filmId = item.filmId.toString()
-                                                        )
-                                                    )
-                                                }
-                                            ) {
-                                                Image(
-                                                    painter = rememberImagePainter(
-                                                        data = item.posterUrl,
-                                                        builder = {
-                                                            crossfade(true)
-                                                        }
-                                                    ),
-                                                    contentDescription = null,
-                                                    modifier = Modifier
-                                                        .padding(5.dp)
-                                                        .height(180.dp)
-                                                        .width(140.dp)
-                                                )
-                                            }
-                                        }
-                                    })
-                                }
                                 filmInfo.value.webUrl?.let {
                                     TextButton(
                                         modifier = Modifier.padding(5.dp),
