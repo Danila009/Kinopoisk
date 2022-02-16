@@ -1,10 +1,10 @@
-package com.example.kinopoisk.screen.staffInfo
+package com.example.kinopoisk.screen.review
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.api.ApiRepository
-import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.kinopoisk.api.model.review.ReviewDetail
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,22 +13,20 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class StaffInfoViewModel @Inject constructor(
+class ReviewViewModel @Inject constructor(
     private val apiRepository: ApiRepository
 ):ViewModel() {
 
-    private val _responseStaffInfo:MutableStateFlow<StaffInfo> = MutableStateFlow(StaffInfo())
-    val responseStaffInfo:StateFlow<StaffInfo> = _responseStaffInfo
+    private val _responseReviewDetail:MutableStateFlow<ReviewDetail> = MutableStateFlow(ReviewDetail())
+    val responseReviewDetail:StateFlow<ReviewDetail> = _responseReviewDetail
 
-    fun getStaffInfo(id:Int){
+    fun getReviewDetail(id:Int){
         viewModelScope.launch {
             try {
-                _responseStaffInfo.value = apiRepository.getStaffInfo(id).body()!!
+                _responseReviewDetail.value =  apiRepository.getReviewDetail(id = id).body()!!
             }catch (e:Exception){
-                Log.d("Retrofit:", e.message.toString())
+                Log.d("Retrofit", e.message.toString())
             }
         }
     }
-
-
 }

@@ -5,11 +5,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -17,6 +19,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.kinopoisk.api.model.FilmInfo
+import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
@@ -26,6 +29,7 @@ import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
+import com.example.kinopoisk.screen.main.viewModel.UserViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
@@ -35,6 +39,7 @@ import kotlinx.coroutines.flow.onEach
 @Composable
 fun FilmInfoScreen(
     filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
+    userViewModel: UserViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
     filmId: Int,
@@ -101,7 +106,7 @@ fun FilmInfoScreen(
                     elevation = 8.dp,
                     backgroundColor = primaryBackground,
                     title = {
-                        Text(text = filmInfo.value.nameRu.toString())
+                        Text(text = filmInfo.value.nameRu)
                     }, navigationIcon = {
                         IconButton(onClick = {
                             navController.navigate(Screen.Main.route)
@@ -109,6 +114,30 @@ fun FilmInfoScreen(
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
                                 contentDescription = null
+                            )
+                        }
+                    }, actions = {
+                        IconButton(onClick = {
+                            userViewModel.postFavoriteFilm(
+                                FilmItem(
+                                    kinopoiskId = filmInfo.value.kinopoiskId,
+                                    imdbId = filmInfo.value.imdbId,
+                                    nameRu = filmInfo.value.nameRu,
+                                    nameEn = filmInfo.value.nameEn,
+                                    nameOriginal = filmInfo.value.nameOriginal,
+                                    ratingImdb = filmInfo.value.ratingImdb,
+                                    ratingKinopoisk = filmInfo.value.ratingKinopoisk,
+                                    year = filmInfo.value.year,
+                                    posterUrl = filmInfo.value.posterUrl,
+                                    posterUrlPreview = filmInfo.value.posterUrlPreview,
+                                    type = filmInfo.value.type
+                                )
+                            )
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = null,
+                                tint = Color.Red
                             )
                         }
                     }
@@ -141,12 +170,14 @@ fun FilmInfoScreen(
 
                                 ReviewView(
                                     navController = navController,
-                                    review = review
+                                    review = review,
+                                    filmId = filmId.toString()
                                 )
 
                                 ImageView(
                                     navController = navController,
-                                    image = image
+                                    image = image,
+                                    filmId = filmId.toString()
                                 )
 
                                 FactView(

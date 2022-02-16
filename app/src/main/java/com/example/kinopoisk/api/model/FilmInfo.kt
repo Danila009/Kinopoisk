@@ -6,7 +6,7 @@ import com.example.kinopoisk.api.model.filmInfo.Genre
 data class FilmInfo(
     val kinopoiskId:Int = 0,
     val imdbId:String = "",
-    val nameRu:String? = "",
+    val nameRu:String = "",
     val nameEn:String = "",
     val nameOriginal:String = "",
     val posterUrl:String? = null,

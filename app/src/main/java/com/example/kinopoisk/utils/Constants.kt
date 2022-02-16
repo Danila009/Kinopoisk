@@ -16,6 +16,15 @@ object Constants {
     const val IMAGE_ID_URL = "/api/v2.2/films/{id}/images"
     const val REVIEW_URL = "/api/v1/reviews"
     const val STAFF_INF0_ID_URL = "/api/v1/staff/{id}"
+    const val REVIEW_ID_URL = "/api/v1/reviews/details"
+
+    const val BASE_USER_URL = "http://10.0.2.2:5000/"
+    const val AUTHORIZATION_URL = "Authorization"
+    const val REGISTRATION_URL = "Registration"
+    const val USER_INFO_URL = "UserInfo"
+    const val USER_FAVORITE_FILM_URL = "FavoriteFilm"
+
+    const val TOKEN = "token"
 
     const val TOKEN_KEY = "ab67ce7d-90cf-4d1b-b354-7474b82c9f38"
 }

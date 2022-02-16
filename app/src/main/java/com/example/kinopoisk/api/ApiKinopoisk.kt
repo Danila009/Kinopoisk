@@ -6,6 +6,7 @@ import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
+import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
@@ -17,6 +18,7 @@ import com.example.kinopoisk.utils.Constants.FILM_URL
 import com.example.kinopoisk.utils.Constants.IMAGE_ID_URL
 import com.example.kinopoisk.utils.Constants.PREMIERE_URL
 import com.example.kinopoisk.utils.Constants.RELEASE_URL
+import com.example.kinopoisk.utils.Constants.REVIEW_ID_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
@@ -114,4 +116,10 @@ interface ApiKinopoisk {
     suspend fun getStaffInfo(
         @Path("id") id: Int
     ):Response<StaffInfo>
+
+    @GET(REVIEW_ID_URL)
+    suspend fun getReviewDetail(
+        @Query("reviewId") id: Int
+    ):Response<ReviewDetail>
+
 }

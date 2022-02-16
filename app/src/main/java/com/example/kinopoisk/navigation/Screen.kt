@@ -5,6 +5,9 @@ const val MAIN_ROUTE = "main_route"
 const val FILM_INFO_ROUTE = "film_info_route"
 const val FILM_TOP_ROUTE = "film_top_route"
 const val STAFF_INFO_ROUTE = "staff_info_route"
+const val MORE_ROUTE = "more_route"
+const val REVIEW_ROUTE = "review_route"
+const val LOGIN_ROUTE = "login_route"
 
 const val RATING_FROM_ARGUMENT = "ratingFrom"
 const val RATING_TO_ARGUMENT = "ratingTo"
@@ -13,8 +16,11 @@ const val YEAR_TO_ARGUMENT = "yearTo"
 const val FILM_ID_ARGUMENT = "filmId"
 const val FILM_TOP_NAME_ARGUMENT = "filmTopName"
 const val STAFF_ID_ARGUMENT = "staffId"
+const val REVIEW_ID_ARGUMENT = "reviewId"
 
 sealed class Screen(val route:String) {
+    object Authorization:Screen("authorization_screen")
+    object Registration:Screen("registration_screen")
     object Main:Screen("main_screen")
     object Sorting:Screen("sorting_screen")
     object ResultSorting:Screen("result_sorting_screen?" +
@@ -60,5 +66,21 @@ sealed class Screen(val route:String) {
             staffIf: String,
             filmId:String
         ):String = "more_staff?staffId=$staffIf&filmId=$filmId"
+    }
+    object ImageMore:Screen("image_more_screen?filmId={filmId}"){
+        fun base(
+            filmId:String
+        ):String = "image_more_screen?filmId=$filmId"
+    }
+    object ReviewMore:Screen("review_more_screen?filmId={filmId}"){
+        fun base(
+            filmId:String
+        ):String = "review_more_screen?filmId=$filmId"
+    }
+    object ReviewDetail:Screen("review_detail?reviewId={reviewId}&filmId={filmId}"){
+        fun base(
+            reviewId:String,
+            filmId:String
+        ):String = "review_detail?reviewId=$reviewId&filmId=$filmId"
     }
 }

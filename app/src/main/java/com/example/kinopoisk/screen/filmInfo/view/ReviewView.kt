@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.filmInfo.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
@@ -15,13 +16,15 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.kinopoisk.api.model.review.ReviewItem
+import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun ReviewView(
     navController: NavController,
-    review: LazyPagingItems<ReviewItem>
+    review: LazyPagingItems<ReviewItem>,
+    filmId:String
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -35,7 +38,7 @@ fun ReviewView(
         )
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.ReviewMore.base(filmId = filmId)) },
             modifier = Modifier.padding(5.dp)
         ) {
             Text(
@@ -50,6 +53,14 @@ fun ReviewView(
             Card(
                 modifier = Modifier
                     .padding(5.dp)
+                    .clickable {
+                        navController.navigate(
+                            Screen.ReviewDetail.base(
+                                reviewId = item?.reviewId.toString(),
+                                filmId = filmId
+                            )
+                        )
+                    }
                     .width(250.dp),
                 shape = AbsoluteRoundedCornerShape(20.dp)
             ) {

@@ -1,4 +1,4 @@
-package com.example.kinopoisk.screen.main
+package com.example.kinopoisk.screen.main.viewModel
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -21,7 +21,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val apiRepository: ApiRepository
+    private val apiRepository: ApiRepository,
 ):ViewModel() {
     private val _responsePremiere:MutableStateFlow<Premiere> = MutableStateFlow(Premiere())
     val responsePremiere:StateFlow<Premiere> = _responsePremiere.asStateFlow()

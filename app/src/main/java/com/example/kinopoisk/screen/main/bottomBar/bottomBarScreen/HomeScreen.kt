@@ -26,7 +26,7 @@ import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
-import com.example.kinopoisk.screen.main.MainViewModel
+import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -62,10 +62,6 @@ fun HomeScreen(
     ) {
         LazyColumn(content = {
             item {
-                Spacer(modifier = Modifier
-                    .fillMaxWidth()
-                    .height(30.dp)
-                )
                 premiere.value.total?.let {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -257,7 +253,7 @@ fun HomeScreen(
                 })
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
-                    .height(50.dp)
+                    .height(90.dp)
                 )
             }
         })

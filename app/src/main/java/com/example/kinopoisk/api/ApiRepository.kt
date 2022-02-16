@@ -6,6 +6,7 @@ import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
+import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
@@ -14,7 +15,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class ApiRepository @Inject constructor(
-    private val apiKinopoisk: ApiKinopoisk
+    private val apiKinopoisk: ApiKinopoisk,
 ) {
     suspend fun getFilm(
         order:String,
@@ -97,6 +98,12 @@ class ApiRepository @Inject constructor(
     suspend fun getStaffInfo(
         id: Int
     ):Response<StaffInfo> = apiKinopoisk.getStaffInfo(
+        id = id
+    )
+
+    suspend fun getReviewDetail(
+        id: Int
+    ):Response<ReviewDetail> = apiKinopoisk.getReviewDetail(
         id = id
     )
 }

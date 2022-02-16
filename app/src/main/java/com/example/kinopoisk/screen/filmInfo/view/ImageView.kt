@@ -14,12 +14,14 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.filmInfo.ImageItem
+import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
 fun ImageView(
     navController: NavController,
-    image:LazyPagingItems<ImageItem>
+    image:LazyPagingItems<ImageItem>,
+    filmId:String
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -33,7 +35,7 @@ fun ImageView(
         )
 
         TextButton(
-            onClick = { /*TODO*/ },
+            onClick = { navController.navigate(Screen.ImageMore.base(filmId = filmId)) },
             modifier = Modifier.padding(5.dp)
         ) {
             Text(

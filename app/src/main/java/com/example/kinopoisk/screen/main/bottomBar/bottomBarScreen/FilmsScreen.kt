@@ -24,7 +24,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.navigation.Screen
-import com.example.kinopoisk.screen.main.MainViewModel
+import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 

@@ -20,8 +20,10 @@ object ApiModule {
     @Provides
     @Singleton
     fun providerApi(
-        apiKinopoisk: ApiKinopoisk
-    ) = ApiRepository(apiKinopoisk)
+        apiKinopoisk: ApiKinopoisk,
+    ) = ApiRepository(
+        apiKinopoisk = apiKinopoisk
+    )
 
     @Provides
     @Singleton
