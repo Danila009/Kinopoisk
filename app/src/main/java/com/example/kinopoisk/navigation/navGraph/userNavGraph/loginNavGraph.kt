@@ -1,6 +1,5 @@
-package com.example.kinopoisk.navigation.userNavGraph
+package com.example.kinopoisk.navigation.navGraph.userNavGraph
 
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -12,7 +11,6 @@ import com.example.kinopoisk.screen.login.RegistrationScreen
 
 fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
         startDestination = Screen.Authorization.route,

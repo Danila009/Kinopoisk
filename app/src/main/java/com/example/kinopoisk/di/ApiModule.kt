@@ -1,7 +1,9 @@
 package com.example.kinopoisk.di
 
 import com.example.kinopoisk.api.ApiKinopoisk
-import com.example.kinopoisk.api.ApiRepository
+import com.example.kinopoisk.api.repository.ApiRepository
+import com.example.kinopoisk.api.ApiUser
+import com.example.kinopoisk.di.annotationName.KinopoiskOkHttpClient
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.BASE_URL
 import dagger.Module
@@ -21,6 +23,7 @@ object ApiModule {
     @Singleton
     fun providerApi(
         apiKinopoisk: ApiKinopoisk,
+        apiUser: ApiUser
     ) = ApiRepository(
         apiKinopoisk = apiKinopoisk
     )
@@ -28,7 +31,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun providerRetrofit(
-        okHttpClient: OkHttpClient
+        @KinopoiskOkHttpClient okHttpClient: OkHttpClient
     ):ApiKinopoisk = Retrofit.Builder()
         .baseUrl(BASE_URL)
         .client(okHttpClient)
@@ -38,6 +41,7 @@ object ApiModule {
 
     @Provides
     @Singleton
+    @KinopoiskOkHttpClient
     fun providerOkhttp():OkHttpClient = OkHttpClient.Builder()
         .addInterceptor {
             val request = it.request()

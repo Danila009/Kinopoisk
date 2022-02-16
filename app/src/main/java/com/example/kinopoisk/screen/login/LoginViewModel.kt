@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.ApiUserRepository
+import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Registration
 import com.example.kinopoisk.navigation.MAIN_ROUTE

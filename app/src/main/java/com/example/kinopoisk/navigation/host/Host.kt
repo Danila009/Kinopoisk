@@ -8,7 +8,7 @@ import androidx.navigation.compose.NavHost
 import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.ROUTE
 import com.example.kinopoisk.navigation.navGraph.*
-import com.example.kinopoisk.navigation.userNavGraph.loginNavGraph
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
@@ -17,6 +17,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 fun Host(
     navHostController: NavHostController,
     lifecycleScope: LifecycleCoroutineScope,
+    buttonNav: NavHostController,
 ) {
     NavHost(
         navController = navHostController,
@@ -25,11 +26,13 @@ fun Host(
         builder = {
             mainNavGraph(
                 navController = navHostController,
-                lifecycleScope
+                lifecycleScope = lifecycleScope,
+                buttonNav = buttonNav
             )
             filmInfoNavGraph(
                 navController = navHostController,
-                lifecycleScope = lifecycleScope
+                lifecycleScope = lifecycleScope,
+                buttonNav = buttonNav
             )
             filmTopNavGraph(
                 navController = navHostController,
@@ -47,8 +50,7 @@ fun Host(
                 lifecycleScope = lifecycleScope
             )
             loginNavGraph(
-                navController = navHostController,
-                lifecycleScope = lifecycleScope
+                navController = navHostController
             )
         }
     )

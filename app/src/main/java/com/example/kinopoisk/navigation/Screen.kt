@@ -84,3 +84,9 @@ sealed class Screen(val route:String) {
         ):String = "review_detail?reviewId=$reviewId&filmId=$filmId"
     }
 }
+
+sealed class BottomScreen(val route: String){
+    object Home:BottomScreen("home_screen")
+    object Films:BottomScreen("film_screen")
+    object Profile:BottomScreen("profile_screen")
+}

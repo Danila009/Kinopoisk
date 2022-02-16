@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.example.kinopoisk.api.model.user.UserInfo
-import com.example.kinopoisk.screen.main.viewModel.UserViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
@@ -25,18 +24,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ProfileView(
-    userViewModel: UserViewModel = hiltViewModel(),
+    mainViewModel: MainViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController:NavController
 ) {
     val userInfo = remember { mutableStateOf(UserInfo()) }
 
-    userViewModel.getUserInfo()
-    userViewModel.responseUserInfo.onEach {
+    mainViewModel.getUserInfo()
+    mainViewModel.responseUserInfo.onEach {
         userInfo.value = it
     }.launchWhenStarted(lifecycleScope)
 

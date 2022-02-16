@@ -3,7 +3,7 @@ package com.example.kinopoisk.screen.main.viewModel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.kinopoisk.api.ApiUserRepository
+import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.user.UserInfo
 import dagger.hilt.android.lifecycle.HiltViewModel

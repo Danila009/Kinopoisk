@@ -6,7 +6,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.kinopoisk.api.ApiRepository
+import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.model.topFilm.TopItem
 import com.example.kinopoisk.screen.filmTop.source.TopPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel

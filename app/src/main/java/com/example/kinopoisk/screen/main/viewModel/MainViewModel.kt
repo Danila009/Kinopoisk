@@ -7,10 +7,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.kinopoisk.api.ApiRepository
+import com.example.kinopoisk.api.repository.ApiRepository
+import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
+import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -22,9 +24,12 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
+    private val apiUserRepository: ApiUserRepository
 ):ViewModel() {
     private val _responsePremiere:MutableStateFlow<Premiere> = MutableStateFlow(Premiere())
     val responsePremiere:StateFlow<Premiere> = _responsePremiere.asStateFlow()
+    private val _responseUserInfo: MutableStateFlow<UserInfo> = MutableStateFlow(UserInfo())
+    val responseUserInfo: StateFlow<UserInfo> = _responseUserInfo
 
     fun getFilm(
         order:String = "RATING",
@@ -73,5 +78,15 @@ class MainViewModel @Inject constructor(
                 mont = month
             )
         }.flow.cachedIn(viewModelScope)
+    }
+
+    fun getUserInfo(){
+        viewModelScope.launch {
+            try {
+                _responseUserInfo.value = apiUserRepository.getUserInfo().body()!!
+            }catch (e: Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
     }
 }

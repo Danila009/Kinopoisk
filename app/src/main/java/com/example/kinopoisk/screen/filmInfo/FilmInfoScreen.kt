@@ -26,10 +26,9 @@ import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.BottomScreen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
-import com.example.kinopoisk.screen.main.viewModel.UserViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
@@ -39,9 +38,9 @@ import kotlinx.coroutines.flow.onEach
 @Composable
 fun FilmInfoScreen(
     filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
-    userViewModel: UserViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
+    buttonNav:NavController,
     filmId: Int,
 ) {
     val checkWeb = remember { mutableStateOf(false) }
@@ -109,7 +108,7 @@ fun FilmInfoScreen(
                         Text(text = filmInfo.value.nameRu)
                     }, navigationIcon = {
                         IconButton(onClick = {
-                            navController.navigate(Screen.Main.route)
+                            buttonNav.navigate(BottomScreen.Films.route)
                         }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
@@ -118,7 +117,7 @@ fun FilmInfoScreen(
                         }
                     }, actions = {
                         IconButton(onClick = {
-                            userViewModel.postFavoriteFilm(
+                            filmInfoViewModel.postFavoriteFilm(
                                 FilmItem(
                                     kinopoiskId = filmInfo.value.kinopoiskId,
                                     imdbId = filmInfo.value.imdbId,

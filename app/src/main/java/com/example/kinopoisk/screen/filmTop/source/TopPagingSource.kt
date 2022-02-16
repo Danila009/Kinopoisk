@@ -3,7 +3,7 @@ package com.example.kinopoisk.screen.filmTop.source
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.kinopoisk.api.ApiRepository
+import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.model.topFilm.TopItem
 import java.lang.Exception
 

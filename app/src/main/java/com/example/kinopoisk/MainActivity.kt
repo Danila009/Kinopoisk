@@ -21,7 +21,8 @@ class MainActivity : ComponentActivity() {
             KinopoiskTheme {
                 Host(
                     navHostController = rememberNavController(),
-                    lifecycleScope = lifecycleScope
+                    lifecycleScope = lifecycleScope,
+                    buttonNav = rememberNavController()
                 )
             }
         }

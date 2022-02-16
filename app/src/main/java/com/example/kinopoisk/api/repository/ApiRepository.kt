@@ -1,5 +1,6 @@
-package com.example.kinopoisk.api
+package com.example.kinopoisk.api.repository
 
+import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
@@ -15,7 +16,7 @@ import retrofit2.Response
 import javax.inject.Inject
 
 class ApiRepository @Inject constructor(
-    private val apiKinopoisk: ApiKinopoisk,
+    private val apiKinopoisk: ApiKinopoisk
 ) {
     suspend fun getFilm(
         order:String,

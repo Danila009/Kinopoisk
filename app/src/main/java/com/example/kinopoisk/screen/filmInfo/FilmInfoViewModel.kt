@@ -7,15 +7,16 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.kinopoisk.api.ApiRepository
+import com.example.kinopoisk.api.repository.ApiRepository
+import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmInfo
+import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.review.ReviewItem
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.screen.filmInfo.source.ImagePagingSource
 import com.example.kinopoisk.screen.filmInfo.source.ReviewPagingSource
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,7 +28,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FilmInfoViewModel @Inject constructor(
-    private val apiRepository: ApiRepository
+    private val apiRepository: ApiRepository,
+    private val apiUserRepository: ApiUserRepository
 ):ViewModel() {
     private val _responseFilmInfo:MutableStateFlow<FilmInfo> = MutableStateFlow(FilmInfo())
     val responseFilmInfo:StateFlow<FilmInfo> = _responseFilmInfo.asStateFlow()
@@ -136,5 +138,19 @@ class FilmInfoViewModel @Inject constructor(
                 id = id
             )
         }.flow.cachedIn(viewModelScope)
+    }
+
+    fun postFavoriteFilm(
+        filmItem: FilmItem
+    ){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.postFavoriteFilm(
+                    filmItem = filmItem
+                )
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
     }
 }

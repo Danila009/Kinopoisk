@@ -1,5 +1,6 @@
-package com.example.kinopoisk.api
+package com.example.kinopoisk.api.repository
 
+import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Header
