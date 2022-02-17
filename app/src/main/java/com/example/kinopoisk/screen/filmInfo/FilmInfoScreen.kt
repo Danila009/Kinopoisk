@@ -8,6 +8,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -24,9 +25,11 @@ import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
+import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.navigation.BottomScreen
+import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -49,6 +52,7 @@ fun FilmInfoScreen(
     val fact = remember { mutableStateOf(Fact()) }
     val staff = remember { mutableStateOf(listOf<Staff>()) }
     val similar = remember { mutableStateOf(Similar()) }
+    val distribution = remember { mutableStateOf(Distribution()) }
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
 
@@ -87,6 +91,11 @@ fun FilmInfoScreen(
         season.value = it
     }.launchWhenStarted(lifecycleScope)
 
+    filmInfoViewModel.getDistribution(filmId)
+    filmInfoViewModel.responseDistribution.onEach {
+        distribution.value = it
+    }.launchWhenStarted(lifecycleScope)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageViewState.STILL.name
@@ -97,7 +106,11 @@ fun FilmInfoScreen(
     ).collectAsLazyPagingItems()
 
     if (checkWeb.value){
-        WebView(url = filmInfo.value.webUrl!!)
+        LaunchedEffect(key1 = Unit, block = {
+            navController.navigate(Screen.WebScreen.base(
+                filmId = filmId.toString()
+            ))
+        })
     }else{
         Scaffold(
             topBar = {
@@ -184,7 +197,8 @@ fun FilmInfoScreen(
                                 )
 
                                 BudgetView(
-                                    budget = budget
+                                    budget = budget,
+                                    distribution = distribution
                                 )
 
                                 SequelAndPrequelView(

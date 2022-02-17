@@ -13,6 +13,7 @@ import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.user.UserInfo
+import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,12 +25,15 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
-    private val apiUserRepository: ApiUserRepository
+    private val apiUserRepository: ApiUserRepository,
+    private val userPreferenceRepository: UserPreferenceRepository
 ):ViewModel() {
     private val _responsePremiere:MutableStateFlow<Premiere> = MutableStateFlow(Premiere())
     val responsePremiere:StateFlow<Premiere> = _responsePremiere.asStateFlow()
     private val _responseUserInfo: MutableStateFlow<UserInfo> = MutableStateFlow(UserInfo())
-    val responseUserInfo: StateFlow<UserInfo> = _responseUserInfo
+    val responseUserInfo: StateFlow<UserInfo> = _responseUserInfo.asStateFlow()
+    private val _responseStatusRegistration:MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val responseStatusRegistration:StateFlow<Boolean> = _responseStatusRegistration.asStateFlow()
 
     fun getFilm(
         order:String = "RATING",
@@ -86,6 +90,18 @@ class MainViewModel @Inject constructor(
                 _responseUserInfo.value = apiUserRepository.getUserInfo().body()!!
             }catch (e: Exception){
                 Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun readStatusRegistration(){
+        viewModelScope.launch {
+            try {
+                userPreferenceRepository.readStatusRegistration().collect {
+                    _responseStatusRegistration.value = it
+                }
+            }catch (e:Exception){
+                Log.d("DateStore:",e.message.toString())
             }
         }
     }

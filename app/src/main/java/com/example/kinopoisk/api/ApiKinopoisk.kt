@@ -3,6 +3,7 @@ package com.example.kinopoisk.api
 import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
+import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
@@ -13,6 +14,7 @@ import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
 import com.example.kinopoisk.utils.Constants.BUDGET_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
+import com.example.kinopoisk.utils.Constants.FILM_DISTRIBUTION_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
 import com.example.kinopoisk.utils.Constants.IMAGE_ID_URL
@@ -122,4 +124,8 @@ interface ApiKinopoisk {
         @Query("reviewId") id: Int
     ):Response<ReviewDetail>
 
+    @GET(FILM_DISTRIBUTION_ID_URL)
+    suspend fun getDistribution(
+        @Path("id") id: Int
+    ):Response<Distribution>
 }

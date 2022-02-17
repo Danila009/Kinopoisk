@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,10 +42,21 @@ fun FilmTopScreen(
     Scaffold(
         topBar = {
             TopAppBar(
+                backgroundColor = primaryBackground,
+                elevation = 8.dp,
                 title = {
                     Text(text = Converters().getNameTop(
                         nameTopViewState = nameTopViewState
                     ))
+                }, navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate(Screen.Main.route)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = null
+                        )
+                    }
                 }
             )
         }, content = {

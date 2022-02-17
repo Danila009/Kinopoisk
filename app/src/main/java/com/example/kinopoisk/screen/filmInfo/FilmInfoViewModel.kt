@@ -12,6 +12,7 @@ import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.filmInfo.*
+import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.review.ReviewItem
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
@@ -45,6 +46,8 @@ class FilmInfoViewModel @Inject constructor(
     val responseSequelAndPrequel:StateFlow<List<SequelAndPrequel>> = _responseSequelAndPrequel.asStateFlow()
     private val _responseSeason:MutableStateFlow<Season> = MutableStateFlow(Season())
     val responseSeason:StateFlow<Season> = _responseSeason.asStateFlow()
+    private val _responseDistribution:MutableStateFlow<Distribution> = MutableStateFlow(Distribution())
+    val responseDistribution:StateFlow<Distribution> = _responseDistribution.asStateFlow()
 
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
@@ -148,6 +151,16 @@ class FilmInfoViewModel @Inject constructor(
                 apiUserRepository.postFavoriteFilm(
                     filmItem = filmItem
                 )
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getDistribution(id: Int){
+        viewModelScope.launch {
+            try {
+                _responseDistribution.value = apiRepository.getDistribution(id = id).body()!!
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }

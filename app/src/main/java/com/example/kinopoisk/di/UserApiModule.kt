@@ -6,7 +6,7 @@ import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.di.annotationName.UserOkHttpClient
 import com.example.kinopoisk.utils.Constants.BASE_USER_URL
-import com.example.kinopoisk.utils.Constants.TOKEN
+import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -51,7 +51,7 @@ object UserApiModule {
                 .newBuilder()
                 .addHeader(
                     name = "Authorization",
-                    value = "Bearer ${sharedPreferences.getString(TOKEN, "")}"
+                    value = "Bearer ${sharedPreferences.getString(TOKEN_SHARED, "")}"
                 )
                 .build()
             it.proceed(request)
@@ -62,5 +62,5 @@ object UserApiModule {
     @Singleton
     fun providerUserTokenPreferences(
         @ApplicationContext context: Context
-    ):SharedPreferences = context.getSharedPreferences(TOKEN, Context.MODE_PRIVATE)
+    ):SharedPreferences = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
 }

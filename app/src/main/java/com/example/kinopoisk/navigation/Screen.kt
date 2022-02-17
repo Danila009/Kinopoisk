@@ -83,6 +83,11 @@ sealed class Screen(val route:String) {
             filmId:String
         ):String = "review_detail?reviewId=$reviewId&filmId=$filmId"
     }
+    object WebScreen:Screen("web_screen?filmId={filmId}"){
+        fun base(
+            filmId:String
+        ):String = "web_screen?filmId=$filmId"
+    }
 }
 
 sealed class BottomScreen(val route: String){

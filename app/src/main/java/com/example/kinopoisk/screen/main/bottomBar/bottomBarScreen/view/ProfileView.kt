@@ -40,12 +40,12 @@ fun ProfileView(
         userInfo.value = it
     }.launchWhenStarted(lifecycleScope)
 
-    LazyColumn(content = {
-        item {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = primaryBackground
-            ) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = primaryBackground
+    ) {
+        LazyColumn(content = {
+            item {
                 Column {
                     TopAppBar(
                         backgroundColor = primaryBackground,
@@ -118,6 +118,7 @@ fun ProfileView(
                     }
                 }
             }
-        }
-    })
+
+        })
+    }
 }

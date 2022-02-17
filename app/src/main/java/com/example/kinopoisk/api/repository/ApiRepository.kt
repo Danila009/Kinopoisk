@@ -4,6 +4,7 @@ import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
+import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
@@ -105,6 +106,12 @@ class ApiRepository @Inject constructor(
     suspend fun getReviewDetail(
         id: Int
     ):Response<ReviewDetail> = apiKinopoisk.getReviewDetail(
+        id = id
+    )
+
+    suspend fun getDistribution(
+        id: Int
+    ):Response<Distribution> = apiKinopoisk.getDistribution(
         id = id
     )
 }

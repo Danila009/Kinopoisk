@@ -27,7 +27,7 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 @Composable
 fun AuthorizationScreen(
     loginViewModel: LoginViewModel = hiltViewModel(),
-    navController: NavController,
+    navController: NavController
 ) {
     val context = LocalContext.current
     val email = remember { mutableStateOf("") }

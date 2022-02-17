@@ -8,6 +8,7 @@ import com.example.kinopoisk.navigation.FILM_INFO_ROUTE
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.FilmInfoScreen
 import com.example.kinopoisk.screen.filmInfo.SerialInfoSeasonScreen
+import com.example.kinopoisk.screen.filmInfo.WebScreen
 
 fun NavGraphBuilder.filmInfoNavGraph(
     navController: NavController,
@@ -45,6 +46,20 @@ fun NavGraphBuilder.filmInfoNavGraph(
                     navController = navController,
                     filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt(),
                     lifecycleScope = lifecycleScope
+                )
+            }
+            composable(
+                Screen.WebScreen.route,
+                arguments = listOf(
+                    navArgument(FILM_ID_ARGUMENT){
+                        type = NavType.StringType
+                    }
+                )
+            ){
+                WebScreen(
+                    navController = navController,
+                    lifecycleScope = lifecycleScope,
+                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt()
                 )
             }
         }

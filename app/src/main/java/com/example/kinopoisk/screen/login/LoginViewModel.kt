@@ -8,8 +8,9 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Registration
-import com.example.kinopoisk.navigation.MAIN_ROUTE
-import com.example.kinopoisk.utils.Constants.TOKEN
+import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
+import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
@@ -18,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val apiUserRepository: ApiUserRepository,
-    private val sharedPreferences: SharedPreferences
+    private val sharedPreferences: SharedPreferences,
+    private val userPreferenceRepository: UserPreferenceRepository
 ):ViewModel() {
 
     fun postAuthorization(authorization: Authorization, navController: NavController){
@@ -29,12 +31,14 @@ class LoginViewModel @Inject constructor(
                 )
                 if (response.isSuccessful){
                     sharedPreferences.edit()
-                        .putString(TOKEN, response.body()?.access_token)
+                        .putString(TOKEN_SHARED, response.body()?.access_token)
                         .apply()
-                    navController.navigate(MAIN_ROUTE)
+                    saveStatusRegistration(userRegistration = true)
+                    navController.navigate(Screen.Main.route)
                 }
             }catch (e:Exception){
                 Log.d("Retrofit", e.message.toString())
+                saveStatusRegistration(userRegistration = false)
             }
         }
     }
@@ -54,6 +58,16 @@ class LoginViewModel @Inject constructor(
                 )
             }catch (e:Exception){
                 Log.d("Retrofit", e.message.toString())
+            }
+        }
+    }
+
+    private fun saveStatusRegistration(userRegistration:Boolean){
+        viewModelScope.launch {
+            try {
+                userPreferenceRepository.saveStatusRegistration(userRegistration)
+            }catch (e:Exception){
+                Log.d("DateStore:",e.message.toString())
             }
         }
     }

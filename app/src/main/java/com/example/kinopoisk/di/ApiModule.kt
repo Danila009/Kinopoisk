@@ -22,8 +22,7 @@ object ApiModule {
     @Provides
     @Singleton
     fun providerApi(
-        apiKinopoisk: ApiKinopoisk,
-        apiUser: ApiUser
+        apiKinopoisk: ApiKinopoisk
     ) = ApiRepository(
         apiKinopoisk = apiKinopoisk
     )

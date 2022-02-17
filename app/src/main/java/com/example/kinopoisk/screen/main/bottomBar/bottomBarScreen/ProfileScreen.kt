@@ -1,32 +1,38 @@
 package com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen
 
-import android.content.Context
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.ProfileView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.TokenNullLoginView
-import com.example.kinopoisk.utils.Constants.TOKEN
+import com.example.kinopoisk.screen.main.viewModel.MainViewModel
+import com.example.kinopoisk.utils.launchWhenStarted
+import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ProfileScreen(
+    mainViewModel: MainViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope
 ) {
-    val context = LocalContext.current
+    val checkRegistration:MutableState<Boolean> = remember { mutableStateOf(false) }
 
-    val token = context
-        .getSharedPreferences(TOKEN, Context.MODE_PRIVATE)
-        .getString(TOKEN, "")
+    mainViewModel.readStatusRegistration()
+    mainViewModel.responseStatusRegistration.onEach {
+        checkRegistration.value = it
+    }.launchWhenStarted(lifecycleScope)
 
-    if (token!!.isEmpty()){
-        TokenNullLoginView(
+    if (checkRegistration.value){
+        ProfileView(
+            lifecycleScope = lifecycleScope,
             navController = navController
         )
     }else{
-        ProfileView(
-            lifecycleScope = lifecycleScope,
+        TokenNullLoginView(
             navController = navController
         )
     }
