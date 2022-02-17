@@ -4,6 +4,7 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
+import com.example.kinopoisk.api.model.person.Person
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
@@ -22,6 +23,7 @@ import com.example.kinopoisk.utils.Constants.PREMIERE_URL
 import com.example.kinopoisk.utils.Constants.RELEASE_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_ID_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_URL
+import com.example.kinopoisk.utils.Constants.SEARCH_PERSON_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
@@ -128,4 +130,10 @@ interface ApiKinopoisk {
     suspend fun getDistribution(
         @Path("id") id: Int
     ):Response<Distribution>
+
+    @GET(SEARCH_PERSON_URL)
+    suspend fun getSearchPerson(
+        @Query("name") name:String,
+        @Query("page") page: Int
+    ):Response<Person>
 }

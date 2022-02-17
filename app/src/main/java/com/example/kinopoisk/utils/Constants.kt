@@ -19,6 +19,7 @@ object Constants {
     const val REVIEW_ID_URL = "/api/v1/reviews/details"
     const val FILM_VIDEO_ID_URL = "/api/v2.2/films/{id}/videos"
     const val FILM_DISTRIBUTION_ID_URL = "/api/v2.2/films/{id}/distributions"
+    const val SEARCH_PERSON_URL = "/api/v1/persons"
 
     const val BASE_USER_URL = "http://10.0.2.2:5000/"
     const val AUTHORIZATION_URL = "Authorization"

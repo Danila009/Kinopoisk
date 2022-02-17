@@ -4,45 +4,41 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.WebView
+import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.launchWhenStarted
-import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun WebScreen(
-    filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope,
-    filmId:Int
+    webUrl:String,
+    filmId:String?,
+    keyScreen:String
 ) {
-    val filmInfo = remember { mutableStateOf(FilmInfo()) }
-
-    filmInfoViewModel.getFilmInfo(filmId)
-    filmInfoViewModel.responseFilmInfo.onEach {
-        filmInfo.value = it
-    }.launchWhenStarted(lifecycleScope)
+    val key = Converters().decodeFromString<WebScreenKey>(keyScreen)
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text(
                     text = Converters().replaceRange(
-                        filmInfo.value.webUrl.toString(),
+                        webUrl,
                         50
                     )
                 ) }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(
-                        Screen.FilmInfo.base(filmId.toString())
-                    ) }) {
+                    IconButton(onClick = {
+                        when(key){
+                            WebScreenKey.PERSON ->  navController.navigate(Screen.Main.route)
+                            WebScreenKey.FILM ->  filmId?.let {
+                                navController.navigate(
+                                    Screen.FilmInfo.base(it)
+                                )
+                            }
+                        }
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = null,
@@ -52,9 +48,7 @@ fun WebScreen(
                 }
             )
         }, content = {
-            filmInfo.value.webUrl?.let {
-                WebView(url = it)
-            }
+            WebView(url = webUrl)
         }
     )
 }

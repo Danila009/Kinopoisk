@@ -9,13 +9,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.example.kinopoisk.api.model.filmInfo.Budget
-import com.example.kinopoisk.api.model.filmInfo.Countrie
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -56,7 +53,8 @@ fun BudgetView(
                     Column {
                         Text(
                             text = item.type,
-                            modifier = Modifier.padding(5.dp)
+                            modifier = Modifier.padding(5.dp),
+                            color = secondaryBackground
                         )
                         Text(
                             text = "${item.amount} ${item.symbol}",
@@ -71,13 +69,11 @@ fun BudgetView(
                     modifier = Modifier.padding(5.dp)
                 ) {
                     Column {
-                        item.country.forEach {
-                            Text(
-                                text = it.country,
-                                modifier = Modifier.padding(5.dp),
-                                color = secondaryBackground
-                            )
-                        }
+                        Text(
+                            text = item.country.country,
+                            modifier = Modifier.padding(5.dp),
+                            color = secondaryBackground
+                        )
 
                         Text(
                             text = Converters().getTime(item.date),

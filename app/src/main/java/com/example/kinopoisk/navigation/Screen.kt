@@ -17,6 +17,8 @@ const val FILM_ID_ARGUMENT = "filmId"
 const val FILM_TOP_NAME_ARGUMENT = "filmTopName"
 const val STAFF_ID_ARGUMENT = "staffId"
 const val REVIEW_ID_ARGUMENT = "reviewId"
+const val KEY_SCREEN_ARGUMENT = "keyScreen"
+const val WEB_URL_ARGUMENT = "webUrl"
 
 sealed class Screen(val route:String) {
     object Authorization:Screen("authorization_screen")
@@ -55,11 +57,12 @@ sealed class Screen(val route:String) {
             filmTopName:String
         ):String = "film_top?filmTopName=$filmTopName"
     }
-    object StaffInfo:Screen("staff_info?staffId={staffId}&filmId={filmId}"){
+    object StaffInfo:Screen("staff_info?staffId={staffId}&filmId={filmId}&keyScreen={keyScreen}"){
         fun base(
             staffId:String,
-            filmId:String
-        ):String = "staff_info?staffId=$staffId&filmId=$filmId"
+            filmId:String? = null,
+            key:String
+        ):String = "staff_info?staffId=$staffId&filmId=$filmId&keyScreen=$key"
     }
     object MoreStaff:Screen("more_staff?staffId={staffId}&filmId={filmId}"){
         fun base(
@@ -83,15 +86,18 @@ sealed class Screen(val route:String) {
             filmId:String
         ):String = "review_detail?reviewId=$reviewId&filmId=$filmId"
     }
-    object WebScreen:Screen("web_screen?filmId={filmId}"){
+    object WebScreen:Screen("web_screen?filmId={filmId}&keyScreen={keyScreen}&webUrl={webUrl}"){
         fun base(
-            filmId:String
-        ):String = "web_screen?filmId=$filmId"
+            filmId:String? = null,
+            keyString: String,
+            webUrl:String
+        ):String = "web_screen?filmId=$filmId&keyScreen=$keyString&webUrl=$webUrl"
     }
 }
 
 sealed class BottomScreen(val route: String){
     object Home:BottomScreen("home_screen")
     object Films:BottomScreen("film_screen")
+    object Person:BottomScreen("person_screen")
     object Profile:BottomScreen("profile_screen")
 }

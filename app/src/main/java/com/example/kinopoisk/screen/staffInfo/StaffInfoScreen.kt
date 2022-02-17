@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -37,10 +38,13 @@ fun StaffInfoScreen(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     staffId:Int,
-    filmId:Int
+    filmId:String?,
+    keyStaffInfoScreenString: String
 ) {
     val statePager = rememberPagerState(pageCount = 4)
     val staffInfo = remember { mutableStateOf(StaffInfo()) }
+
+    val keyStaffInfoScreen = Converters().decodeFromString<StaffInfoScreenKey>(keyStaffInfoScreenString)
 
     staffInfoViewModel.getStaffInfo(staffId)
     staffInfoViewModel.responseStaffInfo.onEach {
@@ -56,7 +60,16 @@ fun StaffInfoScreen(
                     Text(text = staffInfo.value.nameRu.toString())
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.FilmInfo.base(filmId.toString()))
+                        when(keyStaffInfoScreen){
+                            StaffInfoScreenKey.FILM -> {
+                                filmId?.let {
+                                    navController.navigate(Screen.FilmInfo.base(it))
+                                }
+                            }
+                            StaffInfoScreenKey.PERSON -> {
+                                navController.navigate(Screen.Main.route)
+                            }
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

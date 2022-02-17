@@ -16,7 +16,9 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
+import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
@@ -45,7 +47,8 @@ fun MoreStaffScreen(
                 }, navigationIcon = {
                     IconButton(onClick = { navController.navigate(Screen.StaffInfo.base(
                         staffId = staffId.toString(),
-                        filmId = filmId.toString()
+                        filmId = filmId.toString(),
+                        key = Converters().encodeToString(StaffInfoScreenKey.FILM)
                     )) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

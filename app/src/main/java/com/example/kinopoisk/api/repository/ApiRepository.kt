@@ -5,6 +5,7 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
+import com.example.kinopoisk.api.model.person.Person
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
@@ -113,5 +114,13 @@ class ApiRepository @Inject constructor(
         id: Int
     ):Response<Distribution> = apiKinopoisk.getDistribution(
         id = id
+    )
+
+    suspend fun getSearchPerson(
+        name:String,
+        page:Int = 1
+    ):Response<Person> = apiKinopoisk.getSearchPerson(
+        name = name,
+        page = page
     )
 }

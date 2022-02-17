@@ -18,7 +18,9 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun StaffView(
@@ -57,7 +59,8 @@ fun StaffView(
                             .clickable {
                                 navController.navigate(Screen.StaffInfo.base(
                                     staffId = item.staffId.toString(),
-                                    filmId = filmId
+                                    filmId = filmId,
+                                    key = Converters().encodeToString(StaffInfoScreenKey.FILM)
                                 ))
                             }
                     ) {
@@ -132,7 +135,8 @@ fun StaffView(
                             .clickable {
                                 navController.navigate(Screen.StaffInfo.base(
                                     staffId = item.staffId.toString(),
-                                    filmId = filmId
+                                    filmId = filmId,
+                                    key = Converters().encodeToString(StaffInfoScreenKey.FILM)
                                 ))
                             }
                     ) {

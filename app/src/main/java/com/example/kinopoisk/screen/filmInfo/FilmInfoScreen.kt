@@ -32,8 +32,10 @@ import com.example.kinopoisk.navigation.BottomScreen
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
+import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
@@ -107,9 +109,13 @@ fun FilmInfoScreen(
 
     if (checkWeb.value){
         LaunchedEffect(key1 = Unit, block = {
-            navController.navigate(Screen.WebScreen.base(
-                filmId = filmId.toString()
-            ))
+            filmInfo.value.webUrl?.let {
+                navController.navigate(Screen.WebScreen.base(
+                    filmId = filmId.toString(),
+                    keyString = Converters().encodeToString(WebScreenKey.FILM),
+                    webUrl = it
+                ))
+            }
         })
     }else{
         Scaffold(

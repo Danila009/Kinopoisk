@@ -10,5 +10,6 @@ import com.example.kinopoisk.navigation.BottomScreen
 enum class BottomBar(val icon:ImageVector, val nav:String){
     Home(icon = Icons.Default.Home, nav = BottomScreen.Home.route),
     Films(icon = Icons.Default.Menu, nav = BottomScreen.Films.route),
+    Persons(icon = Icons.Default.Menu, nav = BottomScreen.Person.route),
     Profile(icon = Icons.Default.Person, nav = BottomScreen.Profile.route)
 }

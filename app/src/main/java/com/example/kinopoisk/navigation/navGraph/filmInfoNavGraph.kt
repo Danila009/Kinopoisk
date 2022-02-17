@@ -3,9 +3,7 @@ package com.example.kinopoisk.navigation.navGraph
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.FILM_ID_ARGUMENT
-import com.example.kinopoisk.navigation.FILM_INFO_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.*
 import com.example.kinopoisk.screen.filmInfo.FilmInfoScreen
 import com.example.kinopoisk.screen.filmInfo.SerialInfoSeasonScreen
 import com.example.kinopoisk.screen.filmInfo.WebScreen
@@ -52,14 +50,20 @@ fun NavGraphBuilder.filmInfoNavGraph(
                 Screen.WebScreen.route,
                 arguments = listOf(
                     navArgument(FILM_ID_ARGUMENT){
+                        nullable = true
+                        type = NavType.StringType
+                    }, navArgument(KEY_SCREEN_ARGUMENT){
+                        type = NavType.StringType
+                    }, navArgument(WEB_URL_ARGUMENT){
                         type = NavType.StringType
                     }
                 )
             ){
                 WebScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
-                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt()
+                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT),
+                    keyScreen = it.arguments?.getString(KEY_SCREEN_ARGUMENT).toString(),
+                    webUrl = it.arguments?.getString(WEB_URL_ARGUMENT).toString()
                 )
             }
         }

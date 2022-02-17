@@ -16,6 +16,7 @@ import com.example.kinopoisk.navigation.BottomScreen
 import com.example.kinopoisk.screen.main.bottomBar.BottomBar
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.HomeScreen
+import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.PersonScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.ProfileScreen
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -63,6 +64,11 @@ fun MainScreen(
                         ProfileScreen(
                             navController = navController,
                             lifecycleScope = lifecycleScope
+                        )
+                    }
+                    composable(BottomScreen.Person.route){
+                        PersonScreen(
+                            navController = navController
                         )
                     }
                 }

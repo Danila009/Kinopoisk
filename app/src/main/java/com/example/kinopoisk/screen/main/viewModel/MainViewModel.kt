@@ -10,11 +10,13 @@ import androidx.paging.cachedIn
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmItem
+import com.example.kinopoisk.api.model.person.PersonItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
+import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.PersonPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -80,6 +82,17 @@ class MainViewModel @Inject constructor(
                 apiRepository = apiRepository,
                 year = year,
                 mont = month
+            )
+        }.flow.cachedIn(viewModelScope)
+    }
+
+    fun getSearchPerson(
+        name:String
+    ):Flow<PagingData<PersonItem>>{
+        return Pager(PagingConfig(pageSize = 1)){
+            PersonPagingSource(
+                apiRepository = apiRepository,
+                name = name
             )
         }.flow.cachedIn(viewModelScope)
     }
