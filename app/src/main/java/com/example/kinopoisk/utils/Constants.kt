@@ -29,6 +29,7 @@ object Constants {
     const val USER_WATCH_LATER_FILM_URL = "WatchLater"
     const val USER_FAVORITE_CHECK_FILM_URL = "/FavoriteFilm/CheckFilm"
     const val USER_WATCH_LATER_CHECK_FILM_URL = "/WatchLater/CheckFilm"
+    const val SHOP_FILM_URL = "Shop"
 
     const val TOKEN_SHARED = "token_share"
 

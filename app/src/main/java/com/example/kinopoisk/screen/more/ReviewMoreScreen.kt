@@ -52,7 +52,7 @@ fun ReviewMoreScreen(
                 elevation = 8.dp,
                 backgroundColor = primaryBackground,
                 title = {
-                    Text(text = filmInfo.value.nameRu)
+                    Text(text = filmInfo.value.nameRu.toString())
                 }, navigationIcon = {
                     IconButton(onClick = { navController.navigate(Screen.FilmInfo.base(filmId = filmId.toString())) }) {
                         Icon(

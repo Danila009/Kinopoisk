@@ -1,17 +1,19 @@
-package com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen
+package com.example.kinopoisk.screen.shop
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -19,25 +21,22 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
-import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
-import com.example.kinopoisk.screen.main.key.WebScreenKey
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
+import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
 
 @Composable
-fun PersonScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
-    navController: NavController,
+fun ShopScreen(
+    shopViewModel: ShopViewModel = hiltViewModel(),
+    navController: NavController
 ) {
-    val check = remember { mutableStateOf(false) }
     val search = remember { mutableStateOf("") }
-
-    val person = mainViewModel.getSearchPerson(
-        name = search.value.ifEmpty { "a" }
+    val check = remember { mutableStateOf(false) }
+    val shop = shopViewModel.getShop(
+        search = search.value
     ).collectAsLazyPagingItems()
 
     Scaffold(
@@ -47,6 +46,15 @@ fun PersonScreen(
                 elevation = 8.dp,
                 title = {
                     SearchView(search = search)
+                }, navigationIcon = {
+                    IconButton(onClick = {
+                        navController.navigate(MAIN_ROUTE)
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowLeft,
+                            contentDescription = null
+                        )
+                    }
                 }
             )
         }, content = {
@@ -55,25 +63,31 @@ fun PersonScreen(
                 color = primaryBackground
             ) {
                 LazyColumn(content = {
-                    items(person){ item ->
+                    items(shop){ item ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(5.dp)
-                                .background(primaryBackground)
-                                .clickable{
-                                    navController.navigate(Screen.StaffInfo.base(
-                                        staffId = item?.kinopoiskId.toString(),
-                                        key = Converters().encodeToString(StaffInfoScreenKey.PERSON)
-                                    ))
+                                .height(140.dp)
+                                .padding(horizontal = 9.dp, vertical = 5.dp)
+                                .clickable {
+                                    navController.navigate(
+                                        Screen.FilmInfo.base(
+                                            item?.kinopoiskId.toString()
+                                        )
+                                    )
                                 },
                             shape = AbsoluteRoundedCornerShape(15.dp),
+                            backgroundColor = primaryBackground,
                             elevation = 8.dp
                         ) {
-                            Row {
+                            Row(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Start
+                            ) {
                                 Image(
                                     painter = rememberImagePainter(
-                                        data = item?.posterUrl,
+                                        data = item?.posterUrlPreview,
                                         builder = {
                                             crossfade(true)
                                         }
@@ -81,29 +95,19 @@ fun PersonScreen(
                                     contentDescription = null,
                                     modifier = Modifier
                                         .padding(5.dp)
-                                        .height(150.dp)
-                                        .width(230.dp)
+                                        .width(100.dp)
+                                        .clip(AbsoluteRoundedCornerShape(10.dp))
                                 )
                                 Column {
                                     Text(
                                         text = item?.nameRu.toString(),
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                    Text(
+                                        text = "${item?.price} P",
                                         modifier = Modifier.padding(5.dp),
                                         color = secondaryBackground
                                     )
-                                    TextButton(onClick = {
-                                        item?.webUrl?.let {
-                                            navController.navigate(Screen.WebScreen.base(
-                                                keyString = Converters().encodeToString(WebScreenKey.PERSON),
-                                                webUrl = it
-                                            ))
-                                        }
-                                    }) {
-                                        Text(
-                                            text = "Кинопоиск ->",
-                                            modifier = Modifier.padding(5.dp),
-                                            color = secondaryBackground
-                                        )
-                                    }
                                 }
                             }
                         }
@@ -121,7 +125,15 @@ fun PersonScreen(
                         }
                     }
 
-                    person.apply {
+                    item {
+                        Spacer(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(60.dp)
+                        )
+                    }
+
+                    shop.apply {
                         when{
                             loadState.refresh is LoadState.Loading -> check.value = false
 

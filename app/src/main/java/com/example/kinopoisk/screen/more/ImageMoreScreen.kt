@@ -53,7 +53,7 @@ fun ImageMoreScreen(
                     backgroundColor = primaryBackground,
                     elevation = 8.dp,
                     title = {
-                        Text(text = filmInfo.value.nameRu)
+                        Text(text = filmInfo.value.nameRu.toString())
                     }, navigationIcon = {
                         IconButton(onClick = {navController.navigate(Screen.FilmInfo.base(filmId = filmId.toString()))}) {
                             Icon(

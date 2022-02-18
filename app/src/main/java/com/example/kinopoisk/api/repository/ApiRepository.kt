@@ -11,6 +11,7 @@ import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top

@@ -8,6 +8,7 @@ const val STAFF_INFO_ROUTE = "staff_info_route"
 const val MORE_ROUTE = "more_route"
 const val REVIEW_ROUTE = "review_route"
 const val LOGIN_ROUTE = "login_route"
+const val SHOP_ROUTE = "shop_route"
 
 const val RATING_FROM_ARGUMENT = "ratingFrom"
 const val RATING_TO_ARGUMENT = "ratingTo"
@@ -93,6 +94,7 @@ sealed class Screen(val route:String) {
             webUrl:String
         ):String = "web_screen?filmId=$filmId&keyScreen=$keyString&webUrl=$webUrl"
     }
+    object Shop:Screen("shop_screen")
 }
 
 sealed class BottomScreen(val route: String){

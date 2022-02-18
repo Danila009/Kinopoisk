@@ -124,7 +124,7 @@ fun FilmInfoScreen(
                     elevation = 8.dp,
                     backgroundColor = primaryBackground,
                     title = {
-                        Text(text = filmInfo.value.nameRu)
+                        Text(text = filmInfo.value.nameRu.toString())
                     }, navigationIcon = {
                         IconButton(onClick = {
                             buttonNav.navigate(BottomScreen.Films.route)

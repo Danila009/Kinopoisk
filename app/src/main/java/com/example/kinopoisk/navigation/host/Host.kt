@@ -52,6 +52,9 @@ fun Host(
             loginNavGraph(
                 navController = navHostController
             )
+            shopNavGraph(
+                navController = navHostController
+            )
         }
     )
 }

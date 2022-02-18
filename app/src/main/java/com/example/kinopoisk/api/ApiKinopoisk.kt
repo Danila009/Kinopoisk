@@ -10,6 +10,7 @@ import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
@@ -26,6 +27,7 @@ import com.example.kinopoisk.utils.Constants.REVIEW_URL
 import com.example.kinopoisk.utils.Constants.SEARCH_PERSON_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
+import com.example.kinopoisk.utils.Constants.SHOP_FILM_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFF_INF0_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFf_URL

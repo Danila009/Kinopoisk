@@ -13,6 +13,7 @@ import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.person.PersonItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
@@ -36,6 +37,8 @@ class MainViewModel @Inject constructor(
     val responseUserInfo: StateFlow<UserInfo> = _responseUserInfo.asStateFlow()
     private val _responseStatusRegistration:MutableStateFlow<Boolean> = MutableStateFlow(false)
     val responseStatusRegistration:StateFlow<Boolean> = _responseStatusRegistration.asStateFlow()
+    private val _responseShop:MutableStateFlow<List<Shop>> = MutableStateFlow(listOf())
+    val responseShop:StateFlow<List<Shop>> = _responseShop.asStateFlow()
 
     fun getFilm(
         order:String = "RATING",
@@ -115,6 +118,24 @@ class MainViewModel @Inject constructor(
                 }
             }catch (e:Exception){
                 Log.d("DateStore:",e.message.toString())
+            }
+        }
+    }
+
+    fun getShop(
+        ratingMin:Float? = 1f,
+        ratingMax: Float? = 10f,
+        search:String? = ""
+    ){
+        viewModelScope.launch {
+            try {
+                _responseShop.value = apiUserRepository.getShop(
+                    ratingMin = ratingMin,
+                    ratingMax = ratingMax,
+                    search = search
+                ).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
             }
         }
     }

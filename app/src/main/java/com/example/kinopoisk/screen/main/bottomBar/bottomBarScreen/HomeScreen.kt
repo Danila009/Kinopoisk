@@ -24,6 +24,7 @@ import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.premiere.Premiere
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
@@ -41,6 +42,7 @@ fun HomeScreen(
     lifecycleScope: LifecycleCoroutineScope
 ) {
     val premiere = remember { mutableStateOf(Premiere()) }
+    val shop = remember { mutableStateOf(listOf<Shop>()) }
 
     val release = mainViewModel.getRelease(
         year = Converters().getDatePremiere(ViewStatePremiere.YEAR).toInt(),
@@ -53,6 +55,11 @@ fun HomeScreen(
     )
     mainViewModel.responsePremiere.onEach {
         premiere.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    mainViewModel.getShop()
+    mainViewModel.responseShop.onEach {
+        shop.value = it
     }.launchWhenStarted(lifecycleScope)
 
     Surface(
@@ -176,6 +183,65 @@ fun HomeScreen(
                         }
                     }
                 })
+
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Shop:",
+                        modifier = Modifier.padding(5.dp),
+                        color = secondaryBackground,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    TextButton(
+                        onClick = { navController.navigate(Screen.Shop.route)},
+                        modifier = Modifier.padding(5.dp)
+                    ) {
+                        Text(
+                            text = "Все ->",
+                            color = secondaryBackground
+                        )
+                    }
+                }
+
+                LazyRow(content = {
+                    items(shop.value){ item ->
+                        Column(
+                            modifier = Modifier.clickable {
+                                navController.navigate(
+                                    Screen.FilmInfo.base(
+                                        filmId = item.kinopoiskId.toString()
+                                    )
+                                )
+                            }
+                        ) {
+                            Image(
+                                painter = rememberImagePainter(
+                                    data = item.posterUrlPreview,
+                                    builder = {
+                                        crossfade(true)
+                                    }
+                                ),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .height(180.dp)
+                                    .width(140.dp)
+                            )
+                            Text(
+                                text = "${item.price} P",
+                                modifier = Modifier.padding(
+                                    top = 5.dp,
+                                    start = 22.dp,
+                                    bottom = 5.dp
+                                )
+                            )
+                        }
+                    }
+                })
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -251,6 +317,7 @@ fun HomeScreen(
                         }
                     }
                 })
+
                 Spacer(modifier = Modifier
                     .fillMaxWidth()
                     .height(90.dp)

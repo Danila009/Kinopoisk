@@ -2,6 +2,7 @@ package com.example.kinopoisk.api.repository
 
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.api.model.FilmItem
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Header
 import com.example.kinopoisk.api.model.user.Registration
@@ -26,5 +27,17 @@ class ApiUserRepository @Inject constructor(
         filmItem: FilmItem
     ) = apiUser.postFavoriteFilm(
         filmItem = filmItem
+    )
+
+    suspend fun getShop(
+        ratingMin:Float?,
+        ratingMax: Float?,
+        search:String?,
+        page:Int = 1
+    ):Response<List<Shop>> = apiUser.getShop(
+        ratingMax = ratingMax,
+        ratingMin = ratingMin,
+        search = search,
+        page = page
     )
 }
