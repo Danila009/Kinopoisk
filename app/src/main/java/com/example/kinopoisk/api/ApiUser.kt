@@ -9,13 +9,13 @@ import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
+import com.example.kinopoisk.utils.Constants.USER_FAVORITE_CHECK_FILM_URL
+import com.example.kinopoisk.utils.Constants.USER_FAVORITE_FILM_ID_KINOPOISK_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_FILM_URL
 import com.example.kinopoisk.utils.Constants.USER_INFO_URL
+import com.example.kinopoisk.utils.Constants.USER_UPDATE_PASSWORD_URL
 import retrofit2.Response
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiUser {
 
@@ -37,6 +37,17 @@ interface ApiUser {
         @Body filmItem: FilmItem
     )
 
+    @DELETE(USER_FAVORITE_FILM_ID_KINOPOISK_URL)
+    suspend fun deleteFavoriteFilm(
+        @Query("idKinopoisk") kinopoiskId: Int
+    )
+
+    @PUT(USER_UPDATE_PASSWORD_URL)
+    suspend fun putUserPassword(
+        @Query("email") email:String,
+        @Query("password") password:String
+    )
+
     @GET(Constants.SHOP_FILM_URL)
     suspend fun getShop(
         @Query("ratingMin") ratingMin:Float?,
@@ -44,4 +55,9 @@ interface ApiUser {
         @Query("search") search: String?,
         @Query("page") page:Int
     ):Response<List<Shop>>
+
+    @GET(USER_FAVORITE_CHECK_FILM_URL)
+    suspend fun getUserFavoriteCheck(
+        @Query("KinopoiskId") kinopoiskId:Int
+    ):Response<Boolean>
 }

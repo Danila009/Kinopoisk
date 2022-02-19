@@ -40,4 +40,24 @@ class ApiUserRepository @Inject constructor(
         search = search,
         page = page
     )
+
+    suspend fun getUserFavoriteCheck(
+        kinopoiskId:Int
+    ):Response<Boolean> = apiUser.getUserFavoriteCheck(
+        kinopoiskId = kinopoiskId
+    )
+
+    suspend fun deleteFavoriteFilm(
+        kinopoiskId:Int
+    ) = apiUser.deleteFavoriteFilm(
+        kinopoiskId = kinopoiskId
+    )
+
+    suspend fun putUserPassword(
+        email:String,
+        password:String
+    ) = apiUser.putUserPassword(
+        email = email,
+        password = password
+    )
 }

@@ -1,6 +1,7 @@
 package com.example.kinopoisk.screen.filmInfo
 
 import android.annotation.SuppressLint
+import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -13,6 +14,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,13 +30,13 @@ import com.example.kinopoisk.api.model.filmInfo.Similar
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.staff.Staff
-import com.example.kinopoisk.navigation.BottomScreen
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
@@ -45,10 +47,11 @@ fun FilmInfoScreen(
     filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
-    buttonNav:NavController,
     filmId: Int,
 ) {
+    val context = LocalContext.current
     val checkWeb = remember { mutableStateOf(false) }
+    val userFavoriteCheck = remember { mutableStateOf(false) }
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
     val budget = remember { mutableStateOf(Budget()) }
     val fact = remember { mutableStateOf(Fact()) }
@@ -57,6 +60,7 @@ fun FilmInfoScreen(
     val distribution = remember { mutableStateOf(Distribution()) }
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
+    val token = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE).getString(TOKEN_SHARED, "")
 
     filmInfoViewModel.getFilmInfo(filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
@@ -98,6 +102,11 @@ fun FilmInfoScreen(
         distribution.value = it
     }.launchWhenStarted(lifecycleScope)
 
+    filmInfoViewModel.getUserFavoriteCheck(filmId)
+    filmInfoViewModel.responseUserFavoriteCheck.onEach {
+        userFavoriteCheck.value = it
+    }.launchWhenStarted(lifecycleScope)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageViewState.STILL.name
@@ -127,7 +136,7 @@ fun FilmInfoScreen(
                         Text(text = filmInfo.value.nameRu.toString())
                     }, navigationIcon = {
                         IconButton(onClick = {
-                            buttonNav.navigate(BottomScreen.Films.route)
+                            navController.navigate(Screen.Main.route)
                         }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
@@ -135,28 +144,38 @@ fun FilmInfoScreen(
                             )
                         }
                     }, actions = {
-                        IconButton(onClick = {
-                            filmInfoViewModel.postFavoriteFilm(
-                                FilmItem(
-                                    kinopoiskId = filmInfo.value.kinopoiskId,
-                                    imdbId = filmInfo.value.imdbId,
-                                    nameRu = filmInfo.value.nameRu,
-                                    nameEn = filmInfo.value.nameEn,
-                                    nameOriginal = filmInfo.value.nameOriginal,
-                                    ratingImdb = filmInfo.value.ratingImdb,
-                                    ratingKinopoisk = filmInfo.value.ratingKinopoisk,
-                                    year = filmInfo.value.year,
-                                    posterUrl = filmInfo.value.posterUrl,
-                                    posterUrlPreview = filmInfo.value.posterUrlPreview,
-                                    type = filmInfo.value.type
+                        if (token!!.isNotEmpty()){
+                            IconButton(onClick = {
+                                if (userFavoriteCheck.value){
+                                    filmInfoViewModel.deleteFavoriteFilm(
+                                        kinopoiskId = filmId
+                                    )
+                                    userFavoriteCheck.value = false
+                                }else{
+                                    filmInfoViewModel.postFavoriteFilm(
+                                        FilmItem(
+                                            kinopoiskId = filmInfo.value.kinopoiskId,
+                                            imdbId = filmInfo.value.imdbId,
+                                            nameRu = filmInfo.value.nameRu,
+                                            nameEn = filmInfo.value.nameEn,
+                                            nameOriginal = filmInfo.value.nameOriginal,
+                                            ratingImdb = filmInfo.value.ratingImdb,
+                                            ratingKinopoisk = filmInfo.value.ratingKinopoisk,
+                                            year = filmInfo.value.year,
+                                            posterUrl = filmInfo.value.posterUrl,
+                                            posterUrlPreview = filmInfo.value.posterUrlPreview,
+                                            type = filmInfo.value.type
+                                        )
+                                    )
+                                    userFavoriteCheck.value = true
+                                }
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.Favorite,
+                                    contentDescription = null,
+                                    tint = if (userFavoriteCheck.value) Color.Red else Color.Gray
                                 )
-                            )
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Favorite,
-                                contentDescription = null,
-                                tint = Color.Red
-                            )
+                            }
                         }
                     }
                 )

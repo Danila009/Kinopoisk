@@ -8,6 +8,7 @@ data class UserInfo(
     val email:String = "",
     val password:String = "",
     val photo:String? = null,
+    val balance:Int = 0,
     val watchLater:List<FilmItem> = listOf(),
-    val favoritFilm:List<FilmItem> = listOf()
+    val favoritFilm:List<FilmItem>? = null
 )

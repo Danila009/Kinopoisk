@@ -39,8 +39,8 @@ fun FilmsScreen(
     ratingTo:Int = 10,
     yearFrom:Int = 1000,
     yearTo:Int = 3000,
+    keyword:String = ""
 ) {
-    val search = remember { (mutableStateOf("")) }
     val check = remember { mutableStateOf(false) }
     val filmList = mainViewModel.getFilm(
         order = order,
@@ -49,108 +49,85 @@ fun FilmsScreen(
         ratingTo = ratingTo,
         yearFrom = yearFrom,
         yearTo = yearTo,
-        keyword = search.value,
+        keyword = keyword
     ).collectAsLazyPagingItems()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = primaryBackground,
-                elevation = 8.dp,
-                title = {
-                    SearchView(
-                        search = search
-                    )
-                },
-                actions = {
-                    IconButton(onClick = { navController.navigate(Screen.Sorting.route) }) {
-                        Icon(
-                            imageVector = Icons.Default.Menu,
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = primaryBackground
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
+            items(filmList){ item ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(140.dp)
+                        .padding(horizontal = 9.dp, vertical = 5.dp)
+                        .clickable {
+                            navController.navigate(
+                                Screen.FilmInfo.base(
+                                    item?.kinopoiskId.toString()
+                                )
+                            )
+                        },
+                    shape = AbsoluteRoundedCornerShape(15.dp),
+                    backgroundColor = primaryBackground,
+                    elevation = 8.dp
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+                    ) {
+                        Image(
+                            painter = rememberImagePainter(
+                                data = item?.posterUrl,
+                                builder = {
+                                    crossfade(true)
+                                }
+                            ),
                             contentDescription = null,
-                            tint = secondaryBackground
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .width(100.dp)
+                                .clip(AbsoluteRoundedCornerShape(10.dp))
+                        )
+                        Text(
+                            text = item?.nameRu.toString(),
+                            modifier = Modifier.padding(5.dp)
                         )
                     }
                 }
-            )
-        }, content = {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = primaryBackground
-            ) {
-                LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
-                    items(filmList){ item ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(140.dp)
-                                .padding(horizontal = 9.dp, vertical = 5.dp)
-                                .clickable {
-                                    navController.navigate(
-                                        Screen.FilmInfo.base(
-                                            item?.kinopoiskId.toString()
-                                        )
-                                    )
-                                },
-                            shape = AbsoluteRoundedCornerShape(15.dp),
-                            backgroundColor = primaryBackground,
-                            elevation = 8.dp
-                        ) {
-                            Row(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.Start
-                            ) {
-                                Image(
-                                    painter = rememberImagePainter(
-                                        data = item?.posterUrl,
-                                        builder = {
-                                            crossfade(true)
-                                        }
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .padding(5.dp)
-                                        .width(100.dp)
-                                        .clip(AbsoluteRoundedCornerShape(10.dp))
-                                )
-                                Text(
-                                    text = item?.nameRu.toString(),
-                                    modifier = Modifier.padding(5.dp)
-                                )
-                            }
-                        }
-                    }
+            }
 
-                    item {
-                        if (check.value){
-                            Column(
-                                Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                CircularProgressIndicator(
-                                    color = secondaryBackground
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
+            item {
+                if (check.value){
+                    Column(
+                        Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator(
+                            color = secondaryBackground
                         )
                     }
-
-                    filmList.apply {
-                        when{
-                            loadState.refresh is LoadState.Loading -> check.value = false
-
-                            loadState.append is LoadState.Loading -> check.value = true
-                        }
-                    }
-                })
+                }
             }
-        }
-    )
+
+            item {
+                Spacer(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(60.dp)
+                )
+            }
+
+            filmList.apply {
+                when{
+                    loadState.refresh is LoadState.Loading -> check.value = false
+
+                    loadState.append is LoadState.Loading -> check.value = true
+                }
+            }
+        })
+    }
 }

@@ -11,7 +11,6 @@ import com.example.kinopoisk.screen.filmInfo.WebScreen
 fun NavGraphBuilder.filmInfoNavGraph(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
-    buttonNav:NavController,
 ) {
     navigation(
         startDestination = Screen.FilmInfo.route,
@@ -29,7 +28,6 @@ fun NavGraphBuilder.filmInfoNavGraph(
                     navController = navController,
                     filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt(),
                     lifecycleScope = lifecycleScope,
-                    buttonNav = buttonNav
                 )
             }
             composable(

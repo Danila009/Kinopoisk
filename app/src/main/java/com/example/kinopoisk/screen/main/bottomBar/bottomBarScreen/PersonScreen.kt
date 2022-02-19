@@ -20,7 +20,6 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.navigation.Screen
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
@@ -32,104 +31,92 @@ import com.example.kinopoisk.utils.Converters
 fun PersonScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     navController: NavController,
+    search:String
 ) {
     val check = remember { mutableStateOf(false) }
-    val search = remember { mutableStateOf("") }
 
     val person = mainViewModel.getSearchPerson(
-        name = search.value.ifEmpty { "a" }
+        name = search.ifEmpty { "a" }
     ).collectAsLazyPagingItems()
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                backgroundColor = primaryBackground,
-                elevation = 8.dp,
-                title = {
-                    SearchView(search = search)
-                }
-            )
-        }, content = {
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = primaryBackground
-            ) {
-                LazyColumn(content = {
-                    items(person){ item ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(5.dp)
-                                .background(primaryBackground)
-                                .clickable{
-                                    navController.navigate(Screen.StaffInfo.base(
-                                        staffId = item?.kinopoiskId.toString(),
-                                        key = Converters().encodeToString(StaffInfoScreenKey.PERSON)
-                                    ))
-                                },
-                            shape = AbsoluteRoundedCornerShape(15.dp),
-                            elevation = 8.dp
-                        ) {
-                            Row {
-                                Image(
-                                    painter = rememberImagePainter(
-                                        data = item?.posterUrl,
-                                        builder = {
-                                            crossfade(true)
-                                        }
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .padding(5.dp)
-                                        .height(150.dp)
-                                        .width(230.dp)
-                                )
-                                Column {
-                                    Text(
-                                        text = item?.nameRu.toString(),
-                                        modifier = Modifier.padding(5.dp),
-                                        color = secondaryBackground
-                                    )
-                                    TextButton(onClick = {
-                                        item?.webUrl?.let {
-                                            navController.navigate(Screen.WebScreen.base(
-                                                keyString = Converters().encodeToString(WebScreenKey.PERSON),
-                                                webUrl = it
-                                            ))
-                                        }
-                                    }) {
-                                        Text(
-                                            text = "Кинопоиск ->",
-                                            modifier = Modifier.padding(5.dp),
-                                            color = secondaryBackground
-                                        )
-                                    }
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = primaryBackground
+    ) {
+        LazyColumn(content = {
+            items(person){ item ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                        .background(primaryBackground)
+                        .clickable{
+                            navController.navigate(Screen.StaffInfo.base(
+                                staffId = item?.kinopoiskId.toString(),
+                                key = Converters().encodeToString(StaffInfoScreenKey.PERSON)
+                            ))
+                        },
+                    shape = AbsoluteRoundedCornerShape(15.dp),
+                    elevation = 8.dp
+                ) {
+                    Row {
+                        Image(
+                            painter = rememberImagePainter(
+                                data = item?.posterUrl,
+                                builder = {
+                                    crossfade(true)
                                 }
-                            }
-                        }
-                    }
-                    item {
-                        if (check.value){
-                            Column(
-                                Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                CircularProgressIndicator(
+                            ),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .height(150.dp)
+                                .width(230.dp)
+                        )
+                        Column {
+                            Text(
+                                text = item?.nameRu.toString(),
+                                modifier = Modifier.padding(5.dp),
+                                color = secondaryBackground
+                            )
+                            TextButton(onClick = {
+                                item?.webUrl?.let {
+                                    navController.navigate(Screen.WebScreen.base(
+                                        keyString = Converters().encodeToString(WebScreenKey.PERSON),
+                                        webUrl = it
+                                    ))
+                                }
+                            }) {
+                                Text(
+                                    text = "Кинопоиск ->",
+                                    modifier = Modifier.padding(5.dp),
                                     color = secondaryBackground
                                 )
                             }
                         }
                     }
-
-                    person.apply {
-                        when{
-                            loadState.refresh is LoadState.Loading -> check.value = false
-
-                            loadState.append is LoadState.Loading -> check.value = true
-                        }
-                    }
-                })
+                }
             }
-        }
-    )
+            item {
+                if (check.value){
+                    Column(
+                        Modifier.fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        CircularProgressIndicator(
+                            color = secondaryBackground
+                        )
+                    }
+                }
+            }
+
+            person.apply {
+                when{
+                    loadState.refresh is LoadState.Loading -> check.value = false
+
+                    loadState.append is LoadState.Loading -> check.value = true
+                }
+            }
+        })
+    }
 }

@@ -8,6 +8,7 @@ import com.example.kinopoisk.navigation.LOGIN_ROUTE
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.login.AuthorizationScreen
 import com.example.kinopoisk.screen.login.RegistrationScreen
+import com.example.kinopoisk.screen.login.UpdateUserPasswordScreen
 
 fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
@@ -23,6 +24,11 @@ fun NavGraphBuilder.loginNavGraph(
             }
             composable(Screen.Registration.route){
                 RegistrationScreen(
+                    navController = navController
+                )
+            }
+            composable(Screen.UpdateUserPassword.route){
+                UpdateUserPasswordScreen(
                     navController = navController
                 )
             }

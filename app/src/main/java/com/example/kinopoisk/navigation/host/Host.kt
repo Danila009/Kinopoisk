@@ -17,7 +17,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 fun Host(
     navHostController: NavHostController,
     lifecycleScope: LifecycleCoroutineScope,
-    buttonNav: NavHostController,
 ) {
     NavHost(
         navController = navHostController,
@@ -27,12 +26,10 @@ fun Host(
             mainNavGraph(
                 navController = navHostController,
                 lifecycleScope = lifecycleScope,
-                buttonNav = buttonNav
             )
             filmInfoNavGraph(
                 navController = navHostController,
                 lifecycleScope = lifecycleScope,
-                buttonNav = buttonNav
             )
             filmTopNavGraph(
                 navController = navHostController,

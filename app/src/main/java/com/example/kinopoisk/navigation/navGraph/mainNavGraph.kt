@@ -14,7 +14,6 @@ import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 fun NavGraphBuilder.mainNavGraph(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
-    buttonNav: NavHostController
 ) {
     navigation(
         startDestination = Screen.Main.route,
@@ -24,7 +23,6 @@ fun NavGraphBuilder.mainNavGraph(
                 MainScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
-                    bottomNav = buttonNav
                 )
             }
             composable(Screen.Sorting.route){

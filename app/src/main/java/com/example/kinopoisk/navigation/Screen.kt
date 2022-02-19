@@ -26,6 +26,7 @@ sealed class Screen(val route:String) {
     object Registration:Screen("registration_screen")
     object Main:Screen("main_screen")
     object Sorting:Screen("sorting_screen")
+    object UpdateUserPassword:Screen("update_user_password_screen")
     object ResultSorting:Screen("result_sorting_screen?" +
             "ratingFrom={ratingFrom}" +
             "&ratingTo={ratingTo}" +
@@ -95,11 +96,4 @@ sealed class Screen(val route:String) {
         ):String = "web_screen?filmId=$filmId&keyScreen=$keyString&webUrl=$webUrl"
     }
     object Shop:Screen("shop_screen")
-}
-
-sealed class BottomScreen(val route: String){
-    object Home:BottomScreen("home_screen")
-    object Films:BottomScreen("film_screen")
-    object Person:BottomScreen("person_screen")
-    object Profile:BottomScreen("profile_screen")
 }

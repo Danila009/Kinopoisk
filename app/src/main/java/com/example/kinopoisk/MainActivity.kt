@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
                 Host(
                     navHostController = rememberNavController(),
                     lifecycleScope = lifecycleScope,
-                    buttonNav = rememberNavController()
                 )
             }
         }

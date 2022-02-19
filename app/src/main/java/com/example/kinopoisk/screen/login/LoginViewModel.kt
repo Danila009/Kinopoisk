@@ -71,4 +71,20 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
+
+    fun putUserPassword(
+        email:String,
+        password:String,
+    ){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.putUserPassword(
+                    email = email,
+                    password = password
+                )
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
 }

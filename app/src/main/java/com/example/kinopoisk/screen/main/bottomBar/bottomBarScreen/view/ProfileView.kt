@@ -20,7 +20,11 @@ import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.navigation.Screen
@@ -66,7 +70,28 @@ fun ProfileView(
                         }
                     )
 
-                    if (userInfo.value.favoritFilm.isNotEmpty()) {
+                    Text(
+                        buildAnnotatedString {
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.White
+                                )
+                            ){
+                                append("Баланс: ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontWeight = FontWeight.Bold,
+                                    color = secondaryBackground
+                                )
+                            ){
+                                append("${userInfo.value.balance} P")
+                            }
+                        },modifier = Modifier.padding(5.dp)
+                    )
+
+                    userInfo.value.favoritFilm?.let { favoriteFilms ->
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween
@@ -89,7 +114,7 @@ fun ProfileView(
                             }
                         }
                         LazyRow(content = {
-                            items(userInfo.value.favoritFilm) { item ->
+                            items(favoriteFilms) { item ->
                                 Column(
                                     modifier = Modifier.clickable {
                                         navController.navigate(

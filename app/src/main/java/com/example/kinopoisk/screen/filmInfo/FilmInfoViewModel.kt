@@ -48,6 +48,8 @@ class FilmInfoViewModel @Inject constructor(
     val responseSeason:StateFlow<Season> = _responseSeason.asStateFlow()
     private val _responseDistribution:MutableStateFlow<Distribution> = MutableStateFlow(Distribution())
     val responseDistribution:StateFlow<Distribution> = _responseDistribution.asStateFlow()
+    private val _responseUserFavoriteCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val responseUserFavoriteCheck:StateFlow<Boolean> = _responseUserFavoriteCheck.asStateFlow()
 
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
@@ -161,6 +163,26 @@ class FilmInfoViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _responseDistribution.value = apiRepository.getDistribution(id = id).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getUserFavoriteCheck(kinopoiskId:Int){
+        viewModelScope.launch {
+            try {
+                _responseUserFavoriteCheck.value = apiUserRepository.getUserFavoriteCheck(kinopoiskId = kinopoiskId).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun deleteFavoriteFilm(kinopoiskId: Int){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.deleteFavoriteFilm(kinopoiskId = kinopoiskId)
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }
