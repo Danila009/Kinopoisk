@@ -54,6 +54,9 @@ fun NavGraphBuilder.filmInfoNavGraph(
                         type = NavType.StringType
                     }, navArgument(WEB_URL_ARGUMENT){
                         type = NavType.StringType
+                    }, navArgument(CINEMA_ID_ARGUMENT){
+                        nullable = true
+                        type = NavType.StringType
                     }
                 )
             ){
@@ -61,7 +64,8 @@ fun NavGraphBuilder.filmInfoNavGraph(
                     navController = navController,
                     filmId = it.arguments?.getString(FILM_ID_ARGUMENT),
                     keyScreen = it.arguments?.getString(KEY_SCREEN_ARGUMENT).toString(),
-                    webUrl = it.arguments?.getString(WEB_URL_ARGUMENT).toString()
+                    webUrl = it.arguments?.getString(WEB_URL_ARGUMENT).toString(),
+                    cinemaId = it.arguments?.getString(CINEMA_ID_ARGUMENT)?.toInt()
                 )
             }
         }

@@ -9,6 +9,7 @@ const val MORE_ROUTE = "more_route"
 const val REVIEW_ROUTE = "review_route"
 const val LOGIN_ROUTE = "login_route"
 const val SHOP_ROUTE = "shop_route"
+const val CINEMA_ROUTE = "cinema_route"
 
 const val RATING_FROM_ARGUMENT = "ratingFrom"
 const val RATING_TO_ARGUMENT = "ratingTo"
@@ -20,6 +21,7 @@ const val STAFF_ID_ARGUMENT = "staffId"
 const val REVIEW_ID_ARGUMENT = "reviewId"
 const val KEY_SCREEN_ARGUMENT = "keyScreen"
 const val WEB_URL_ARGUMENT = "webUrl"
+const val CINEMA_ID_ARGUMENT = "cinemaId"
 
 sealed class Screen(val route:String) {
     object Authorization:Screen("authorization_screen")
@@ -88,12 +90,19 @@ sealed class Screen(val route:String) {
             filmId:String
         ):String = "review_detail?reviewId=$reviewId&filmId=$filmId"
     }
-    object WebScreen:Screen("web_screen?filmId={filmId}&keyScreen={keyScreen}&webUrl={webUrl}"){
+    object WebScreen:Screen("web_screen?filmId={filmId}&keyScreen={keyScreen}&webUrl={webUrl}&cinemaId={cinemaId}"){
         fun base(
             filmId:String? = null,
             keyString: String,
-            webUrl:String
-        ):String = "web_screen?filmId=$filmId&keyScreen=$keyString&webUrl=$webUrl"
+            webUrl:String,
+            cinemaId:String? = null
+        ):String = "web_screen?filmId=$filmId&keyScreen=$keyString&webUrl=$webUrl&cinemaId=$cinemaId"
     }
     object Shop:Screen("shop_screen")
+    object CinemaMap:Screen("cinema_map_screen")
+    object CinemaInfo:Screen("cinema_info_screen?cinemaId={cinemaId}"){
+        fun base(
+            cinemaId:Int
+        ):String = "cinema_info_screen?cinemaId=$cinemaId"
+    }
 }

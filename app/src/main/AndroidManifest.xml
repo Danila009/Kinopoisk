@@ -15,6 +15,11 @@
         android:theme="@style/Theme.Kinopoisk"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBI7Q92hZqhLszNAc2i3OkwsjmHjUQx6wY"/>
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

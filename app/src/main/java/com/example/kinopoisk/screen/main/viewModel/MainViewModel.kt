@@ -10,6 +10,7 @@ import androidx.paging.cachedIn
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmItem
+import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.person.PersonItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
@@ -39,6 +40,8 @@ class MainViewModel @Inject constructor(
     val responseStatusRegistration:StateFlow<Boolean> = _responseStatusRegistration.asStateFlow()
     private val _responseShop:MutableStateFlow<List<Shop>> = MutableStateFlow(listOf())
     val responseShop:StateFlow<List<Shop>> = _responseShop.asStateFlow()
+    private val _responseCinema:MutableStateFlow<List<Cinema>> = MutableStateFlow(listOf())
+    val responseCinema:StateFlow<List<Cinema>> = _responseCinema.asStateFlow()
 
     fun getFilm(
         order:String = "RATING",
@@ -134,6 +137,16 @@ class MainViewModel @Inject constructor(
                     ratingMax = ratingMax,
                     search = search
                 ).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getCinema(){
+        viewModelScope.launch {
+            try {
+                _responseCinema.value = apiUserRepository.getCinemas().body()!!
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }

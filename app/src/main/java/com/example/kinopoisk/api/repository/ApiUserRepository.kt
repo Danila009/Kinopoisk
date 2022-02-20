@@ -2,6 +2,7 @@ package com.example.kinopoisk.api.repository
 
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.api.model.FilmItem
+import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Header
@@ -59,5 +60,13 @@ class ApiUserRepository @Inject constructor(
     ) = apiUser.putUserPassword(
         email = email,
         password = password
+    )
+
+    suspend fun getCinemas():Response<List<Cinema>> = apiUser.getCinemas()
+
+    suspend fun getCinema(
+        id:Int
+    ):Response<Cinema> = apiUser.getCinema(
+        id = id
     )
 }

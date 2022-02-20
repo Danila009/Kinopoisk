@@ -52,6 +52,10 @@ fun Host(
             shopNavGraph(
                 navController = navHostController
             )
+            cinemaNavGraph(
+                navController = navHostController,
+                lifecycleScope = lifecycleScope
+            )
         }
     )
 }

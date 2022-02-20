@@ -16,6 +16,7 @@ fun WebScreen(
     navController: NavController,
     webUrl:String,
     filmId:String?,
+    cinemaId:Int?,
     keyScreen:String
 ) {
     val key = Converters().decodeFromString<WebScreenKey>(keyScreen)
@@ -37,6 +38,11 @@ fun WebScreen(
                                     Screen.FilmInfo.base(it)
                                 )
                             }
+                            WebScreenKey.CINEMA -> navController.navigate(
+                                Screen.CinemaInfo.base(
+                                    cinemaId = cinemaId!!
+                                )
+                            )
                         }
                     }) {
                         Icon(
