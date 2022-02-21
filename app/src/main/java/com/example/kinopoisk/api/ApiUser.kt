@@ -2,21 +2,22 @@ package com.example.kinopoisk.api
 
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.shop.Shop
-import com.example.kinopoisk.api.model.user.Authorization
+import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.Header
-import com.example.kinopoisk.api.model.user.Registration
-import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
+import com.example.kinopoisk.utils.Constants.USER_CINEMA_REVIEW_CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_CHECK_FILM_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_FILM_ID_KINOPOISK_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_FILM_URL
 import com.example.kinopoisk.utils.Constants.USER_INFO_URL
 import com.example.kinopoisk.utils.Constants.USER_UPDATE_PASSWORD_URL
+import com.example.kinopoisk.utils.Constants.USER_UPDATE_PHOTO_URL
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -51,6 +52,11 @@ interface ApiUser {
         @Query("password") password:String
     )
 
+    @PUT(USER_UPDATE_PHOTO_URL)
+    suspend fun putUserPhoto(
+        @Body photo:PhotoUser
+    )
+
     @GET(Constants.SHOP_FILM_URL)
     suspend fun getShop(
         @Query("ratingMin") ratingMin:Float?,
@@ -71,4 +77,10 @@ interface ApiUser {
     suspend fun getCinema(
         @Path("id") id:Int
     ):Response<Cinema>
+
+    @POST(USER_CINEMA_REVIEW_CINEMA_ID_URL)
+    suspend fun postCinemaReview(
+        @Path("cinemaId") cinemaId:Int,
+        @Body review: Review
+    )
 }

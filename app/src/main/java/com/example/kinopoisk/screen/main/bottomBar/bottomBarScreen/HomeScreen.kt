@@ -281,7 +281,7 @@ fun HomeScreen(
                 }
                 LazyRow(content = {
                     itemsIndexed(cinema.value){ index, item ->
-                        if (index != 5){
+                        if (index < 5){
                             if (checkNavMap.value){
                                 LaunchedEffect(key1 = Unit, block ={
                                     navController.navigate(
@@ -323,7 +323,11 @@ fun HomeScreen(
                                     }
                                 )
                                 Row(
-                                    modifier = Modifier.fillMaxWidth(),
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            checkNavMap.value = true
+                                        },
                                     horizontalArrangement = Arrangement.Center
                                 ) {
                                     Text(

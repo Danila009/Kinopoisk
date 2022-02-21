@@ -3,11 +3,9 @@ package com.example.kinopoisk.api.repository
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.shop.Shop
-import com.example.kinopoisk.api.model.user.Authorization
-import com.example.kinopoisk.api.model.user.Header
-import com.example.kinopoisk.api.model.user.Registration
-import com.example.kinopoisk.api.model.user.UserInfo
+import com.example.kinopoisk.api.model.user.*
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -62,11 +60,25 @@ class ApiUserRepository @Inject constructor(
         password = password
     )
 
+    suspend fun putUserPhoto(
+        photo: PhotoUser
+    ) = apiUser.putUserPhoto(
+        photo = photo
+    )
+
     suspend fun getCinemas():Response<List<Cinema>> = apiUser.getCinemas()
 
     suspend fun getCinema(
         id:Int
     ):Response<Cinema> = apiUser.getCinema(
         id = id
+    )
+
+    suspend fun postCinemaReview(
+        reviewCinema:Review,
+        cinemaId:Int
+    ) = apiUser.postCinemaReview(
+        cinemaId = cinemaId,
+        review = reviewCinema
     )
 }

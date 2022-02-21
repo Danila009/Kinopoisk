@@ -336,7 +336,7 @@ fun CinemaInfoScreen(
                                     modifier = Modifier.padding(5.dp)
                                 )
                                 Text(
-                                    text = Converters().getTime(items.date),
+                                    text = items.date,
                                     modifier = Modifier.padding(5.dp)
                                 )
                             }

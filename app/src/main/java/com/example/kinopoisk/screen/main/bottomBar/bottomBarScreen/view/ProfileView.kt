@@ -20,15 +20,21 @@ import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.R
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
+import com.example.kinopoisk.utils.Converters
 import kotlinx.coroutines.flow.onEach
 
 @Composable
@@ -37,17 +43,33 @@ fun ProfileView(
     lifecycleScope: LifecycleCoroutineScope,
     navController:NavController
 ) {
+    val context = LocalContext.current
     val userInfo = remember { mutableStateOf(UserInfo()) }
+    val checkImageDialog = remember { mutableStateOf(false) }
+    val bitmapImage = remember {
+        mutableStateOf(
+            if (userInfo.value.photo != null)
+                Converters().toBitmap(userInfo.value.photo!!.photo, context)
+            else Converters().toBitmap(R.drawable.icon,context)
+        )
+    }
 
     mainViewModel.getUserInfo()
     mainViewModel.responseUserInfo.onEach {
         userInfo.value = it
     }.launchWhenStarted(lifecycleScope)
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = primaryBackground
     ) {
+        if (checkImageDialog.value){
+            DialogPhotoView(
+                mainViewModel = mainViewModel,
+                checkDialog = checkImageDialog,
+                bitmap = bitmapImage
+            )
+        }
+
         LazyColumn(content = {
             item {
                 Column {
@@ -55,10 +77,22 @@ fun ProfileView(
                         backgroundColor = primaryBackground,
                         elevation = 8.dp,
                         title = {
-                            Text(
-                                text = userInfo.value.username,
-                                color = secondaryBackground
-                            )
+                            Row {
+                                IconButton(onClick = { checkImageDialog.value = true }) {
+                                    Image(bitmap = bitmapImage.value.asImageBitmap(),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(5.dp)
+                                            .size(30.dp)
+                                            .clip(RectangleShape)
+                                    )
+                                }
+
+                                Text(
+                                    text = userInfo.value.username,
+                                    color = secondaryBackground
+                                )
+                            }
                         }, actions = {
                             IconButton(onClick = { /*TODO*/ }) {
                                 Icon(
@@ -143,7 +177,6 @@ fun ProfileView(
                     }
                 }
             }
-
         })
     }
 }

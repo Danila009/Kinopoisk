@@ -5,7 +5,6 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.kinopoisk.navigation.CINEMA_ID_ARGUMENT
 import com.example.kinopoisk.navigation.CINEMA_ROUTE
-import com.example.kinopoisk.navigation.REVIEW_CINEMA_ID_ARGUMENT
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
 import com.example.kinopoisk.screen.cinema.CinemaInfoScreen
@@ -40,23 +39,23 @@ fun NavGraphBuilder.cinemaNavGraph(
                 CinemaInfoScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
-                    cinemaId = it.arguments?.getInt(REVIEW_CINEMA_ID_ARGUMENT)!!.toInt()
+                    cinemaId = it.arguments?.getInt(CINEMA_ID_ARGUMENT)!!.toInt()
                 )
             }
             composable(
                 Screen.AddReviewCinema.route,
                 arguments = listOf(
                     navArgument(
-                        name = REVIEW_CINEMA_ID_ARGUMENT
+                        name = CINEMA_ID_ARGUMENT
                     ){
-                        type = NavType.StringType
+                        type = NavType.IntType
                     }
                 )
             ){
                 AddReviewCinemaScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
-                    cinemaId = it.arguments?.getString(REVIEW_CINEMA_ID_ARGUMENT)!!.toInt()
+                    cinemaId = it.arguments?.getInt(CINEMA_ID_ARGUMENT)!!.toInt()
                 )
             }
         }

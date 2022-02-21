@@ -15,6 +15,7 @@ import com.example.kinopoisk.api.model.person.PersonItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.shop.Shop
+import com.example.kinopoisk.api.model.user.PhotoUser
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
@@ -147,6 +148,20 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _responseCinema.value = apiUserRepository.getCinemas().body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun putUserPhoto(
+        photo: PhotoUser
+    ){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.putUserPhoto(
+                    photo = photo
+                )
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }
