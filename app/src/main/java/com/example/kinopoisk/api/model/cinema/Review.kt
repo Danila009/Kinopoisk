@@ -5,6 +5,7 @@ data class Review(
     val date: String,
     val description: String,
     val id: Int,
+    val photoItems: List<PhotoItem>,
     val rating: Float,
     val title: String,
     val userId: Int,

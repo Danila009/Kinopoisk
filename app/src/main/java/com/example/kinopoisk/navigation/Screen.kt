@@ -22,6 +22,7 @@ const val REVIEW_ID_ARGUMENT = "reviewId"
 const val KEY_SCREEN_ARGUMENT = "keyScreen"
 const val WEB_URL_ARGUMENT = "webUrl"
 const val CINEMA_ID_ARGUMENT = "cinemaId"
+const val REVIEW_CINEMA_ID_ARGUMENT = "reviewCinemaId"
 
 sealed class Screen(val route:String) {
     object Authorization:Screen("authorization_screen")
@@ -104,5 +105,10 @@ sealed class Screen(val route:String) {
         fun base(
             cinemaId:Int
         ):String = "cinema_info_screen?cinemaId=$cinemaId"
+    }
+    object AddReviewCinema:Screen("add_review_cinema_screen?cinemaId={cinemaId}"){
+        fun base(
+            cinemaId:Int
+        ):String = "add_review_cinema_screen?cinemaId=$cinemaId"
     }
 }

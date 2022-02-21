@@ -3,10 +3,12 @@ package com.example.kinopoisk.screen.cinema
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -279,6 +281,65 @@ fun CinemaInfoScreen(
                                 text = cinema.value.description,
                                 modifier = Modifier.padding(5.dp)
                             )
+                        }
+                    }
+
+                    item {
+                        Text(
+                            text = "Отзыввы:",
+                            modifier = Modifier.padding(5.dp),
+                            color = secondaryBackground
+                        )
+                        TextButton(
+                            modifier = Modifier.padding(5.dp),
+                            onClick = { navController.navigate(
+                            Screen.AddReviewCinema.base(
+                                cinemaId = cinemaId
+                            )
+                        ) }) {
+                            Text(
+                                text = "Добавить отзыв ->",
+                                modifier = Modifier.padding(5.dp),
+                                color = secondaryBackground
+                            )
+                        }
+                    }
+
+                    items(cinema.value.reviews){ items ->
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(5.dp)
+                                .background(primaryBackground),
+                            elevation = 8.dp,
+                            shape = AbsoluteRoundedCornerShape(15.dp)
+                        ) {
+                            Column {
+                                Text(
+                                    text = items.userName,
+                                    modifier = Modifier.padding(5.dp),
+                                    color = secondaryBackground,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Row {
+                                    Text(
+                                        text = items.title,
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                    Text(
+                                        text = items.rating.toString(),
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                }
+                                Text(
+                                    text = items.description,
+                                    modifier = Modifier.padding(5.dp)
+                                )
+                                Text(
+                                    text = Converters().getTime(items.date),
+                                    modifier = Modifier.padding(5.dp)
+                                )
+                            }
                         }
                     }
                 })

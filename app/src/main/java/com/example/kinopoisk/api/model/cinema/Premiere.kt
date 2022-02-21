@@ -5,5 +5,6 @@ data class Premiere(
     val kinopoiskId: Int,
     val nameRu: String,
     val posterUrlPreview: String,
-    val ratingKinopoisk: String
+    val ratingKinopoisk: String,
+    val seances: List<Seance>
 )
