@@ -10,6 +10,7 @@ const val REVIEW_ROUTE = "review_route"
 const val LOGIN_ROUTE = "login_route"
 const val SHOP_ROUTE = "shop_route"
 const val CINEMA_ROUTE = "cinema_route"
+const val SETTING_ROUTE = "setting_route"
 
 const val RATING_FROM_ARGUMENT = "ratingFrom"
 const val RATING_TO_ARGUMENT = "ratingTo"
@@ -111,4 +112,5 @@ sealed class Screen(val route:String) {
             cinemaId:Int
         ):String = "add_review_cinema_screen?cinemaId=$cinemaId"
     }
+    object SettingUser:Screen("setting_user_screen")
 }

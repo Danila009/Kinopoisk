@@ -5,6 +5,7 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
+import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.api.model.person.Person
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
@@ -124,4 +125,6 @@ class ApiRepository @Inject constructor(
         name = name,
         page = page
     )
+
+    suspend fun getFilter():Response<Filter> = apiKinopoisk.getFilter()
 }

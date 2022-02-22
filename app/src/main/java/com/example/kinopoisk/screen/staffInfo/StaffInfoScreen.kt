@@ -1,29 +1,37 @@
 package com.example.kinopoisk.screen.staffInfo
 
+import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -41,14 +49,23 @@ fun StaffInfoScreen(
     filmId:String?,
     keyStaffInfoScreenString: String
 ) {
+    val context = LocalContext.current
+    val favoriteCheckStaff = remember { mutableStateOf(false) }
     val statePager = rememberPagerState(pageCount = 4)
     val staffInfo = remember { mutableStateOf(StaffInfo()) }
-
     val keyStaffInfoScreen = Converters().decodeFromString<StaffInfoScreenKey>(keyStaffInfoScreenString)
+    val token = context
+        .getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
+        .getString(TOKEN_SHARED, "")
 
     staffInfoViewModel.getStaffInfo(staffId)
     staffInfoViewModel.responseStaffInfo.onEach {
         staffInfo.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    staffInfoViewModel.getStaffFavoriteCheck(staffId = staffId)
+    staffInfoViewModel.responseStaffFavoriteCheck.onEach {
+        favoriteCheckStaff.value = it
     }.launchWhenStarted(lifecycleScope)
 
     Scaffold(
@@ -75,6 +92,35 @@ fun StaffInfoScreen(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
                         )
+                    }
+                }, actions = {
+                    if (token!!.isNotEmpty()){
+                        IconButton(onClick = {
+                            when(favoriteCheckStaff.value){
+                                true -> {
+                                    favoriteCheckStaff.value = false
+                                }
+                                false ->{
+                                    staffInfoViewModel.postStaffFavorite(
+                                        StaffFavorite(
+                                            nameRu = staffInfo.value.nameRu.toString(),
+                                            nameEn = staffInfo.value.nameEn.toString(),
+                                            posterUrl = staffInfo.value.posterUrl.toString(),
+                                            professionKey = staffInfo.value.profession.toString(),
+                                            professionText = staffInfo.value.profession.toString(),
+                                            staffId = staffId
+                                        )
+                                    )
+                                    favoriteCheckStaff.value = true
+                                }
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.Favorite,
+                                contentDescription = null,
+                                tint = if (favoriteCheckStaff.value) Color.Red else Color.Gray
+                            )
+                        }
                     }
                 }
             )
@@ -145,6 +191,32 @@ fun StaffInfoScreen(
                             }
                         }
                     }
+
+                    item{
+                        Text(
+                            text = "Fact:",
+                            color = secondaryBackground,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(5.dp)
+                        )
+                        LazyRow(content = {
+                            items(staffInfo.value.facts){ item ->
+                                Card(
+                                    shape = AbsoluteRoundedCornerShape(7.dp),
+                                    modifier = Modifier
+                                        .padding(5.dp)
+                                        .width(250.dp)
+                                ) {
+                                    Text(
+                                        text = Converters().replaceRange(item, 150),
+                                        modifier = Modifier
+                                            .padding(5.dp)
+                                    )
+                                }
+                            }
+                        })
+                    }
+
                     items(staffInfo.value.films){ item ->
                         HorizontalPager(state = statePager) {
                             when(it){

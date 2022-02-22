@@ -11,6 +11,7 @@ import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.api.model.person.PersonItem
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.ReleaseItem
@@ -43,6 +44,8 @@ class MainViewModel @Inject constructor(
     val responseShop:StateFlow<List<Shop>> = _responseShop.asStateFlow()
     private val _responseCinema:MutableStateFlow<List<Cinema>> = MutableStateFlow(listOf())
     val responseCinema:StateFlow<List<Cinema>> = _responseCinema.asStateFlow()
+    private val _responseFilter:MutableStateFlow<Filter> = MutableStateFlow(Filter())
+    val responseFilter:StateFlow<Filter> = _responseFilter.asStateFlow()
 
     fun getFilm(
         order:String = "RATING",
@@ -162,6 +165,16 @@ class MainViewModel @Inject constructor(
                 apiUserRepository.putUserPhoto(
                     photo = photo
                 )
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getFilter(){
+        viewModelScope.launch {
+            try {
+                _responseFilter.value = apiRepository.getFilter().body()!!
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }

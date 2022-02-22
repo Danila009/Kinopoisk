@@ -6,6 +6,7 @@ import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
+import com.example.kinopoisk.api.model.user.history.History
 import retrofit2.Response
 import javax.inject.Inject
 
@@ -39,6 +40,10 @@ class ApiUserRepository @Inject constructor(
         search = search,
         page = page
     )
+
+    suspend fun getShopCheck(idKinopoisk:Int):Response<Boolean> = apiUser.getShopCheck(kinopoiskId = idKinopoisk)
+
+    suspend fun getShopId(idKinopoisk: Int):Response<Shop> = apiUser.getShopId(idKinopoisk = idKinopoisk)
 
     suspend fun getUserFavoriteCheck(
         kinopoiskId:Int
@@ -81,4 +86,14 @@ class ApiUserRepository @Inject constructor(
         cinemaId = cinemaId,
         review = reviewCinema
     )
+
+    suspend fun getHistory():Response<List<History>> = apiUser.getHistory()
+
+    suspend fun deleteHistoryAll() = apiUser.deleteHistoryAll()
+
+    suspend fun postHistory(history: History) = apiUser.postHistory(history = history)
+
+    suspend fun postStaffFavorite(staffFavorite: StaffFavorite) = apiUser.postStaffFavorite(staffFavorite = staffFavorite)
+
+    suspend fun getStaffFavoriteCheck(staffId:Int):Response<Boolean> = apiUser.getStaffFavoriteCheck(staffId = staffId)
 }

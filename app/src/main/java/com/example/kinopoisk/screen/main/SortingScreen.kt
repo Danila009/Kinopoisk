@@ -15,21 +15,37 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.validate.SortingValidate
+import com.example.kinopoisk.screen.main.view.MenuItem
+import com.example.kinopoisk.screen.main.view.MenuItemModel
+import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.launchWhenStarted
+import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun SortingScreen(
-    navController: NavController
+    mainViewModel: MainViewModel = hiltViewModel(),
+    navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
     val context = LocalContext.current
     val ratingFrom = remember { mutableStateOf("1") }
     val ratingTo = remember { mutableStateOf("10") }
     val yearFrom = remember { mutableStateOf("1800") }
     val yearTo = remember { mutableStateOf("2022") }
+    val filter = remember { mutableStateOf(Filter()) }
+
+    mainViewModel.getFilter()
+    mainViewModel.responseFilter.onEach {
+        filter.value = it
+    }.launchWhenStarted(lifecycleScope)
 
     Scaffold(
         topBar = {

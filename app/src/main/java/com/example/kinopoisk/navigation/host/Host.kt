@@ -9,6 +9,7 @@ import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.ROUTE
 import com.example.kinopoisk.navigation.navGraph.*
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
@@ -55,6 +56,9 @@ fun Host(
             cinemaNavGraph(
                 navController = navHostController,
                 lifecycleScope = lifecycleScope
+            )
+            settingNavGraph(
+                navController = navHostController
             )
         }
     )

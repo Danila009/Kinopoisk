@@ -27,7 +27,8 @@ fun NavGraphBuilder.mainNavGraph(
             }
             composable(Screen.Sorting.route){
                 SortingScreen(
-                    navController = navController
+                    navController = navController,
+                    lifecycleScope = lifecycleScope
                 )
             }
             composable(

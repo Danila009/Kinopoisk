@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Settings
@@ -32,6 +33,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.R
+import com.example.kinopoisk.navigation.SETTING_ROUTE
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.utils.Converters
@@ -58,6 +60,7 @@ fun ProfileView(
     mainViewModel.responseUserInfo.onEach {
         userInfo.value = it
     }.launchWhenStarted(lifecycleScope)
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = primaryBackground
@@ -94,7 +97,7 @@ fun ProfileView(
                                 )
                             }
                         }, actions = {
-                            IconButton(onClick = { /*TODO*/ }) {
+                            IconButton(onClick = { navController.navigate(SETTING_ROUTE) }) {
                                 Icon(
                                     imageVector = Icons.Default.Settings,
                                     contentDescription = null,
@@ -174,6 +177,115 @@ fun ProfileView(
                                 }
                             }
                         })
+                    }
+
+                    userInfo.value.favoritStaff?.let {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "Favorite staff:",
+                                modifier = Modifier.padding(5.dp),
+                                fontWeight = FontWeight.Bold,
+                                color = secondaryBackground
+                            )
+
+                            TextButton(
+                                onClick = { /*TODO*/ },
+                                modifier = Modifier.padding(5.dp)
+                            ) {
+                                Text(
+                                    text = "Все ->",
+                                    color = secondaryBackground
+                                )
+                            }
+                        }
+
+                        LazyRow(content = {
+                            itemsIndexed(it){index, item ->
+                                if (index < 10){
+                                    Column(
+                                        modifier = Modifier.clickable {
+
+                                        }
+                                    ) {
+                                        Image(
+                                            painter = rememberImagePainter(
+                                                data = item.posterUrl,
+                                                builder = {
+                                                    crossfade(true)
+                                                }
+                                            ),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(5.dp)
+                                                .height(180.dp)
+                                                .width(140.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        })
+                    }
+
+                    userInfo.value.history?.let {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween
+                        ) {
+                            Text(
+                                text = "History:",
+                                modifier = Modifier.padding(5.dp),
+                                fontWeight = FontWeight.Bold,
+                                color = secondaryBackground
+                            )
+
+                            TextButton(
+                                onClick = { /*TODO*/ },
+                                modifier = Modifier.padding(5.dp)
+                            ) {
+                                Text(
+                                    text = "Все ->",
+                                    color = secondaryBackground
+                                )
+                            }
+                        }
+
+                        LazyRow(content = {
+                            itemsIndexed(it){index, item ->
+                                if (index < 10){
+                                    Column(
+                                        modifier = Modifier.clickable {
+                                            navController.navigate(
+                                                Screen.FilmInfo.base(
+                                                    filmId = item.kinopoiskId.toString()
+                                                )
+                                            )
+                                        }
+                                    ) {
+                                        Image(
+                                            painter = rememberImagePainter(
+                                                data = item.posterUrlPreview,
+                                                builder = {
+                                                    crossfade(true)
+                                                }
+                                            ),
+                                            contentDescription = null,
+                                            modifier = Modifier
+                                                .padding(5.dp)
+                                                .height(180.dp)
+                                                .width(140.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        })
+
+                        Spacer(modifier = Modifier
+                            .fillMaxWidth()
+                            .height(70.dp)
+                        )
                     }
                 }
             }

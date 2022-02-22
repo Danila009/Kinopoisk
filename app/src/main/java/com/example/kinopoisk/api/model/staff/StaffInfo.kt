@@ -6,7 +6,7 @@ data class StaffInfo(
     val birthplace: String? = null,
     val death: String? = null,
     val deathplace: String? = null,
-    val facts: List<String>? = null,
+    val facts: List<String> = listOf(),
     val films: List<FilmStaff> = listOf(),
     val growth: String? = null,
     val hasAwards: Int? = null,

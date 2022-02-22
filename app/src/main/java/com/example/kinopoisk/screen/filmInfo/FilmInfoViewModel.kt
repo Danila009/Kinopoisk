@@ -15,7 +15,9 @@ import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.review.ReviewItem
 import com.example.kinopoisk.api.model.seasons.Season
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
+import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.screen.filmInfo.source.ImagePagingSource
 import com.example.kinopoisk.screen.filmInfo.source.ReviewPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -50,6 +52,10 @@ class FilmInfoViewModel @Inject constructor(
     val responseDistribution:StateFlow<Distribution> = _responseDistribution.asStateFlow()
     private val _responseUserFavoriteCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
     val responseUserFavoriteCheck:StateFlow<Boolean> = _responseUserFavoriteCheck.asStateFlow()
+    private val _responseShopCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val responseShopCheck:StateFlow<Boolean> = _responseShopCheck.asStateFlow()
+    private val _responseShopId:MutableStateFlow<Shop> = MutableStateFlow(Shop())
+    val responseShopId:StateFlow<Shop> = _responseShopId.asStateFlow()
 
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
@@ -184,6 +190,38 @@ class FilmInfoViewModel @Inject constructor(
             try {
                 apiUserRepository.deleteFavoriteFilm(kinopoiskId = kinopoiskId)
             }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun postHistory(history: History){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.postHistory(
+                    history = history
+                )
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getShopCheck(idKinopoisk:Int){
+        viewModelScope.launch {
+            try {
+                _responseShopCheck.value = apiUserRepository.getShopCheck(idKinopoisk = idKinopoisk).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getShopId(idKinopoisk: Int){
+        viewModelScope.launch {
+            try {
+                _responseShopId.value = apiUserRepository.getShopId(idKinopoisk = idKinopoisk).body()!!
+            }catch (e:Exception) {
                 Log.d("Retrofit:",e.message.toString())
             }
         }

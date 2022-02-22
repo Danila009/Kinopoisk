@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.cinema
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.Image
@@ -33,6 +34,7 @@ import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -51,6 +53,9 @@ fun CinemaInfoScreen(
     val context = LocalContext.current
     val cinema = remember { mutableStateOf(Cinema()) }
     val pagerStateImage = rememberPagerState(pageCount = cinema.value.photoItems.size)
+    val token = context
+        .getSharedPreferences(Constants.TOKEN_SHARED, Context.MODE_PRIVATE)
+        .getString(Constants.TOKEN_SHARED, "")
 
     cinemaViewModel.getCinema(
         id = cinemaId
@@ -290,18 +295,20 @@ fun CinemaInfoScreen(
                             modifier = Modifier.padding(5.dp),
                             color = secondaryBackground
                         )
-                        TextButton(
-                            modifier = Modifier.padding(5.dp),
-                            onClick = { navController.navigate(
-                            Screen.AddReviewCinema.base(
-                                cinemaId = cinemaId
-                            )
-                        ) }) {
-                            Text(
-                                text = "Добавить отзыв ->",
+                        if (token!!.isNotEmpty()){
+                            TextButton(
                                 modifier = Modifier.padding(5.dp),
-                                color = secondaryBackground
-                            )
+                                onClick = { navController.navigate(
+                                    Screen.AddReviewCinema.base(
+                                        cinemaId = cinemaId
+                                    )
+                                ) }) {
+                                Text(
+                                    text = "Добавить отзыв ->",
+                                    modifier = Modifier.padding(5.dp),
+                                    color = secondaryBackground
+                                )
+                            }
                         }
                     }
 

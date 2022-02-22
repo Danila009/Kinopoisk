@@ -29,7 +29,9 @@ import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.seasons.Season
+import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
+import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
@@ -60,6 +62,8 @@ fun FilmInfoScreen(
     val distribution = remember { mutableStateOf(Distribution()) }
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
+    val shop = remember { mutableStateOf(Shop()) }
+    val shopCheck = remember { mutableStateOf(false) }
     val token = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE).getString(TOKEN_SHARED, "")
 
     filmInfoViewModel.getFilmInfo(filmId)
@@ -107,6 +111,16 @@ fun FilmInfoScreen(
         userFavoriteCheck.value = it
     }.launchWhenStarted(lifecycleScope)
 
+    filmInfoViewModel.getShopCheck(filmId)
+    filmInfoViewModel.responseShopCheck.onEach {
+        shopCheck.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    filmInfoViewModel.getShopId(filmId)
+    filmInfoViewModel.responseShopId.onEach {
+        shop.value = it
+    }.launchWhenStarted(lifecycleScope)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageViewState.STILL.name
@@ -115,6 +129,20 @@ fun FilmInfoScreen(
     val review = filmInfoViewModel.getReview(
         id = filmId
     ).collectAsLazyPagingItems()
+
+    LaunchedEffect(key1 = Unit, block = {
+        filmInfo.value.nameRu?.let { nameRu ->
+            filmInfoViewModel.postHistory(
+                history = History(
+                    date = Converters().getCurrentTime(),
+                    kinopoiskId = filmInfo.value.kinopoiskId,
+                    nameRu = nameRu,
+                    ratingKinopoisk = filmInfo.value.ratingKinopoisk,
+                    posterUrlPreview = filmInfo.value.posterUrlPreview
+                )
+            )
+        }
+    })
 
     if (checkWeb.value){
         LaunchedEffect(key1 = Unit, block = {
@@ -194,6 +222,12 @@ fun FilmInfoScreen(
                                     navController = navController,
                                     season = season
                                 )
+
+                                if (shopCheck.value){
+                                    ShopView(
+                                        shop = shop.value
+                                    )
+                                }
 
                                 RatingView(
                                     filmInfo = filmInfo

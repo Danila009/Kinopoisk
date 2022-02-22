@@ -6,11 +6,19 @@ import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.Header
+import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
+import com.example.kinopoisk.utils.Constants.HISTORY_ALL_URL
+import com.example.kinopoisk.utils.Constants.HISTORY_USER_URL
+import com.example.kinopoisk.utils.Constants.PURCHASE_USER_URK
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
+import com.example.kinopoisk.utils.Constants.SHOP_CHECK_URL
+import com.example.kinopoisk.utils.Constants.SHOP_FILM_ID_KINOPOISK_URL
+import com.example.kinopoisk.utils.Constants.STAFF_USER_FAVORITE_CHECK_URL
+import com.example.kinopoisk.utils.Constants.STAFF_USER_FAVORITE_URL
 import com.example.kinopoisk.utils.Constants.USER_CINEMA_REVIEW_CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_CHECK_FILM_URL
 import com.example.kinopoisk.utils.Constants.USER_FAVORITE_FILM_ID_KINOPOISK_URL
@@ -65,6 +73,16 @@ interface ApiUser {
         @Query("page") page:Int
     ):Response<List<Shop>>
 
+    @GET(SHOP_CHECK_URL)
+    suspend fun getShopCheck(
+        @Query("kinopoiskId") kinopoiskId:Int
+    ):Response<Boolean>
+
+    @GET(SHOP_FILM_ID_KINOPOISK_URL)
+    suspend fun getShopId(
+        @Path("idKinopoisk") idKinopoisk:Int
+    ):Response<Shop>
+
     @GET(USER_FAVORITE_CHECK_FILM_URL)
     suspend fun getUserFavoriteCheck(
         @Query("KinopoiskId") kinopoiskId:Int
@@ -83,4 +101,28 @@ interface ApiUser {
         @Path("cinemaId") cinemaId:Int,
         @Body review: Review
     )
+
+    @GET(HISTORY_USER_URL)
+    suspend fun getHistory():Response<List<History>>
+
+    @POST(HISTORY_USER_URL)
+    suspend fun postHistory(
+        @Body history: History
+    )
+
+    @DELETE(HISTORY_ALL_URL)
+    suspend fun deleteHistoryAll()
+
+    @GET(PURCHASE_USER_URK)
+    suspend fun getPurchase()
+
+    @POST(STAFF_USER_FAVORITE_URL)
+    suspend fun postStaffFavorite(
+        @Body staffFavorite: StaffFavorite
+    )
+
+    @GET(STAFF_USER_FAVORITE_CHECK_URL)
+    suspend fun getStaffFavoriteCheck(
+        @Query("StaffId") staffId:Int
+    ):Response<Boolean>
 }

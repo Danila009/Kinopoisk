@@ -40,7 +40,7 @@ fun MainScreen(
                     backgroundColor = primaryBackground,
                     elevation = 8.dp,
                     title = {
-                            SearchView(search = if (idBar.value == BottomBar.Films.name) filmSearch else personSearch)
+                        SearchView(search = if (idBar.value == BottomBar.Films.name) filmSearch else personSearch)
                     },
                     actions = {
                         IconButton(onClick = { navController.navigate(Screen.Sorting.route) }) {

@@ -4,13 +4,13 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
+import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.api.model.person.Person
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
-import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
@@ -19,6 +19,7 @@ import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_DISTRIBUTION_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
+import com.example.kinopoisk.utils.Constants.FILTER_URL
 import com.example.kinopoisk.utils.Constants.IMAGE_ID_URL
 import com.example.kinopoisk.utils.Constants.PREMIERE_URL
 import com.example.kinopoisk.utils.Constants.RELEASE_URL
@@ -27,7 +28,6 @@ import com.example.kinopoisk.utils.Constants.REVIEW_URL
 import com.example.kinopoisk.utils.Constants.SEARCH_PERSON_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
-import com.example.kinopoisk.utils.Constants.SHOP_FILM_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFF_INF0_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFf_URL
@@ -138,4 +138,7 @@ interface ApiKinopoisk {
         @Query("name") name:String,
         @Query("page") page: Int
     ):Response<Person>
+
+    @GET(FILTER_URL)
+    suspend fun getFilter():Response<Filter>
 }
