@@ -43,12 +43,14 @@ fun MainScreen(
                         SearchView(search = if (idBar.value == BottomBar.Films.name) filmSearch else personSearch)
                     },
                     actions = {
-                        IconButton(onClick = { navController.navigate(Screen.Sorting.route) }) {
-                            Icon(
-                                imageVector = Icons.Default.Menu,
-                                contentDescription = null,
-                                tint = secondaryBackground
-                            )
+                        if (idBar.value == BottomBar.Films.name){
+                            IconButton(onClick = { navController.navigate(Screen.Sorting.base()) }) {
+                                Icon(
+                                    imageVector = Icons.Default.Menu,
+                                    contentDescription = null,
+                                    tint = secondaryBackground
+                                )
+                            }
                         }
                     }
                 )

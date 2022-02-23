@@ -13,6 +13,7 @@ import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_ALL_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_USER_URL
+import com.example.kinopoisk.utils.Constants.PURCHASE_USER_ID_KINOPOISK_URK
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_URK
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
 import com.example.kinopoisk.utils.Constants.SHOP_CHECK_URL
@@ -114,7 +115,17 @@ interface ApiUser {
     suspend fun deleteHistoryAll()
 
     @GET(PURCHASE_USER_URK)
-    suspend fun getPurchase()
+    suspend fun getPurchase():Response<List<Purchase>>
+
+    @POST(PURCHASE_USER_URK)
+    suspend fun postPurchase(
+        @Body purchase: Purchase
+    )
+
+    @POST(PURCHASE_USER_ID_KINOPOISK_URK)
+    suspend fun getPurchase(
+        @Path("idKinopoisk") idKinopoisk:Int
+    ):Response<Boolean>
 
     @POST(STAFF_USER_FAVORITE_URL)
     suspend fun postStaffFavorite(

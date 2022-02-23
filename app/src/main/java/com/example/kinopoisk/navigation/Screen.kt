@@ -1,5 +1,9 @@
 package com.example.kinopoisk.navigation
 
+import com.example.kinopoisk.screen.main.sortingScreen.tab.OrderTabData
+import com.example.kinopoisk.screen.main.sortingScreen.tab.TypeTabData
+import com.example.kinopoisk.utils.Converters
+
 const val ROUTE = "route"
 const val MAIN_ROUTE = "main_route"
 const val FILM_INFO_ROUTE = "film_info_route"
@@ -16,9 +20,15 @@ const val RATING_FROM_ARGUMENT = "ratingFrom"
 const val RATING_TO_ARGUMENT = "ratingTo"
 const val YEAR_FROM_ARGUMENT = "yearFrom"
 const val YEAR_TO_ARGUMENT = "yearTo"
+const val TYPE_ARGUMENT = "type"
+const val ORDER_ARGUMENT = "order"
 const val FILM_ID_ARGUMENT = "filmId"
 const val FILM_TOP_NAME_ARGUMENT = "filmTopName"
 const val STAFF_ID_ARGUMENT = "staffId"
+const val GENRE_ARGUMENT = "genre"
+const val COUNTRIES_ARGUMENT = "countries"
+const val COUNTRIES_ID_ARGUMENT = "countriesId"
+const val GENRE_ID_ARGUMENT = "genreId"
 const val REVIEW_ID_ARGUMENT = "reviewId"
 const val KEY_SCREEN_ARGUMENT = "keyScreen"
 const val WEB_URL_ARGUMENT = "webUrl"
@@ -29,24 +39,41 @@ sealed class Screen(val route:String) {
     object Authorization:Screen("authorization_screen")
     object Registration:Screen("registration_screen")
     object Main:Screen("main_screen")
-    object Sorting:Screen("sorting_screen")
+    object Sorting:Screen("sorting_screen?genre={genre}&countries={countries}"){
+        fun base(
+            genre:String = "All",
+            countries:String = "All"
+        ):String = "sorting_screen?genre=$genre&countries=$countries"
+    }
     object UpdateUserPassword:Screen("update_user_password_screen")
     object ResultSorting:Screen("result_sorting_screen?" +
             "ratingFrom={ratingFrom}" +
             "&ratingTo={ratingTo}" +
             "&yearFrom={yearFrom}" +
-            "&yearTo={yearTo}"
+            "&yearTo={yearTo}" +
+            "&type={type}" +
+            "&order={order}" +
+            "&genreId={genreId}" +
+            "&countriesId={countriesId}"
     ){
         fun base(
             ratingFrom:String = "0",
             ratingTo:String = "10",
             yearFrom:String = "1000",
-            yearTo:String = "3000"
+            yearTo:String = "3000",
+            type:String = TypeTabData.ALL.name,
+            order:String = OrderTabData.RATING.name,
+            genreId:String = Converters().encodeToString(listOf<Int>()),
+            countriesId:String = Converters().encodeToString(listOf<Int>())
         ):String = "result_sorting_screen?" +
                 "ratingFrom=$ratingFrom" +
                 "&ratingTo=$ratingTo" +
                 "&yearFrom=$yearFrom" +
-                "&yearTo=$yearTo"
+                "&yearTo=$yearTo" +
+                "&type=$type" +
+                "&order=$order" +
+                "&genreId=$genreId" +
+                "&countriesId=$countriesId"
     }
     object FilmInfo:Screen("film_info_screen?filmId={filmId}"){
         fun base(
@@ -113,4 +140,6 @@ sealed class Screen(val route:String) {
         ):String = "add_review_cinema_screen?cinemaId=$cinemaId"
     }
     object SettingUser:Screen("setting_user_screen")
+    object Genre:Screen("genre_screen")
+    object Countries:Screen("countries_screen")
 }

@@ -7,6 +7,8 @@ import com.example.kinopoisk.api.model.FilmItem
 import java.lang.Exception
 
 class FilmPagingSource (
+    private val genres:List<Int>,
+    private val countries:List<Int>,
     private val order:String,
     private val type:String,
     private val ratingFrom:Int,
@@ -24,6 +26,8 @@ class FilmPagingSource (
         return try {
             val nextPage = params.key ?: 1
             val film = apiRepository.getFilm(
+                genres = genres,
+                countries = countries,
                 order = order,
                 type = type,
                 ratingFrom = ratingFrom,

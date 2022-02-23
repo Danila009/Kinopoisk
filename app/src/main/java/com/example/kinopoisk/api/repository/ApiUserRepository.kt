@@ -91,6 +91,12 @@ class ApiUserRepository @Inject constructor(
 
     suspend fun deleteHistoryAll() = apiUser.deleteHistoryAll()
 
+    suspend fun getPurchase():Response<List<Purchase>> = apiUser.getPurchase()
+
+    suspend fun postPurchase(purchase: Purchase) = apiUser.postPurchase(purchase)
+
+    suspend fun getPurchase(idKinopoisk: Int):Response<Boolean> = apiUser.getPurchase(idKinopoisk = idKinopoisk)
+
     suspend fun postHistory(history: History) = apiUser.postHistory(history = history)
 
     suspend fun postStaffFavorite(staffFavorite: StaffFavorite) = apiUser.postStaffFavorite(staffFavorite = staffFavorite)

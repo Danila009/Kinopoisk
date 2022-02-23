@@ -48,6 +48,8 @@ class MainViewModel @Inject constructor(
     val responseFilter:StateFlow<Filter> = _responseFilter.asStateFlow()
 
     fun getFilm(
+        genres:List<Int> = listOf(),
+        countries:List<Int> = listOf(),
         order:String = "RATING",
         type:String = "ALL",
         ratingFrom:Int = 0,
@@ -58,6 +60,8 @@ class MainViewModel @Inject constructor(
     ):Flow<PagingData<FilmItem>>  {
          return  Pager(PagingConfig(pageSize = 1)){
             FilmPagingSource(
+                genres = genres,
+                countries = countries,
                 order = order,
                 type = type,
                 ratingFrom = ratingFrom,

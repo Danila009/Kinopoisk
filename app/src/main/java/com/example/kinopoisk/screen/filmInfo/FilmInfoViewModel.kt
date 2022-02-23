@@ -17,6 +17,7 @@ import com.example.kinopoisk.api.model.review.ReviewItem
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
+import com.example.kinopoisk.api.model.user.Purchase
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.screen.filmInfo.source.ImagePagingSource
 import com.example.kinopoisk.screen.filmInfo.source.ReviewPagingSource
@@ -56,6 +57,8 @@ class FilmInfoViewModel @Inject constructor(
     val responseShopCheck:StateFlow<Boolean> = _responseShopCheck.asStateFlow()
     private val _responseShopId:MutableStateFlow<Shop> = MutableStateFlow(Shop())
     val responseShopId:StateFlow<Shop> = _responseShopId.asStateFlow()
+    private val _responsePurchaseCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val responsePurchaseCheck:StateFlow<Boolean> = _responsePurchaseCheck.asStateFlow()
 
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
@@ -222,6 +225,26 @@ class FilmInfoViewModel @Inject constructor(
             try {
                 _responseShopId.value = apiUserRepository.getShopId(idKinopoisk = idKinopoisk).body()!!
             }catch (e:Exception) {
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun postPurchase(purchase: Purchase){
+        viewModelScope.launch {
+            try {
+                apiUserRepository.postPurchase(purchase)
+            }catch (e:Exception){
+                Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun getPurchase(idKinopoisk: Int){
+        viewModelScope.launch {
+            try {
+                _responsePurchaseCheck.value = apiUserRepository.getPurchase(idKinopoisk = idKinopoisk).body()!!
+            }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }
         }

@@ -63,6 +63,7 @@ fun FilmInfoScreen(
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
     val shop = remember { mutableStateOf(Shop()) }
+    val purchaseCheck = remember { mutableStateOf(false) }
     val shopCheck = remember { mutableStateOf(false) }
     val token = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE).getString(TOKEN_SHARED, "")
 
@@ -119,6 +120,11 @@ fun FilmInfoScreen(
     filmInfoViewModel.getShopId(filmId)
     filmInfoViewModel.responseShopId.onEach {
         shop.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    filmInfoViewModel.getPurchase(idKinopoisk = filmId)
+    filmInfoViewModel.responsePurchaseCheck.onEach {
+        purchaseCheck.value = it
     }.launchWhenStarted(lifecycleScope)
 
     val image = filmInfoViewModel.getImage(
@@ -225,7 +231,9 @@ fun FilmInfoScreen(
 
                                 if (shopCheck.value){
                                     ShopView(
-                                        shop = shop.value
+                                        filmInfoViewModel = filmInfoViewModel,
+                                        shop = shop.value,
+                                        checkPurchase = purchaseCheck.value
                                     )
                                 }
 

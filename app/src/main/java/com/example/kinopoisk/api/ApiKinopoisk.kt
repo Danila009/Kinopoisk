@@ -41,6 +41,8 @@ interface ApiKinopoisk {
 
     @GET(FILM_URL)
     suspend fun getFilm(
+        @Query("genres") genres:List<Int>,
+        @Query("countries") countries:List<Int>,
         @Query("order") order:String, //Сортировка
         @Query("type") type:String, //тип фильма
         @Query("ratingFrom") ratingFrom:Int, //минимальный рейтинг

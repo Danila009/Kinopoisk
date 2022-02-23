@@ -34,6 +34,7 @@ fun BudgetView(
                 color = secondaryBackground
             )
 
+
             TextButton(
                 onClick = { /*TODO*/ },
                 modifier = Modifier.padding(5.dp)
@@ -69,16 +70,20 @@ fun BudgetView(
                     modifier = Modifier.padding(5.dp)
                 ) {
                     Column {
-                        Text(
-                            text = item.country.country,
-                            modifier = Modifier.padding(5.dp),
-                            color = secondaryBackground
-                        )
+                        if (item.country.country.isNotEmpty()){
+                            Text(
+                                text = item.country.country,
+                                modifier = Modifier.padding(5.dp),
+                                color = secondaryBackground
+                            )
+                        }
 
-                        Text(
-                            text = Converters().getTime(item.date),
-                            modifier = Modifier.padding(5.dp)
-                        )
+                        if (item.date.isNotEmpty()){
+                            Text(
+                                text = Converters().getTime(item.date),
+                                modifier = Modifier.padding(5.dp)
+                            )
+                        }
                     }
                 }
             }

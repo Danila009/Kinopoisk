@@ -39,10 +39,14 @@ fun FilmsScreen(
     ratingTo:Int = 10,
     yearFrom:Int = 1000,
     yearTo:Int = 3000,
-    keyword:String = ""
+    keyword:String = "",
+    genres:List<Int> = listOf(),
+    countries:List<Int> = listOf()
 ) {
     val check = remember { mutableStateOf(false) }
     val filmList = mainViewModel.getFilm(
+        genres = genres,
+        countries = countries,
         order = order,
         type = type,
         ratingFrom = ratingFrom,

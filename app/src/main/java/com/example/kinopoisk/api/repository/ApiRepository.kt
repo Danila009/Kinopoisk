@@ -23,6 +23,8 @@ class ApiRepository @Inject constructor(
     private val apiKinopoisk: ApiKinopoisk
 ) {
     suspend fun getFilm(
+        genres:List<Int>,
+        countries:List<Int>,
         order:String,
         type:String,
         ratingFrom:Int,
@@ -32,6 +34,8 @@ class ApiRepository @Inject constructor(
         keyword:String,
         page:Int = 1
     ):Response<Film> = apiKinopoisk.getFilm(
+        genres = genres,
+        countries = countries,
         order = order,
         type = type,
         ratingFrom = ratingFrom,

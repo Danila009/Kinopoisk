@@ -1,15 +1,11 @@
 package com.example.kinopoisk.screen.cinema
 
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -19,23 +15,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.cinema.view.PhoneView
+import com.example.kinopoisk.screen.cinema.view.ReviewView
+import com.example.kinopoisk.screen.cinema.view.ScheduleView
+import com.example.kinopoisk.screen.cinema.view.WebView
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
-import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Constants
-import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -149,81 +145,10 @@ fun CinemaInfoScreen(
                                 }
                             })
 
-                            LazyRow(content = {
-                                items(4){ item ->
-                                    when(item){
-                                        0->{
-                                            IconButton(onClick = {
-                                                navController.navigate(
-                                                    Screen.WebScreen.base(
-                                                        keyString = Converters().encodeToString(WebScreenKey.CINEMA),
-                                                        webUrl = cinema.value.website,
-                                                        cinemaId = cinema.value.id.toString()
-                                                    )
-                                                )
-                                            }, modifier = Modifier
-                                                .padding(5.dp)) {
-                                                Image(
-                                                    painter = painterResource(id = R.drawable.web),
-                                                    contentDescription = null
-                                                )
-                                            }
-                                        }
-                                        1->{
-                                            IconButton(onClick = {
-                                                navController.navigate(
-                                                    Screen.WebScreen.base(
-                                                        keyString = Converters().encodeToString(WebScreenKey.CINEMA),
-                                                        webUrl = cinema.value.webVk,
-                                                        cinemaId = cinema.value.id.toString()
-                                                    )
-                                                )
-                                            }, modifier = Modifier
-                                                .padding(5.dp)) {
-                                                Image(
-                                                    painter = painterResource(id = R.drawable.vk),
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(50.dp)
-                                                )
-                                            }
-                                        }
-                                        2->{
-                                            IconButton(onClick = {
-                                                navController.navigate(
-                                                    Screen.WebScreen.base(
-                                                        keyString = Converters().encodeToString(WebScreenKey.CINEMA),
-                                                        webUrl = cinema.value.webInstagram,
-                                                        cinemaId = cinema.value.id.toString()
-                                                    )
-                                                )
-                                            }, modifier = Modifier
-                                                .padding(5.dp)) {
-                                                Image(
-                                                    painter = painterResource(id = R.drawable.instagram),
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(50.dp)
-                                                )
-                                            }
-                                        }
-                                        3->{IconButton(onClick = {
-                                            navController.navigate(
-                                                Screen.WebScreen.base(
-                                                    keyString = Converters().encodeToString(WebScreenKey.CINEMA),
-                                                    webUrl = cinema.value.webFacebook,
-                                                    cinemaId = cinema.value.id.toString()
-                                                )
-                                            )
-                                        }, modifier = Modifier
-                                            .padding(5.dp)) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.facebook),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(50.dp)
-                                            )
-                                        }}
-                                    }
-                                }
-                            })
+                            WebView(
+                                navController = navController,
+                                cinema = cinema.value
+                            )
                         }
                     }
 
@@ -236,16 +161,10 @@ fun CinemaInfoScreen(
                     }
 
                     items(cinema.value.phoneItems){item ->
-                        TextButton(onClick = {
-                            val intent = Intent(Intent.ACTION_DIAL)
-                            intent.data = Uri.parse("tel:${item.phone}")
-                            context.startActivity(intent)
-                        }) {
-                            Text(
-                                text = item.phone,
-                                modifier = Modifier.padding(5.dp)
-                            )
-                        }
+                        PhoneView(
+                            phoneItem = item,
+                            context = context
+                        )
                     }
 
                     item {
@@ -257,21 +176,9 @@ fun CinemaInfoScreen(
                     }
 
                     items(cinema.value.schedules){ item ->
-                        Row(
-                            modifier = Modifier
-                                .width(220.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Text(
-                                text = item.week,
-                                modifier = Modifier.padding(5.dp),
-                                color = secondaryBackground
-                            )
-                            Text(
-                                text = "${item.startDate} - ${item.endDate}",
-                                modifier = Modifier.padding(5.dp)
-                            )
-                        }
+                        ScheduleView(
+                            schedule = item
+                        )
                     }
 
                     item {
@@ -311,43 +218,10 @@ fun CinemaInfoScreen(
                             }
                         }
                     }
-
-                    items(cinema.value.reviews){ items ->
-                        Card(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(5.dp)
-                                .background(primaryBackground),
-                            elevation = 8.dp,
-                            shape = AbsoluteRoundedCornerShape(15.dp)
-                        ) {
-                            Column {
-                                Text(
-                                    text = items.userName,
-                                    modifier = Modifier.padding(5.dp),
-                                    color = secondaryBackground,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Row {
-                                    Text(
-                                        text = items.title,
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                    Text(
-                                        text = items.rating.toString(),
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                }
-                                Text(
-                                    text = items.description,
-                                    modifier = Modifier.padding(5.dp)
-                                )
-                                Text(
-                                    text = items.date,
-                                    modifier = Modifier.padding(5.dp)
-                                )
-                            }
-                        }
+                    items(cinema.value.reviews){ item ->
+                        ReviewView(
+                            review = item
+                        )
                     }
                 })
             }

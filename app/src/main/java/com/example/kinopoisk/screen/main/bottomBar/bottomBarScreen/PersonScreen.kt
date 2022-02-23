@@ -49,7 +49,6 @@ fun PersonScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp)
-                        .background(primaryBackground)
                         .clickable{
                             navController.navigate(Screen.StaffInfo.base(
                                 staffId = item?.kinopoiskId.toString(),
@@ -57,6 +56,7 @@ fun PersonScreen(
                             ))
                         },
                     shape = AbsoluteRoundedCornerShape(15.dp),
+                    backgroundColor = primaryBackground,
                     elevation = 8.dp
                 ) {
                     Row {

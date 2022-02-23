@@ -11,7 +11,8 @@ data class UserInfo(
     val photo:PhotoUser? = null,
     val balance:Int = 0,
     val watchLater:List<FilmItem> = listOf(),
-    val favoritFilm:List<FilmItem>? = null,
-    val history:List<History>? = null,
-    val favoritStaff:List<FavoriteStaff>? = null
+    val favoritFilm:List<FilmItem> = listOf(),
+    val history:List<History> = listOf(),
+    val favoritStaff:List<FavoriteStaff> = listOf(),
+    val purchase:List<Purchase> = listOf()
 )

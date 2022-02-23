@@ -41,6 +41,7 @@ object Constants {
     const val HISTORY_USER_URL = "/User/History"
     const val HISTORY_ALL_URL = "/User/History/All"
     const val PURCHASE_USER_URK = "/User/Purchase"
+    const val PURCHASE_USER_ID_KINOPOISK_URK = "/User/Purchase/{idKinopoisk}/Check"
     const val STAFF_USER_FAVORITE_URL = "/Staff/User/Favorite"
     const val STAFF_USER_FAVORITE_CHECK_URL = "/Staff/User/Favorite/Check"
     const val SHOP_CHECK_URL = "/Shop/Check"

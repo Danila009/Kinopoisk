@@ -10,11 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.kinopoisk.api.model.shop.Shop
+import com.example.kinopoisk.api.model.user.Purchase
+import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun ShopView(
-    shop: Shop
+    filmInfoViewModel: FilmInfoViewModel,
+    shop: Shop,
+    checkPurchase:Boolean
 ) {
 
     Button(
@@ -28,8 +33,17 @@ fun ShopView(
             backgroundColor = secondaryBackground
         ),
         shape = AbsoluteRoundedCornerShape(15.dp),
-        onClick = { /*TODO*/ }
+        onClick = {
+            if (!checkPurchase){
+                filmInfoViewModel.postPurchase(
+                    Purchase(
+                        date = Converters().getCurrentTime(),
+                        shop = shop
+                    )
+                )
+            }
+        }
     ) {
-        Text(text = "Купить фильм ${shop.price} P")
+        Text(text = if (checkPurchase) "Купить фильм ${shop.price} P" else "Филь куплин")
     }
 }
