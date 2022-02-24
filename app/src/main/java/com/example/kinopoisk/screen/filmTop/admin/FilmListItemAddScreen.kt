@@ -1,4 +1,4 @@
-package com.example.kinopoisk.screen.filmTop
+package com.example.kinopoisk.screen.filmTop.admin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -14,44 +14,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
-import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
+import java.util.ArrayList
 
 @Composable
-fun FilmTopScreen(
+fun FilmListItemAddScreen(
     filmTopViewModel: FilmTopViewModel = hiltViewModel(),
-    navController: NavController,
-    nameTopViewState: NameTopViewState
+    navController: NavController
 ) {
-    val check = remember { mutableStateOf(false) }
-    val filmTop = filmTopViewModel.getTop(
-        nameTopViewState.name
-    ).collectAsLazyPagingItems()
-    
+    val filmAddList = remember { mutableStateOf(ArrayList<FilmItem>()) }
+    val films = filmTopViewModel.getFilm().collectAsLazyPagingItems()
+
     Scaffold(
         topBar = {
             TopAppBar(
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = {
-                    Text(text = Converters().getNameTop(
-                        nameTopViewState = nameTopViewState
-                    ))
+                    Text(text = "film list add item")
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route)
+                        navController.navigate(Screen.FilmListAdd.base())
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -60,13 +54,36 @@ fun FilmTopScreen(
                     }
                 }
             )
+        },
+        bottomBar = {
+            OutlinedButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 15.dp,
+                        vertical = 5.dp
+                    ), shape = AbsoluteRoundedCornerShape(15.dp),
+                onClick = { navController.navigate(
+                    Screen.FilmListAdd.base(
+                        filmList = Converters().encodeToString(filmAddList.value)
+                    )
+                ) }
+            ) {
+                Text(text = "Add top list")
+            }
         }, content = {
             Surface(
                 modifier = Modifier.fillMaxSize(),
                 color = primaryBackground
             ) {
-                LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
-                    items(filmTop){ item ->
+                LazyColumn(content = {
+                    items(films){ item ->
+                        val checkFilm = remember { mutableStateOf(false) }
+                        if (checkFilm.value){
+                            filmAddList.value.add(item!!)
+                        }else{
+                            filmAddList.value.remove(item)
+                        }
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -75,7 +92,7 @@ fun FilmTopScreen(
                                 .clickable {
                                     navController.navigate(
                                         Screen.FilmInfo.base(
-                                            item?.filmId.toString()
+                                            item?.kinopoiskId.toString()
                                         )
                                     )
                                 },
@@ -101,41 +118,20 @@ fun FilmTopScreen(
                                         .width(100.dp)
                                         .clip(AbsoluteRoundedCornerShape(10.dp))
                                 )
-                                Text(
-                                    text = item?.nameRu.toString(),
-                                    modifier = Modifier.padding(5.dp),
-                                    color = Color.White
-                                )
+                                Column {
+                                    Text(
+                                        text = item?.nameRu.toString(),
+                                        modifier = Modifier.padding(5.dp)
+                                    )
+                                    Checkbox(
+                                        checked = checkFilm.value,
+                                        onCheckedChange = { checkFilm.value = it },
+                                        colors = CheckboxDefaults.colors(
+                                            checkedColor = secondaryBackground
+                                        )
+                                    )
+                                }
                             }
-                        }
-                    }
-
-                    item {
-                        if (check.value){
-                            Column(
-                                Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                CircularProgressIndicator(
-                                    color = secondaryBackground
-                                )
-                            }
-                        }
-                    }
-
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(80.dp)
-                        )
-                    }
-
-                    filmTop.apply {
-                        when{
-                            loadState.refresh is LoadState.Loading -> check.value = false
-
-                            loadState.append is LoadState.Loading -> check.value = true
                         }
                     }
                 })

@@ -13,10 +13,12 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.premiere.Premiere
 import com.example.kinopoisk.api.model.shop.Shop
+import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.homeView.*
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.Converters
+import com.example.kinopoisk.utils.UserRole
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.example.kinopoisk.utils.viewState.ViewStatePremiere
 import kotlinx.coroutines.flow.onEach
@@ -27,9 +29,11 @@ fun HomeScreen(
     navController:NavController,
     lifecycleScope: LifecycleCoroutineScope
 ) {
+    val userRole = remember { mutableStateOf(UserRole.BaseUser.name) }
     val checkNavMap = remember { mutableStateOf(false) }
     val premiere = remember { mutableStateOf(Premiere()) }
     val shop = remember { mutableStateOf(listOf<Shop>()) }
+    val filmListAdmin = remember { mutableStateOf(listOf<AdminFilmList>()) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
 
     val release = mainViewModel.getRelease(
@@ -54,6 +58,16 @@ fun HomeScreen(
     mainViewModel.getCinema()
     mainViewModel.responseCinema.onEach {
         cinema.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    mainViewModel.readUserRole()
+    mainViewModel.responseUserRole.onEach {
+        userRole.value = it
+    }.launchWhenStarted(lifecycleScope)
+
+    mainViewModel.getFilmList()
+    mainViewModel.responseFilmList.onEach {
+        filmListAdmin.value = it
     }.launchWhenStarted(lifecycleScope)
 
     Surface(
@@ -94,7 +108,9 @@ fun HomeScreen(
                 }
 
                 TopView(
-                    navController = navController
+                    navController = navController,
+                    userRole = userRole.value,
+                    adminListFilmTop = filmListAdmin.value
                 )
 
                 Spacer(modifier = Modifier

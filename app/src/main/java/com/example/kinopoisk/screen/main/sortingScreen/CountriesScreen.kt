@@ -88,12 +88,10 @@ fun CountriesScreen(
                                     },
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                item.country?.let { country ->
-                                    Text(
-                                        text = country,
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                }
+                                Text(
+                                    text = item.country,
+                                    modifier = Modifier.padding(5.dp)
+                                )
                                 Checkbox(
                                     checked = checkCountrie.value,
                                     onCheckedChange = {checkCountrie.value = it},

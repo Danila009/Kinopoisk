@@ -18,6 +18,7 @@ import com.example.kinopoisk.api.model.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.PhotoUser
 import com.example.kinopoisk.api.model.user.UserInfo
+import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.PersonPagingSource
@@ -46,6 +47,10 @@ class MainViewModel @Inject constructor(
     val responseCinema:StateFlow<List<Cinema>> = _responseCinema.asStateFlow()
     private val _responseFilter:MutableStateFlow<Filter> = MutableStateFlow(Filter())
     val responseFilter:StateFlow<Filter> = _responseFilter.asStateFlow()
+    private val _responseUserRole:MutableStateFlow<String> = MutableStateFlow("")
+    val responseUserRole:StateFlow<String> = _responseUserRole.asStateFlow()
+    private val _responseFilmList:MutableStateFlow<List<AdminFilmList>> = MutableStateFlow(listOf())
+    val responseFilmList:StateFlow<List<AdminFilmList>> = _responseFilmList.asStateFlow()
 
     fun getFilm(
         genres:List<Int> = listOf(),
@@ -181,6 +186,28 @@ class MainViewModel @Inject constructor(
                 _responseFilter.value = apiRepository.getFilter().body()!!
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
+            }
+        }
+    }
+
+    fun readUserRole(){
+        viewModelScope.launch {
+            try {
+                userPreferenceRepository.readUserRole().collect {
+                    _responseUserRole.value = it
+                }
+            }catch (e:Exception){
+                Log.d("DateStore:",e.message.toString())
+            }
+        }
+    }
+
+    fun getFilmList(){
+        viewModelScope.launch {
+            try {
+                _responseFilmList.value = apiUserRepository.getFilmList().body()!!
+            }catch (e:Exception){
+                Log.d("DateStore:",e.message.toString())
             }
         }
     }

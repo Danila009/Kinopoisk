@@ -34,6 +34,7 @@ class LoginViewModel @Inject constructor(
                         .putString(TOKEN_SHARED, response.body()?.access_token)
                         .apply()
                     saveStatusRegistration(userRegistration = true)
+                    savaUserRole(userRole = response.body()!!.role)
                     navController.navigate(Screen.Main.route)
                 }
             }catch (e:Exception){
@@ -66,6 +67,16 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 userPreferenceRepository.saveStatusRegistration(userRegistration)
+            }catch (e:Exception){
+                Log.d("DateStore:",e.message.toString())
+            }
+        }
+    }
+
+    private fun savaUserRole(userRole:String){
+        viewModelScope.launch {
+            try {
+                userPreferenceRepository.savaUserRole(userRole)
             }catch (e:Exception){
                 Log.d("DateStore:",e.message.toString())
             }

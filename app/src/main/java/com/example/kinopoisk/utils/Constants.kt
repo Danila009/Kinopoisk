@@ -45,6 +45,9 @@ object Constants {
     const val STAFF_USER_FAVORITE_URL = "/Staff/User/Favorite"
     const val STAFF_USER_FAVORITE_CHECK_URL = "/Staff/User/Favorite/Check"
     const val SHOP_CHECK_URL = "/Shop/Check"
+    const val ADMIN_FILM_LIST_URL ="/Admin/FilmList"
+    const val FILM_LIST_URL ="/FilmList"
+    const val NEWS_MOVIE = "/News/Movie"
 
     const val TOKEN_SHARED = "token_share"
 

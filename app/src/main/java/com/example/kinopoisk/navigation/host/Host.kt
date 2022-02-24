@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.ROUTE
 import com.example.kinopoisk.navigation.navGraph.*
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.cinemaNavGraph
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -51,7 +53,8 @@ fun Host(
                 navController = navHostController
             )
             shopNavGraph(
-                navController = navHostController
+                navController = navHostController,
+                lifecycleScope = lifecycleScope
             )
             cinemaNavGraph(
                 navController = navHostController,

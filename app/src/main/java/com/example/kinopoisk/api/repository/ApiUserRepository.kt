@@ -6,6 +6,7 @@ import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
+import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.api.model.user.history.History
 import retrofit2.Response
 import javax.inject.Inject
@@ -102,4 +103,8 @@ class ApiUserRepository @Inject constructor(
     suspend fun postStaffFavorite(staffFavorite: StaffFavorite) = apiUser.postStaffFavorite(staffFavorite = staffFavorite)
 
     suspend fun getStaffFavoriteCheck(staffId:Int):Response<Boolean> = apiUser.getStaffFavoriteCheck(staffId = staffId)
+
+    suspend fun postFilmList(filmList: AdminFilmList) = apiUser.postFilmList(filmList = filmList)
+
+    suspend fun getFilmList():Response<List<AdminFilmList>> = apiUser.getFilmList()
 }

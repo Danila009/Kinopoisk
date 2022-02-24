@@ -3,16 +3,21 @@ package com.example.kinopoisk.api
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
+import com.example.kinopoisk.api.model.news.News
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.Header
+import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.utils.Constants
+import com.example.kinopoisk.utils.Constants.ADMIN_FILM_LIST_URL
 import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
+import com.example.kinopoisk.utils.Constants.FILM_LIST_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_ALL_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_USER_URL
+import com.example.kinopoisk.utils.Constants.NEWS_MOVIE
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_ID_KINOPOISK_URK
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_URK
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
@@ -136,4 +141,17 @@ interface ApiUser {
     suspend fun getStaffFavoriteCheck(
         @Query("StaffId") staffId:Int
     ):Response<Boolean>
+
+    @POST(ADMIN_FILM_LIST_URL)
+    suspend fun postFilmList(
+        @Body filmList: AdminFilmList
+    )
+
+    @GET(FILM_LIST_URL)
+    suspend fun getFilmList():Response<List<AdminFilmList>>
+
+    @GET(NEWS_MOVIE)
+    suspend fun getNewsMovie(
+        @Query("kinopoiskId") kinopoiskId:Int
+    ):Response<List<News>>
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -27,17 +29,27 @@ import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchVi
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.kinopoisk.utils.UserRole
+import com.example.kinopoisk.utils.launchWhenStarted
+import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ShopScreen(
     shopViewModel: ShopViewModel = hiltViewModel(),
+    lifecycleScope: LifecycleCoroutineScope,
     navController: NavController
 ) {
+    val userRole = remember { mutableStateOf(UserRole.BaseUser.name) }
     val search = remember { mutableStateOf("") }
     val check = remember { mutableStateOf(false) }
     val shop = shopViewModel.getShop(
         search = search.value
     ).collectAsLazyPagingItems()
+
+    shopViewModel.readUserRole()
+    shopViewModel.responseUserRole.onEach {
+        userRole.value = it
+    }.launchWhenStarted(lifecycleScope)
 
     Scaffold(
         topBar = {
@@ -54,6 +66,16 @@ fun ShopScreen(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
                         )
+                    }
+                }, actions = {
+                    if (userRole.value == UserRole.Admin.name){
+                        IconButton(onClick = { /*TODO*/ }) {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = null,
+                                tint = secondaryBackground
+                            )
+                        }
                     }
                 }
             )

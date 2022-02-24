@@ -85,7 +85,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.14.0")
 
     //Datastore
-    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //Maps
     implementation ("com.google.maps.android:maps-compose:1.0.1")

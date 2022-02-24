@@ -1,5 +1,6 @@
 package com.example.kinopoisk.navigation
 
+import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.screen.main.sortingScreen.tab.OrderTabData
 import com.example.kinopoisk.screen.main.sortingScreen.tab.TypeTabData
 import com.example.kinopoisk.utils.Converters
@@ -33,6 +34,7 @@ const val REVIEW_ID_ARGUMENT = "reviewId"
 const val KEY_SCREEN_ARGUMENT = "keyScreen"
 const val WEB_URL_ARGUMENT = "webUrl"
 const val CINEMA_ID_ARGUMENT = "cinemaId"
+const val FILM_LIST_ARGUMENT = "filmList"
 const val REVIEW_CINEMA_ID_ARGUMENT = "reviewCinemaId"
 
 sealed class Screen(val route:String) {
@@ -142,4 +144,10 @@ sealed class Screen(val route:String) {
     object SettingUser:Screen("setting_user_screen")
     object Genre:Screen("genre_screen")
     object Countries:Screen("countries_screen")
+    object FilmListAdd:Screen("film_list_add_screen?filmList={filmList}"){
+        fun base(
+            filmList:String = ""
+        ):String = "film_list_add_screen?filmList=$filmList"
+    }
+    object FilmListItemAdd:Screen("film_list_item_add_screen")
 }

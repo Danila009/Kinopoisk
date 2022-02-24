@@ -1,4 +1,4 @@
-package com.example.kinopoisk.navigation.navGraph
+package com.example.kinopoisk.navigation.navGraph.cinemaNavGraph
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
