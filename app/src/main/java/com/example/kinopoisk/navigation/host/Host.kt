@@ -36,6 +36,7 @@ fun Host(
             )
             filmTopNavGraph(
                 navController = navHostController,
+                lifecycleScope = lifecycleScope
             )
             staffInfoNavGraph(
                 navController = navHostController,

@@ -36,6 +36,7 @@ const val WEB_URL_ARGUMENT = "webUrl"
 const val CINEMA_ID_ARGUMENT = "cinemaId"
 const val FILM_LIST_ARGUMENT = "filmList"
 const val REVIEW_CINEMA_ID_ARGUMENT = "reviewCinemaId"
+const val ADMIN_FILM_LIST_ITEM_ID = "adminFilmListItemId"
 
 sealed class Screen(val route:String) {
     object Authorization:Screen("authorization_screen")
@@ -150,4 +151,10 @@ sealed class Screen(val route:String) {
         ):String = "film_list_add_screen?filmList=$filmList"
     }
     object FilmListItemAdd:Screen("film_list_item_add_screen")
+    object AdminListFilmItem:Screen("admin_film_list_item_screen?adminFilmListItemId={adminFilmListItemId}"){
+        fun base(
+            adminFilmListItemId:String
+        ):String = "admin_film_list_item_screen?adminFilmListItemId=$adminFilmListItemId"
+    }
+    object ShopAddFilmItem:Screen("shop_add_film_item_screen")
 }

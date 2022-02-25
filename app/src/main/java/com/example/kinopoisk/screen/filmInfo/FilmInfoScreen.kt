@@ -136,20 +136,19 @@ fun FilmInfoScreen(
         id = filmId
     ).collectAsLazyPagingItems()
 
-    LaunchedEffect(key1 = Unit, block = {
-        filmInfo.value.nameRu?.let { nameRu ->
+    if (filmInfo.value.nameRu.isNotEmpty()){
+        LaunchedEffect(key1 = Unit, block = {
             filmInfoViewModel.postHistory(
                 history = History(
                     date = Converters().getCurrentTime(),
                     kinopoiskId = filmInfo.value.kinopoiskId,
-                    nameRu = nameRu,
+                    nameRu = filmInfo.value.nameRu,
                     ratingKinopoisk = filmInfo.value.ratingKinopoisk,
                     posterUrlPreview = filmInfo.value.posterUrlPreview
                 )
             )
-        }
-    })
-
+        })
+    }
     if (checkWeb.value){
         LaunchedEffect(key1 = Unit, block = {
             filmInfo.value.webUrl?.let {

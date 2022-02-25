@@ -7,6 +7,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -19,6 +20,7 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.seasons.Episode
 import com.example.kinopoisk.api.model.seasons.Season
+import com.example.kinopoisk.api.model.series.Serial
 import com.example.kinopoisk.navigation.Screen
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -62,7 +64,7 @@ fun SerialInfoSeasonScreen(
                     backgroundColor = primaryBackground,
                     elevation = 8.dp,
                     title = {
-                        Text(text = filmInfo.value.nameRu.toString())
+                        Text(text = filmInfo.value.nameRu)
                     },
                     navigationIcon = {
                         IconButton(onClick = { navController.navigate(Screen.FilmInfo.base(filmId.toString())) }) {
@@ -85,6 +87,19 @@ fun SerialInfoSeasonScreen(
                 ) {
                     LazyColumn(content = {
                         items(seasonEpisode.value){ item ->
+                            val checkedSeres = remember { mutableStateOf(false) }
+
+                            LaunchedEffect(key1 = Unit, block = {
+                                filmInfoViewModel.getSeriesCheck(
+                                    kinopoiskId = filmId,
+                                    season = item.seasonNumber,
+                                    series = item.episodeNumber
+                                )
+                                filmInfoViewModel.responseSeriesCheck.onEach {
+                                    checkedSeres.value = it
+                                }.launchWhenStarted(lifecycleScope)
+                            })
+
                             Column {
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
@@ -128,10 +143,29 @@ fun SerialInfoSeasonScreen(
                                                 fontWeight = FontWeight.Bold,
                                                 color = secondaryBackground
                                             )
-                                            Text(
-                                                text = Converters().getTime(it),
-                                                modifier = Modifier.padding(5.dp)
-                                            )
+                                            Row {
+                                                Text(
+                                                    text = Converters().getTime(it),
+                                                    modifier = Modifier.padding(5.dp)
+                                                )
+
+                                                Checkbox(
+                                                    checked = checkedSeres.value,
+                                                    onCheckedChange = {
+                                                        checkedSeres.value = it
+                                                        filmInfoViewModel.postSeries(
+                                                            Serial(
+                                                                idKinopoisk = filmId,
+                                                                season = item.seasonNumber,
+                                                                series = item.episodeNumber,
+                                                                viewed = checkedSeres.value
+                                                            )
+                                                        )
+                                                    },
+                                                    modifier = Modifier
+                                                        .padding(5.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }

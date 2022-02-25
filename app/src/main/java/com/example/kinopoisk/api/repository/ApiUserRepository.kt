@@ -4,6 +4,7 @@ import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
+import com.example.kinopoisk.api.model.series.Serial
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
@@ -107,4 +108,32 @@ class ApiUserRepository @Inject constructor(
     suspend fun postFilmList(filmList: AdminFilmList) = apiUser.postFilmList(filmList = filmList)
 
     suspend fun getFilmList():Response<List<AdminFilmList>> = apiUser.getFilmList()
+
+    suspend fun getFilmListItem(id:Int):Response<AdminFilmList> = apiUser.getFilmListItem(id = id)
+
+    suspend fun postShopAddFilmItem(shop: Shop) = apiUser.postShopAddFilmItem(shop = shop)
+
+    suspend fun getSeriesCheck(
+        kinopoiskId:Int,
+        season:Int,
+        series:Int
+    ):Response<Boolean> = apiUser.getSerialCheck(
+        kinopoiskId = kinopoiskId,
+        season = season,
+        series = series
+    )
+
+    suspend fun postSeries(serial: Serial) = apiUser.postSerial(serial = serial)
+
+    suspend fun putSeries(
+        viewed:Boolean,
+        kinopoiskId:Int,
+        season:Int,
+        series:Int
+    ) = apiUser.putSerial(
+        viewed = viewed,
+        kinopoiskId = kinopoiskId,
+        series = series,
+        season = season
+    )
 }

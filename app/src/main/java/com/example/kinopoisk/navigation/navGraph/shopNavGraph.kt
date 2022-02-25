@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.kinopoisk.navigation.SHOP_ROUTE
 import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.screen.shop.ShopAddFilmItemScreen
 import com.example.kinopoisk.screen.shop.ShopScreen
 
 fun NavGraphBuilder.shopNavGraph(
@@ -21,6 +22,11 @@ fun NavGraphBuilder.shopNavGraph(
                 ShopScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope
+                )
+            }
+            composable(Screen.ShopAddFilmItem.route){
+                ShopAddFilmItemScreen(
+                    navController = navController
                 )
             }
         }

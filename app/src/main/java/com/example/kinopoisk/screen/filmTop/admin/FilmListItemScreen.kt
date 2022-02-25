@@ -1,13 +1,13 @@
-package com.example.kinopoisk.screen.shop
+package com.example.kinopoisk.screen.filmTop.admin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -15,40 +15,32 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import androidx.paging.LoadState
-import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.navigation.MAIN_ROUTE
 import com.example.kinopoisk.navigation.Screen
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
-import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
+import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.UserRole
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
 @Composable
-fun ShopScreen(
-    shopViewModel: ShopViewModel = hiltViewModel(),
+fun FilmListItemScreen(
+    filmTopViewModel: FilmTopViewModel = hiltViewModel(),
+    navController:NavController,
     lifecycleScope: LifecycleCoroutineScope,
-    navController: NavController
+    adminListFilmId:Int
 ) {
-    val userRole = remember { mutableStateOf(UserRole.BaseUser.name) }
-    val search = remember { mutableStateOf("") }
-    val check = remember { mutableStateOf(false) }
-    val shop = shopViewModel.getShop(
-        search = search.value
-    ).collectAsLazyPagingItems()
+    val filmListItem = remember { mutableStateOf(AdminFilmList()) }
 
-    shopViewModel.readUserRole()
-    shopViewModel.responseUserRole.onEach {
-        userRole.value = it
+    filmTopViewModel.getFilmListItem(id = adminListFilmId)
+    filmTopViewModel.responseFilmListItem.onEach {
+        filmListItem.value = it
     }.launchWhenStarted(lifecycleScope)
 
     Scaffold(
@@ -57,25 +49,13 @@ fun ShopScreen(
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = {
-                    SearchView(search = search)
+                    Text(text = filmListItem.value.title)
                 }, navigationIcon = {
-                    IconButton(onClick = {
-                        navController.navigate(MAIN_ROUTE)
-                    }) {
+                    IconButton(onClick = { navController.navigate(MAIN_ROUTE) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
                         )
-                    }
-                }, actions = {
-                    if (userRole.value == UserRole.Admin.name){
-                        IconButton(onClick = { navController.navigate(Screen.ShopAddFilmItem.route) }) {
-                            Icon(
-                                imageVector = Icons.Default.Add,
-                                contentDescription = null,
-                                tint = secondaryBackground
-                            )
-                        }
                     }
                 }
             )
@@ -84,8 +64,8 @@ fun ShopScreen(
                 modifier = Modifier.fillMaxSize(),
                 color = primaryBackground
             ) {
-                LazyColumn(content = {
-                    items(shop){ item ->
+                LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
+                    items(filmListItem.value.movies){ item ->
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -94,7 +74,7 @@ fun ShopScreen(
                                 .clickable {
                                     navController.navigate(
                                         Screen.FilmInfo.base(
-                                            item?.kinopoiskId.toString()
+                                            item.kinopoiskId.toString()
                                         )
                                     )
                                 },
@@ -109,7 +89,7 @@ fun ShopScreen(
                             ) {
                                 Image(
                                     painter = rememberImagePainter(
-                                        data = item?.posterUrlPreview,
+                                        data = item.posterUrl,
                                         builder = {
                                             crossfade(true)
                                         }
@@ -120,46 +100,12 @@ fun ShopScreen(
                                         .width(100.dp)
                                         .clip(AbsoluteRoundedCornerShape(10.dp))
                                 )
-                                Column {
-                                    Text(
-                                        text = item?.nameRu.toString(),
-                                        modifier = Modifier.padding(5.dp)
-                                    )
-                                    Text(
-                                        text = "${item?.price} P",
-                                        modifier = Modifier.padding(5.dp),
-                                        color = secondaryBackground
-                                    )
-                                }
-                            }
-                        }
-                    }
-                    item {
-                        if (check.value){
-                            Column(
-                                Modifier.fillMaxWidth(),
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
-                                CircularProgressIndicator(
-                                    color = secondaryBackground
+                                Text(
+                                    text = item.nameRu.toString(),
+                                    modifier = Modifier.padding(5.dp),
+                                    color = Color.White
                                 )
                             }
-                        }
-                    }
-
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                        )
-                    }
-
-                    shop.apply {
-                        when{
-                            loadState.refresh is LoadState.Loading -> check.value = false
-
-                            loadState.append is LoadState.Loading -> check.value = true
                         }
                     }
                 })

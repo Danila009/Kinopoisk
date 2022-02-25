@@ -1,18 +1,18 @@
 package com.example.kinopoisk.navigation.navGraph.filmNavGraph
 
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.FILM_LIST_ARGUMENT
-import com.example.kinopoisk.navigation.FILM_TOP_NAME_ARGUMENT
-import com.example.kinopoisk.navigation.FILM_TOP_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.*
 import com.example.kinopoisk.screen.filmTop.FilmTopScreen
 import com.example.kinopoisk.screen.filmTop.admin.FilmListAddScreen
 import com.example.kinopoisk.screen.filmTop.admin.FilmListItemAddScreen
+import com.example.kinopoisk.screen.filmTop.admin.FilmListItemScreen
 import com.example.kinopoisk.utils.Converters
 
 fun NavGraphBuilder.filmTopNavGraph(
     navController: NavController,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
         startDestination = Screen.FilmTop.route,
@@ -52,6 +52,20 @@ fun NavGraphBuilder.filmTopNavGraph(
             composable(Screen.FilmListItemAdd.route){
                 FilmListItemAddScreen(
                     navController = navController
+                )
+            }
+            composable(
+                Screen.AdminListFilmItem.route,
+                arguments = listOf(
+                    navArgument(ADMIN_FILM_LIST_ITEM_ID){
+                        type = NavType.StringType
+                    }
+                )
+            ){
+                FilmListItemScreen(
+                    navController = navController,
+                    lifecycleScope = lifecycleScope,
+                    adminListFilmId = it.arguments?.getString(ADMIN_FILM_LIST_ITEM_ID)!!.toInt()
                 )
             }
         }

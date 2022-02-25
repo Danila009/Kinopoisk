@@ -16,6 +16,9 @@ import com.example.kinopoisk.screen.filmTop.source.TopPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
@@ -25,6 +28,9 @@ class FilmTopViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val apiUserRepository: ApiUserRepository
 ):ViewModel() {
+    private val _responseFilmListItem:MutableStateFlow<AdminFilmList> = MutableStateFlow(AdminFilmList())
+    val responseFilmListItem: StateFlow<AdminFilmList> = _responseFilmListItem.asStateFlow()
+
     fun getTop(
         type: String
     ): Flow<PagingData<TopItem>> {
@@ -71,5 +77,15 @@ class FilmTopViewModel @Inject constructor(
                 apiRepository = apiRepository
             )
         }.flow.cachedIn(viewModelScope)
+    }
+
+    fun getFilmListItem(id:Int){
+        viewModelScope.launch {
+            try {
+                _responseFilmListItem.value = apiUserRepository.getFilmListItem(id = id).body()!!
+            }catch (e:Exception){
+                Log.d("Retrofit", e.message.toString())
+            }
+        }
     }
 }

@@ -142,7 +142,9 @@ fun TopView(
                     .size(150.dp)
                     .padding(5.dp)
                     .clickable {
-                        //navController.navigate(Screen.FilmListAdd.base())
+                        navController.navigate(Screen.AdminListFilmItem.base(
+                            adminFilmListItemId = item.id.toString()
+                        ))
                     }
             ) {
                 Column(

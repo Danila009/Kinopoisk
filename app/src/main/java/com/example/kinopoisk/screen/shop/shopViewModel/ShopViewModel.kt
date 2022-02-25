@@ -7,9 +7,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.shop.Shop
+import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
+import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.shop.source.ShopPagingShop
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -20,7 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class ShopViewModel @Inject constructor(
     private val userRepository: ApiUserRepository,
-    private val userPreferenceRepository: UserPreferenceRepository
+    private val userPreferenceRepository: UserPreferenceRepository,
+    private val apiRepository: ApiRepository
 ):ViewModel() {
     private val _responseUserRole:MutableStateFlow<String> = MutableStateFlow("")
     val responseUserRole:StateFlow<String> = _responseUserRole.asStateFlow()
@@ -50,5 +54,42 @@ class ShopViewModel @Inject constructor(
                 Log.d("DateStore:",e.message.toString())
             }
         }
+    }
+
+    fun postShopAddFilmItem(shop: Shop){
+        viewModelScope.launch {
+            try {
+                userRepository.postShopAddFilmItem(shop = shop)
+            }catch (e:Exception){
+                Log.d("Retrofit", e.message.toString())
+            }
+        }
+    }
+
+    fun getFilm(
+        genres:List<Int> = listOf(),
+        countries:List<Int> = listOf(),
+        order:String = "RATING",
+        type:String = "ALL",
+        ratingFrom:Int = 0,
+        ratingTo:Int = 10,
+        yearFrom:Int = 1000,
+        yearTo:Int = 3000,
+        keyword:String = ""
+    ):Flow<PagingData<FilmItem>>  {
+        return  Pager(PagingConfig(pageSize = 1)){
+            FilmPagingSource(
+                genres = genres,
+                countries = countries,
+                order = order,
+                type = type,
+                ratingFrom = ratingFrom,
+                ratingTo = ratingTo,
+                yearFrom = yearFrom,
+                yearTo = yearTo,
+                keyword = keyword,
+                apiRepository = apiRepository
+            )
+        }.flow.cachedIn(viewModelScope)
     }
 }

@@ -4,8 +4,8 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FilmItem(
-    val kinopoiskId:Int,
-    val imdbId:String,
+    val kinopoiskId:Int = 0,
+    val imdbId:String = "",
     val nameRu:String? = null,
     val nameEn:String? = null,
     val nameOriginal:String? = null,

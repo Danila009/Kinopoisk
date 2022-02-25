@@ -4,6 +4,7 @@ import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.news.News
+import com.example.kinopoisk.api.model.series.Serial
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.Header
@@ -11,16 +12,20 @@ import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.ADMIN_FILM_LIST_URL
+import com.example.kinopoisk.utils.Constants.ADMIN_SHOP_ADD_FILM_ITEM_URL
 import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
+import com.example.kinopoisk.utils.Constants.FILM_LIST_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_LIST_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_ALL_URL
 import com.example.kinopoisk.utils.Constants.HISTORY_USER_URL
-import com.example.kinopoisk.utils.Constants.NEWS_MOVIE
+import com.example.kinopoisk.utils.Constants.NEWS_MOVIE_URL
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_ID_KINOPOISK_URK
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_URK
 import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
+import com.example.kinopoisk.utils.Constants.SERIAL_CHECK_URL
+import com.example.kinopoisk.utils.Constants.SERIAL_URK
 import com.example.kinopoisk.utils.Constants.SHOP_CHECK_URL
 import com.example.kinopoisk.utils.Constants.SHOP_FILM_ID_KINOPOISK_URL
 import com.example.kinopoisk.utils.Constants.STAFF_USER_FAVORITE_CHECK_URL
@@ -150,8 +155,38 @@ interface ApiUser {
     @GET(FILM_LIST_URL)
     suspend fun getFilmList():Response<List<AdminFilmList>>
 
-    @GET(NEWS_MOVIE)
+    @GET(FILM_LIST_ID_URL)
+    suspend fun getFilmListItem(
+        @Path("id") id:Int
+    ):Response<AdminFilmList>
+
+    @GET(NEWS_MOVIE_URL)
     suspend fun getNewsMovie(
         @Query("kinopoiskId") kinopoiskId:Int
     ):Response<List<News>>
+
+    @POST(ADMIN_SHOP_ADD_FILM_ITEM_URL)
+    suspend fun postShopAddFilmItem(
+        @Body shop: Shop
+    )
+
+    @GET(SERIAL_CHECK_URL)
+    suspend fun getSerialCheck(
+        @Query("kinopoiskId") kinopoiskId:Int,
+        @Query("season") season:Int,
+        @Query("series") series:Int
+    ):Response<Boolean>
+
+    @POST(SERIAL_URK)
+    suspend fun postSerial(
+        @Body serial: Serial
+    )
+
+    @PUT(SERIAL_URK)
+    suspend fun putSerial(
+        @Query("viewed") viewed: Boolean,
+        @Query("kinopoiskId") kinopoiskId:Int,
+        @Query("season") season:Int,
+        @Query("series") series:Int
+    )
 }
