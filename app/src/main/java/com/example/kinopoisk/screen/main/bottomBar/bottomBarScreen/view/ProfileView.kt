@@ -28,7 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.example.kinopoisk.R
-import com.example.kinopoisk.navigation.SETTING_ROUTE
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.constants.SettingScreenConstants.Route.SETTING_ROUTE
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.FavoriteFilmView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.FavoriteStaffView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.HistoryView

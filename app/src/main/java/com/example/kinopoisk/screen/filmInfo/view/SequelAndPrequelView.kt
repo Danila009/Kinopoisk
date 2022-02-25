@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
@@ -50,7 +50,7 @@ fun SequelAndPrequelView(
                 Column(
                     modifier = Modifier.clickable {
                         navController.navigate(
-                            Screen.FilmInfo.base(
+                            FilmScreenRoute.FilmInfo.base(
                                 filmId = item.filmId.toString()
                             )
                         )

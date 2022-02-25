@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.shop.Shop
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
@@ -84,7 +84,7 @@ fun DialogPriceFilmShopView(
                                         price = price.value.toInt()
                                     )
                                 )
-                                navController.navigate(Screen.Shop.route)
+                                navController.navigate(ShopScreenRoute.Shop.route)
                             }else{
                                 Toast.makeText(
                                     context,

@@ -1,35 +1,38 @@
-package com.example.kinopoisk.navigation.navGraph
+package com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import com.example.kinopoisk.navigation.*
-import com.example.kinopoisk.screen.main.MainScreen
-import com.example.kinopoisk.screen.main.sortingScreen.SortingScreen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.GENRE_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.GENRE_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.ORDER_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.RATING_FROM_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.RATING_TO_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.TYPE_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.YEAR_FROM_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.YEAR_TO_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Route.SORTING_FILM_ROUTE
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 import com.example.kinopoisk.screen.main.sortingScreen.CountriesScreen
 import com.example.kinopoisk.screen.main.sortingScreen.GenreScreen
+import com.example.kinopoisk.screen.main.sortingScreen.SortingScreen
 import com.example.kinopoisk.utils.Converters
 
 @ExperimentalFoundationApi
-fun NavGraphBuilder.mainNavGraph(
+fun NavGraphBuilder.sortingFilmNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope,
+    lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
-        startDestination = Screen.Main.route,
-        route = MAIN_ROUTE,
+        startDestination = SortingScreenRoute.SortingFilm.route,
+        route = SORTING_FILM_ROUTE,
         builder = {
-            composable(Screen.Main.route){
-                MainScreen(
-                    navController = navController,
-                    lifecycleScope = lifecycleScope,
-                )
-            }
             composable(
-                Screen.Sorting.route,
+                SortingScreenRoute.SortingFilm.route,
                 arguments = listOf(
                     navArgument(GENRE_ARGUMENT){
                         type = NavType.StringType
@@ -47,7 +50,7 @@ fun NavGraphBuilder.mainNavGraph(
                 )
             }
             composable(
-                Screen.ResultSorting.route,
+                SortingScreenRoute.ResultSorting.route,
                 arguments = listOf(
                     navArgument(RATING_FROM_ARGUMENT){
                         type = NavType.StringType
@@ -93,19 +96,18 @@ fun NavGraphBuilder.mainNavGraph(
                     navController = navController
                 )
             }
-            composable(Screen.Genre.route){
+            composable(SortingScreenRoute.Genre.route){
                 GenreScreen(
                     lifecycleScope = lifecycleScope,
                     navController = navController
                 )
             }
-            composable(Screen.Countries.route){
+            composable(SortingScreenRoute.Countries.route){
                 CountriesScreen(
                     lifecycleScope = lifecycleScope,
                     navController = navController
                 )
             }
-
         }
     )
 }

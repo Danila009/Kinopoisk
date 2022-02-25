@@ -1,9 +1,14 @@
-package com.example.kinopoisk.navigation.navGraph
+package com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.kinopoisk.navigation.*
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.FILM_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.KEY_STAFF_SCREEN_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.STAFF_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Route.STAFF_INFO_ROUTE
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.staffInfo.MoreStaffScreen
 import com.example.kinopoisk.screen.staffInfo.StaffInfoScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -14,11 +19,11 @@ fun NavGraphBuilder.staffInfoNavGraph(
     lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
-        startDestination = Screen.StaffInfo.route,
+        startDestination = StaffInfoScreenRoute.StaffInfo.route,
         route = STAFF_INFO_ROUTE,
         builder = {
             composable(
-                Screen.StaffInfo.route,
+                StaffInfoScreenRoute.StaffInfo.route,
                 arguments = listOf(
                     navArgument(
                         name = STAFF_ID_ARGUMENT,
@@ -31,7 +36,7 @@ fun NavGraphBuilder.staffInfoNavGraph(
                             nullable = true
                             type = NavType.StringType
                         }
-                    ), navArgument(KEY_SCREEN_ARGUMENT){
+                    ), navArgument(KEY_STAFF_SCREEN_ARGUMENT){
                         type = NavType.StringType
                         nullable = true
                     }
@@ -42,11 +47,11 @@ fun NavGraphBuilder.staffInfoNavGraph(
                     lifecycleScope = lifecycleScope,
                     staffId = it.arguments?.getString(STAFF_ID_ARGUMENT)!!.toInt(),
                     filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toString(),
-                    keyStaffInfoScreenString = it.arguments?.getString(KEY_SCREEN_ARGUMENT).toString()
+                    keyStaffInfoScreenString = it.arguments?.getString(KEY_STAFF_SCREEN_ARGUMENT).toString()
                 )
             }
             composable(
-                Screen.MoreStaff.route,
+                StaffInfoScreenRoute.MoreStaff.route,
                 arguments = listOf(
                     navArgument(STAFF_ID_ARGUMENT){
                         type = NavType.StringType

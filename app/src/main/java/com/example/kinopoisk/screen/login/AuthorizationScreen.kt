@@ -18,7 +18,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.user.Authorization
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.screen.login.validate.validateAuthorization
 import com.example.kinopoisk.screen.login.view.EmailTextFieldView
 import com.example.kinopoisk.screen.login.view.PasswordTextFieldView
@@ -43,7 +44,7 @@ fun AuthorizationScreen(
                         Text(text = "Authorization")
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.navigate(Screen.Main.route) }) {
+                        IconButton(onClick = { navController.navigate(MAIN_ROUTE) }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
                                 contentDescription = null
@@ -95,7 +96,7 @@ fun AuthorizationScreen(
                         Text(text = "Authorization")
                     }
 
-                    TextButton(onClick = { navController.navigate(Screen.UpdateUserPassword.route) }) {
+                    TextButton(onClick = { navController.navigate(LoginScreenRoute.UpdateUserPassword.route) }) {
                         Text(
                             text = "Забыл пароль",
                             modifier = Modifier.padding(5.dp),

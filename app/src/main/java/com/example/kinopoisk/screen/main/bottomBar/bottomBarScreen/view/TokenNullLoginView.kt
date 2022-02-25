@@ -14,7 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
@@ -32,7 +32,7 @@ fun TokenNullLoginView(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = { navController.navigate(Screen.Authorization.route) },
+                onClick = { navController.navigate(LoginScreenRoute.Authorization.route) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = secondaryBackground),
                 shape = AbsoluteRoundedCornerShape(20.dp),
                 modifier = Modifier.padding(5.dp)
@@ -40,7 +40,7 @@ fun TokenNullLoginView(
                 Text(text = "Authorization")
             }
             Button(
-                onClick = { navController.navigate(Screen.Registration.route) },
+                onClick = { navController.navigate(LoginScreenRoute.Registration.route) },
                 colors = ButtonDefaults.buttonColors(backgroundColor = secondaryBackground),
                 shape = AbsoluteRoundedCornerShape(20.dp),
                 modifier = Modifier.padding(5.dp)

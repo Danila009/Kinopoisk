@@ -3,9 +3,9 @@ package com.example.kinopoisk.navigation.navGraph.cinemaNavGraph
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.CINEMA_ID_ARGUMENT
-import com.example.kinopoisk.navigation.CINEMA_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenConstants.Route.CINEMA_ROUTE
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
 import com.example.kinopoisk.screen.cinema.CinemaInfoScreen
 import com.example.kinopoisk.screen.cinema.CinemaMapScreen
@@ -17,17 +17,17 @@ fun NavGraphBuilder.cinemaNavGraph(
     lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
-        startDestination = Screen.CinemaInfo.route,
+        startDestination = CinemaScreenRoute.CinemaInfo.route,
         route = CINEMA_ROUTE,
         builder = {
-            composable(Screen.CinemaMap.route){
+            composable(CinemaScreenRoute.CinemaMap.route){
                 CinemaMapScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope
                 )
             }
             composable(
-                Screen.CinemaInfo.route,
+                CinemaScreenRoute.CinemaInfo.route,
                 arguments = listOf(
                     navArgument(
                         name = CINEMA_ID_ARGUMENT
@@ -43,7 +43,7 @@ fun NavGraphBuilder.cinemaNavGraph(
                 )
             }
             composable(
-                Screen.AddReviewCinema.route,
+                CinemaScreenRoute.AddReviewCinema.route,
                 arguments = listOf(
                     navArgument(
                         name = CINEMA_ID_ARGUMENT

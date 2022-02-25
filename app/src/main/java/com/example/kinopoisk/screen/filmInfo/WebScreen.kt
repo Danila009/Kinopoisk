@@ -5,7 +5,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavController
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.WebView
 import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -17,9 +19,9 @@ fun WebScreen(
     webUrl:String,
     filmId:String?,
     cinemaId:Int?,
-    keyScreen:String
+    keyWebScreen:String
 ) {
-    val key = Converters().decodeFromString<WebScreenKey>(keyScreen)
+    val key = Converters().decodeFromString<WebScreenKey>(keyWebScreen)
 
     Scaffold(
         topBar = {
@@ -32,14 +34,14 @@ fun WebScreen(
                 ) }, navigationIcon = {
                     IconButton(onClick = {
                         when(key){
-                            WebScreenKey.PERSON ->  navController.navigate(Screen.Main.route)
+                            WebScreenKey.PERSON ->  navController.navigate(MAIN_ROUTE)
                             WebScreenKey.FILM ->  filmId?.let {
                                 navController.navigate(
-                                    Screen.FilmInfo.base(it)
+                                    FilmScreenRoute.FilmInfo.base(it)
                                 )
                             }
                             WebScreenKey.CINEMA -> navController.navigate(
-                                Screen.CinemaInfo.base(
+                                CinemaScreenRoute.CinemaInfo.base(
                                     cinemaId = cinemaId!!
                                 )
                             )

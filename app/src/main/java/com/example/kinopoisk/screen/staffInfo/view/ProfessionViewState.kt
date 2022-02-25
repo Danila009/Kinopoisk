@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.staff.FilmStaff
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -31,7 +31,7 @@ fun ProfessionViewState(
                 .padding(horizontal = 9.dp, vertical = 5.dp)
                 .clickable {
                     navController.navigate(
-                        Screen.FilmInfo.base(
+                        FilmScreenRoute.FilmInfo.base(
                             item.filmId.toString()
                         )
                     )

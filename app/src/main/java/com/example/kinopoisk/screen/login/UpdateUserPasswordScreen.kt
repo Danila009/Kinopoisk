@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.screen.login.validate.validateAuthorization
 import com.example.kinopoisk.screen.login.view.EmailTextFieldView
 import com.example.kinopoisk.screen.login.view.PasswordTextFieldView
@@ -42,7 +42,7 @@ fun UpdateUserPasswordScreen(
                 title = {
                     Text(text = "Update password")
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screen.Authorization.route) }) {
+                    IconButton(onClick = { navController.navigate(LoginScreenRoute.Authorization.route) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
@@ -87,7 +87,7 @@ fun UpdateUserPasswordScreen(
                                 email = email.value,
                                 password = password.value,
                             )
-                            navController.navigate(Screen.Authorization.route)
+                            navController.navigate(LoginScreenRoute.Authorization.route)
                             Toast.makeText(context, "Пароль изменен", Toast.LENGTH_SHORT).show()
                         }
                     }) {

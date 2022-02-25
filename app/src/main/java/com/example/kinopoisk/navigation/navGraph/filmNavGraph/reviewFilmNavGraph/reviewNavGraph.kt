@@ -1,24 +1,24 @@
-package com.example.kinopoisk.navigation.navGraph
+package com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph
 
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.FILM_ID_ARGUMENT
-import com.example.kinopoisk.navigation.REVIEW_ID_ARGUMENT
-import com.example.kinopoisk.navigation.REVIEW_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenConstants.Argument.FILM_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenConstants.Argument.REVIEW_ID_ARGUMENT
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenConstants.Route.REVIEW_ROUTE
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute
 import com.example.kinopoisk.screen.review.ReviewDetailScreen
 
-fun NavGraphBuilder.reviewNavGraph(
+fun NavGraphBuilder.reviewFilmNavGraph(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope
 ) {
     navigation(
-        startDestination = Screen.ReviewDetail.route,
+        startDestination = ReviewFilmScreenRoute.ReviewDetail.route,
         route = REVIEW_ROUTE,
         builder = {
             composable(
-                Screen.ReviewDetail.route,
+                ReviewFilmScreenRoute.ReviewDetail.route,
                 arguments = listOf(
                     navArgument(REVIEW_ID_ARGUMENT){
                         type = NavType.StringType

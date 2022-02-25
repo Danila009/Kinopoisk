@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.user.Registration
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.login.validate.validateRegistration
 import com.example.kinopoisk.screen.login.view.BaseTextFieldView
 import com.example.kinopoisk.screen.login.view.EmailTextFieldView
@@ -44,7 +44,7 @@ fun RegistrationScreen(
                     Text(text = "Registration")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screen.Main.route) }) {
+                    IconButton(onClick = { navController.navigate(MAIN_ROUTE) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null

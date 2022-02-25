@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,8 +20,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.navigation.Screen
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -69,7 +66,7 @@ fun FilmsScreen(
                         .padding(horizontal = 9.dp, vertical = 5.dp)
                         .clickable {
                             navController.navigate(
-                                Screen.FilmInfo.base(
+                                FilmScreenRoute.FilmInfo.base(
                                     item?.kinopoiskId.toString()
                                 )
                             )

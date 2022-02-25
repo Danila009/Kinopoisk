@@ -18,7 +18,7 @@ import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.homeView
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.UserRole
+import com.example.kinopoisk.utils.viewState.UserRole
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.example.kinopoisk.utils.viewState.ViewStatePremiere
 import kotlinx.coroutines.flow.onEach

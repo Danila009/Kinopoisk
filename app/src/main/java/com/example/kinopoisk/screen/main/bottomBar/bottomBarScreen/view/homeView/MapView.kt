@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -42,7 +42,7 @@ fun MapView(
         )
 
         TextButton(
-            onClick = { navController.navigate(Screen.CinemaMap.route) },
+            onClick = { navController.navigate(CinemaScreenRoute.CinemaMap.route) },
             modifier = Modifier.padding(5.dp)
         ) {
             Text(
@@ -57,7 +57,7 @@ fun MapView(
                 if (checkNavMap.value){
                     LaunchedEffect(key1 = Unit, block ={
                         navController.navigate(
-                            Screen.CinemaInfo.base(
+                            CinemaScreenRoute.CinemaInfo.base(
                                 cinemaId = item.id
                             )
                         )

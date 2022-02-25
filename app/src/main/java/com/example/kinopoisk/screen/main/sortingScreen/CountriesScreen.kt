@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.filmInfo.Countrie
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -47,7 +47,7 @@ fun CountriesScreen(
                 title = { Text(text = "Countries") },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Sorting.base())
+                        navController.navigate(SortingScreenRoute.SortingFilm.base())
                     }) {
                         Icon(imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
@@ -55,7 +55,7 @@ fun CountriesScreen(
                     }
                 }, actions = {
                     TextButton(onClick = {
-                        navController.navigate(Screen.Sorting.base(
+                        navController.navigate(SortingScreenRoute.SortingFilm.base(
                             countries = Converters().encodeToString(countriesCheck.value)
                         ))
                     }) {

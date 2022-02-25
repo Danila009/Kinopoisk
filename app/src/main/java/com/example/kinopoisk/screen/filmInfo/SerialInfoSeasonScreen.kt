@@ -21,7 +21,7 @@ import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.seasons.Episode
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.series.Serial
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -67,7 +67,7 @@ fun SerialInfoSeasonScreen(
                         Text(text = filmInfo.value.nameRu)
                     },
                     navigationIcon = {
-                        IconButton(onClick = { navController.navigate(Screen.FilmInfo.base(filmId.toString())) }) {
+                        IconButton(onClick = { navController.navigate(FilmScreenRoute.FilmInfo.base(filmId.toString())) }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
                                 contentDescription = null

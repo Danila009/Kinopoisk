@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.google.android.gms.maps.model.LatLng
@@ -41,7 +41,7 @@ fun CinemaMapScreen(
                 if (checkNavMap.value){
                     LaunchedEffect(key1 = Unit, block ={
                         navController.navigate(
-                            Screen.CinemaInfo.base(
+                            CinemaScreenRoute.CinemaInfo.base(
                                 cinemaId = cinema.value[it].id
                             )
                         )

@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.screen.more.view.ImageView
@@ -53,9 +53,9 @@ fun ImageMoreScreen(
                     backgroundColor = primaryBackground,
                     elevation = 8.dp,
                     title = {
-                        Text(text = filmInfo.value.nameRu.toString())
+                        Text(text = filmInfo.value.nameRu)
                     }, navigationIcon = {
-                        IconButton(onClick = {navController.navigate(Screen.FilmInfo.base(filmId = filmId.toString()))}) {
+                        IconButton(onClick = {navController.navigate(FilmScreenRoute.FilmInfo.base(filmId = filmId.toString()))}) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,
                                 contentDescription = null

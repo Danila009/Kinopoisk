@@ -8,7 +8,7 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.model.user.Authorization
 import com.example.kinopoisk.api.model.user.Registration
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -35,7 +35,7 @@ class LoginViewModel @Inject constructor(
                         .apply()
                     saveStatusRegistration(userRegistration = true)
                     savaUserRole(userRole = response.body()!!.role)
-                    navController.navigate(Screen.Main.route)
+                    navController.navigate(MAIN_ROUTE)
                 }
             }catch (e:Exception){
                 Log.d("Retrofit", e.message.toString())

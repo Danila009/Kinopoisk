@@ -21,7 +21,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmItem
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph.constants.FilmTopScreenRoute
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -45,7 +46,7 @@ fun FilmListItemAddScreen(
                     Text(text = "film list add item")
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.FilmListAdd.base())
+                        navController.navigate(FilmTopScreenRoute.FilmListAdd.base())
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -64,7 +65,7 @@ fun FilmListItemAddScreen(
                         vertical = 5.dp
                     ), shape = AbsoluteRoundedCornerShape(15.dp),
                 onClick = { navController.navigate(
-                    Screen.FilmListAdd.base(
+                    FilmTopScreenRoute.FilmListAdd.base(
                         filmList = Converters().encodeToString(filmAddList.value)
                     )
                 ) }
@@ -91,7 +92,7 @@ fun FilmListItemAddScreen(
                                 .padding(horizontal = 9.dp, vertical = 5.dp)
                                 .clickable {
                                     navController.navigate(
-                                        Screen.FilmInfo.base(
+                                        FilmScreenRoute.FilmInfo.base(
                                             item?.kinopoiskId.toString()
                                         )
                                     )

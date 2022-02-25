@@ -22,7 +22,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmItem
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.screen.shop.view.DialogPriceFilmShopView
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -51,7 +52,7 @@ fun ShopAddFilmItemScreen(
                 title = {
                     Text(text = "Shop add film item")
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screen.Shop.route) }) {
+                    IconButton(onClick = { navController.navigate(ShopScreenRoute.Shop.route) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
@@ -73,7 +74,7 @@ fun ShopAddFilmItemScreen(
                                 .padding(horizontal = 9.dp, vertical = 5.dp)
                                 .clickable {
                                     navController.navigate(
-                                        Screen.FilmInfo.base(
+                                        FilmScreenRoute.FilmInfo.base(
                                             item!!.kinopoiskId.toString()
                                         )
                                     )

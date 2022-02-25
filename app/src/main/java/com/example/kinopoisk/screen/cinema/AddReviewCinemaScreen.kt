@@ -21,7 +21,7 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.user.UserInfo
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.view.BaseTextField
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -66,7 +66,7 @@ fun AddReviewCinemaScreen(
                     Text(text = cinema.value.title)
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.CinemaInfo.base(
+                        navController.navigate(CinemaScreenRoute.CinemaInfo.base(
                             cinemaId = cinemaId
                         ))
                     }) {
@@ -129,7 +129,7 @@ fun AddReviewCinemaScreen(
                                 date = Converters().getCurrentTime()
                             ), cinemaId = cinemaId
                         )
-                        navController.navigate(Screen.CinemaInfo.base(
+                        navController.navigate(CinemaScreenRoute.CinemaInfo.base(
                             cinemaId = cinemaId
                         ))
                     }) {

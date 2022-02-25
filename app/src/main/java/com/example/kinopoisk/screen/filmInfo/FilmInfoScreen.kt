@@ -32,7 +32,8 @@ import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.history.History
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.screen.main.key.WebScreenKey
@@ -152,7 +153,7 @@ fun FilmInfoScreen(
     if (checkWeb.value){
         LaunchedEffect(key1 = Unit, block = {
             filmInfo.value.webUrl?.let {
-                navController.navigate(Screen.WebScreen.base(
+                navController.navigate(FilmScreenRoute.WebScreen.base(
                     filmId = filmId.toString(),
                     keyString = Converters().encodeToString(WebScreenKey.FILM),
                     webUrl = it
@@ -166,10 +167,10 @@ fun FilmInfoScreen(
                     elevation = 8.dp,
                     backgroundColor = primaryBackground,
                     title = {
-                        Text(text = filmInfo.value.nameRu.toString())
+                        Text(text = filmInfo.value.nameRu)
                     }, navigationIcon = {
                         IconButton(onClick = {
-                            navController.navigate(Screen.Main.route)
+                            navController.navigate(MAIN_ROUTE)
                         }) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,

@@ -7,7 +7,6 @@ import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.util.Base64
-import android.util.Log
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -156,8 +155,8 @@ class Converters {
     ): ManagedActivityResultLauncher<String, Uri?> {
         val select = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()){
             it?.let { uri: Uri ->
-                val sourse = ImageDecoder.createSource(context.applicationContext.contentResolver,uri)
-                bitmap.value = ImageDecoder.decodeBitmap(sourse)
+                val source = ImageDecoder.createSource(context.applicationContext.contentResolver,uri)
+                bitmap.value = ImageDecoder.decodeBitmap(source)
 
                 boolean.value = false
             }

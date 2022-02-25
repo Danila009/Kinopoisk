@@ -19,7 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.review.ReviewDetail
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.constants.FilmMoreScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -50,7 +50,7 @@ fun ReviewDetailScreen(
                     Text(text = reviewDetail.value.reviewTitle)
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.ReviewMore.base(filmId.toString())
+                        navController.navigate(FilmMoreScreenRoute.ReviewFilmMore.base(filmId.toString())
                         ) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

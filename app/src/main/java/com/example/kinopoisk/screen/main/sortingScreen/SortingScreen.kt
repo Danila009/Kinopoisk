@@ -25,7 +25,8 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.filmInfo.Countrie
 import com.example.kinopoisk.api.model.filmInfo.Genre
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.sortingScreen.tab.OrderTabData
 import com.example.kinopoisk.screen.main.sortingScreen.tab.TypeTabData
 import com.example.kinopoisk.screen.main.validate.SortingValidate
@@ -82,7 +83,7 @@ fun SortingScreen(
                 title = { Text(text = "Sorting")},
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route)
+                        navController.navigate(MAIN_ROUTE)
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -212,7 +213,7 @@ fun SortingScreen(
                             .padding(vertical = 5.dp)
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate(Screen.Genre.route)
+                                navController.navigate(SortingScreenRoute.Genre.route)
                             }
                     ) {
                         Column(
@@ -252,7 +253,7 @@ fun SortingScreen(
                             .padding(vertical = 5.dp)
                             .fillMaxWidth()
                             .clickable {
-                                navController.navigate(Screen.Countries.route)
+                                navController.navigate(SortingScreenRoute.Countries.route)
                             }
                     ) {
                         Column(
@@ -276,12 +277,10 @@ fun SortingScreen(
                                     modifier = Modifier.padding(5.dp),
                                     content = {
                                         items(countries){item ->
-                                            item.country?.let { country ->
-                                                Text(
-                                                    text = country,
-                                                    modifier = Modifier.padding(5.dp)
-                                                )
-                                            }
+                                            Text(
+                                                text = item.country,
+                                                modifier = Modifier.padding(5.dp)
+                                            )
                                         }
                                     }
                                 )
@@ -322,7 +321,7 @@ fun SortingScreen(
                                     max = yearTo.value,
                                     context = context
                             )){
-                                navController.navigate(Screen.ResultSorting.base(
+                                navController.navigate(SortingScreenRoute.ResultSorting.base(
                                     ratingTo = ratingTo.value,
                                     ratingFrom = ratingFrom.value,
                                     yearTo = yearTo.value,

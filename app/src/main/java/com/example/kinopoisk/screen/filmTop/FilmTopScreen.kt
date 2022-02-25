@@ -22,7 +22,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -51,7 +52,7 @@ fun FilmTopScreen(
                     ))
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Main.route)
+                        navController.navigate(MAIN_ROUTE)
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -74,7 +75,7 @@ fun FilmTopScreen(
                                 .padding(horizontal = 9.dp, vertical = 5.dp)
                                 .clickable {
                                     navController.navigate(
-                                        Screen.FilmInfo.base(
+                                        FilmScreenRoute.FilmInfo.base(
                                             item?.filmId.toString()
                                         )
                                     )

@@ -15,7 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.staff.StaffInfo
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -45,7 +45,7 @@ fun MoreStaffScreen(
                 title = {
                     Text(text = staff.value.nameRu.toString())
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screen.StaffInfo.base(
+                    IconButton(onClick = { navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
                         staffId = staffId.toString(),
                         filmId = filmId.toString(),
                         key = Converters().encodeToString(StaffInfoScreenKey.FILM)

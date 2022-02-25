@@ -1,7 +1,6 @@
 package com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,7 +18,8 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.main.key.WebScreenKey
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
@@ -50,7 +50,7 @@ fun PersonScreen(
                         .fillMaxWidth()
                         .padding(5.dp)
                         .clickable{
-                            navController.navigate(Screen.StaffInfo.base(
+                            navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
                                 staffId = item?.kinopoiskId.toString(),
                                 key = Converters().encodeToString(StaffInfoScreenKey.PERSON)
                             ))
@@ -81,7 +81,7 @@ fun PersonScreen(
                             )
                             TextButton(onClick = {
                                 item?.webUrl?.let {
-                                    navController.navigate(Screen.WebScreen.base(
+                                    navController.navigate(FilmScreenRoute.WebScreen.base(
                                         keyString = Converters().encodeToString(WebScreenKey.PERSON),
                                         webUrl = it
                                     ))

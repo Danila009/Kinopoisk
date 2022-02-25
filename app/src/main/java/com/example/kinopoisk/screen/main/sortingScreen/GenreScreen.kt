@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.filmInfo.Genre
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -47,7 +47,7 @@ fun GenreScreen(
                 title = { Text(text = "Genre") },
                 navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(Screen.Sorting.base())
+                        navController.navigate(SortingScreenRoute.SortingFilm.base())
                     }) {
                         Icon(imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
@@ -55,7 +55,7 @@ fun GenreScreen(
                     }
                 }, actions = {
                     TextButton(onClick = {
-                        navController.navigate(Screen.Sorting.base(
+                        navController.navigate(SortingScreenRoute.SortingFilm.base(
                             genre = Converters().encodeToString(genreCheck.value)
                         ))
                     }) {

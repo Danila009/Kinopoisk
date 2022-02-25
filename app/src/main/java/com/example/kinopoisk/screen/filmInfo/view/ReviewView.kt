@@ -16,7 +16,8 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import com.example.kinopoisk.api.model.review.ReviewItem
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.constants.FilmMoreScreenRoute
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 
@@ -38,7 +39,7 @@ fun ReviewView(
         )
 
         TextButton(
-            onClick = { navController.navigate(Screen.ReviewMore.base(filmId = filmId)) },
+            onClick = { navController.navigate(FilmMoreScreenRoute.ReviewFilmMore.base(filmId = filmId)) },
             modifier = Modifier.padding(5.dp)
         ) {
             Text(
@@ -55,7 +56,7 @@ fun ReviewView(
                     .padding(5.dp)
                     .clickable {
                         navController.navigate(
-                            Screen.ReviewDetail.base(
+                            ReviewFilmScreenRoute.ReviewDetail.base(
                                 reviewId = item?.reviewId.toString(),
                                 filmId = filmId
                             )

@@ -25,7 +25,9 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
@@ -80,11 +82,11 @@ fun StaffInfoScreen(
                         when(keyStaffInfoScreen){
                             StaffInfoScreenKey.FILM -> {
                                 filmId?.let {
-                                    navController.navigate(Screen.FilmInfo.base(it))
+                                    navController.navigate(FilmScreenRoute.FilmInfo.base(it))
                                 }
                             }
                             StaffInfoScreenKey.PERSON -> {
-                                navController.navigate(Screen.Main.route)
+                                navController.navigate(MAIN_ROUTE)
                             }
                         }
                     }) {
@@ -176,7 +178,7 @@ fun StaffInfoScreen(
                                         color = Color.White
                                     )
                                     TextButton(onClick = { navController.navigate(
-                                        Screen.MoreStaff.base(
+                                        StaffInfoScreenRoute.MoreStaff.base(
                                             staffIf = staffId.toString(),
                                             filmId = filmId.toString()
                                         )) }) {

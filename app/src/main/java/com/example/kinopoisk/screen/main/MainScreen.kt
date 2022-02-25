@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.bottomBar.BottomBar
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.HomeScreen
@@ -44,7 +44,7 @@ fun MainScreen(
                     },
                     actions = {
                         if (idBar.value == BottomBar.Films.name){
-                            IconButton(onClick = { navController.navigate(Screen.Sorting.base()) }) {
+                            IconButton(onClick = { navController.navigate(SortingScreenRoute.SortingFilm.base()) }) {
                                 Icon(
                                     imageVector = Icons.Default.Menu,
                                     contentDescription = null,

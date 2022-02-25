@@ -12,7 +12,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -20,7 +19,8 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -52,9 +52,9 @@ fun ReviewMoreScreen(
                 elevation = 8.dp,
                 backgroundColor = primaryBackground,
                 title = {
-                    Text(text = filmInfo.value.nameRu.toString())
+                    Text(text = filmInfo.value.nameRu)
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(Screen.FilmInfo.base(filmId = filmId.toString())) }) {
+                    IconButton(onClick = { navController.navigate(FilmScreenRoute.FilmInfo.base(filmId = filmId.toString())) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
@@ -75,7 +75,7 @@ fun ReviewMoreScreen(
                                 .fillMaxWidth()
                                 .clickable {
                                     navController.navigate(
-                                        Screen.ReviewDetail.base(
+                                        ReviewFilmScreenRoute.ReviewDetail.base(
                                             reviewId = item?.reviewId.toString(),
                                             filmId = filmId.toString()
                                         )

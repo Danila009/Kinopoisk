@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.seasons.Season
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
@@ -40,7 +40,7 @@ fun SeasonView(
                     )
                 }
                 TextButton(
-                    onClick = { navController.navigate(Screen.SerialInfoSeason.base(filmId.toString())) },
+                    onClick = { navController.navigate(FilmScreenRoute.SerialInfoSeason.base(filmId.toString())) },
                     modifier = Modifier.padding(5.dp)
                 ) {
                     Text(

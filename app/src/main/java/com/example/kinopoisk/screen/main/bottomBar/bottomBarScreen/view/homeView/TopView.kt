@@ -22,11 +22,11 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph.constants.FilmTopScreenRoute
 import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.UserRole
+import com.example.kinopoisk.utils.viewState.UserRole
 
 @Composable
 fun TopView(
@@ -67,7 +67,7 @@ fun TopView(
                             .padding(5.dp)
                             .clickable {
                                 navController.navigate(
-                                    Screen.FilmTop.base(
+                                    FilmTopScreenRoute.FilmTop.base(
                                         Converters().encodeToString(NameTopViewState.TOP_100_POPULAR_FILMS)
                                     )
                                 )
@@ -83,7 +83,7 @@ fun TopView(
                             .padding(5.dp)
                             .clickable {
                                 navController.navigate(
-                                    Screen.FilmTop.base(
+                                    FilmTopScreenRoute.FilmTop.base(
                                         Converters().encodeToString(NameTopViewState.TOP_250_BEST_FILMS)
                                     )
                                 )
@@ -99,7 +99,7 @@ fun TopView(
                             .padding(5.dp)
                             .clickable {
                                 navController.navigate(
-                                    Screen.FilmTop.base(
+                                    FilmTopScreenRoute.FilmTop.base(
                                         Converters().encodeToString(NameTopViewState.TOP_AWAIT_FILMS)
                                     )
                                 )
@@ -116,7 +116,7 @@ fun TopView(
                         .size(150.dp)
                         .padding(5.dp)
                         .clickable {
-                            navController.navigate(Screen.FilmListAdd.base())
+                            navController.navigate(FilmTopScreenRoute.FilmListAdd.base())
                         }
                 ) {
                     Column(
@@ -142,7 +142,7 @@ fun TopView(
                     .size(150.dp)
                     .padding(5.dp)
                     .clickable {
-                        navController.navigate(Screen.AdminListFilmItem.base(
+                        navController.navigate(FilmTopScreenRoute.AdminListFilmItem.base(
                             adminFilmListItemId = item.id.toString()
                         ))
                     }

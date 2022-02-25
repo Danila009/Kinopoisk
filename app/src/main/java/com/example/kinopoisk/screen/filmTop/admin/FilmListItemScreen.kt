@@ -22,8 +22,8 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
-import com.example.kinopoisk.navigation.MAIN_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
@@ -73,7 +73,7 @@ fun FilmListItemScreen(
                                 .padding(horizontal = 9.dp, vertical = 5.dp)
                                 .clickable {
                                     navController.navigate(
-                                        Screen.FilmInfo.base(
+                                        FilmScreenRoute.FilmInfo.base(
                                             item.kinopoiskId.toString()
                                         )
                                     )

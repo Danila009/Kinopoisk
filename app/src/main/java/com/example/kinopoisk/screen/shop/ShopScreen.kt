@@ -23,13 +23,14 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.navigation.MAIN_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenRoute
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.UserRole
+import com.example.kinopoisk.utils.viewState.UserRole
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
@@ -69,7 +70,7 @@ fun ShopScreen(
                     }
                 }, actions = {
                     if (userRole.value == UserRole.Admin.name){
-                        IconButton(onClick = { navController.navigate(Screen.ShopAddFilmItem.route) }) {
+                        IconButton(onClick = { navController.navigate(ShopScreenRoute.ShopAddFilmItem.route) }) {
                             Icon(
                                 imageVector = Icons.Default.Add,
                                 contentDescription = null,
@@ -93,7 +94,7 @@ fun ShopScreen(
                                 .padding(horizontal = 9.dp, vertical = 5.dp)
                                 .clickable {
                                     navController.navigate(
-                                        Screen.FilmInfo.base(
+                                        FilmScreenRoute.FilmInfo.base(
                                             item?.kinopoiskId.toString()
                                         )
                                     )

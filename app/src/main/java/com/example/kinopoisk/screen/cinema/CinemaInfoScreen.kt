@@ -22,8 +22,8 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.cinema.Cinema
-import com.example.kinopoisk.navigation.MAIN_ROUTE
-import com.example.kinopoisk.navigation.Screen
+import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
+import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.cinema.view.PhoneView
 import com.example.kinopoisk.screen.cinema.view.ReviewView
 import com.example.kinopoisk.screen.cinema.view.ScheduleView
@@ -206,7 +206,7 @@ fun CinemaInfoScreen(
                             TextButton(
                                 modifier = Modifier.padding(5.dp),
                                 onClick = { navController.navigate(
-                                    Screen.AddReviewCinema.base(
+                                    CinemaScreenRoute.AddReviewCinema.base(
                                         cinemaId = cinemaId
                                     )
                                 ) }) {
