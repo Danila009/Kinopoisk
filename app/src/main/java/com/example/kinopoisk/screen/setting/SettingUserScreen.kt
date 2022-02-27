@@ -15,20 +15,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.screen.setting.viewModel.SettingViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 
 @Composable
 fun SettingUserScreen(
-    settingViewModel: SettingViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val context = LocalContext.current
+    val settingViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .settingViewModel()
+
     val token = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
 
     Scaffold(

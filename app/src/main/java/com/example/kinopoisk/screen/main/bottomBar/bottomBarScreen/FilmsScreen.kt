@@ -13,22 +13,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @ExperimentalFoundationApi
 @Composable
 fun FilmsScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
     navController: NavController,
     order:String = "RATING",
     type:String = "ALL",
@@ -40,6 +39,12 @@ fun FilmsScreen(
     genres:List<Int> = listOf(),
     countries:List<Int> = listOf()
 ) {
+    val context = LocalContext.current
+    val mainViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .mainViewModel()
+
     val check = remember { mutableStateOf(false) }
     val filmList = mainViewModel.getFilm(
         genres = genres,

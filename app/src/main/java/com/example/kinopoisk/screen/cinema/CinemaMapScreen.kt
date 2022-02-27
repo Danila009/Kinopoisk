@@ -6,10 +6,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.utils.launchWhenStarted
@@ -20,10 +21,15 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun CinemaMapScreen(
-    cinemaViewModel: CinemaViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope
 ) {
+    val context = LocalContext.current
+    val cinemaViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .cinemaViewModel()
+
     val checkNavMap = remember { mutableStateOf(false) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
 

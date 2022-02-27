@@ -16,26 +16,31 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun FilmListItemScreen(
-    filmTopViewModel: FilmTopViewModel = hiltViewModel(),
     navController:NavController,
     lifecycleScope: LifecycleCoroutineScope,
     adminListFilmId:Int
 ) {
+    val context = LocalContext.current
+    val filmTopViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmTopViewModel()
+
     val filmListItem = remember { mutableStateOf(AdminFilmList()) }
 
     filmTopViewModel.getFilmListItem(id = adminListFilmId)

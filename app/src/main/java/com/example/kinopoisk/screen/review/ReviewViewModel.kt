@@ -5,14 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.model.review.ReviewDetail
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class ReviewViewModel @Inject constructor(
     private val apiRepository: ApiRepository
 ):ViewModel() {

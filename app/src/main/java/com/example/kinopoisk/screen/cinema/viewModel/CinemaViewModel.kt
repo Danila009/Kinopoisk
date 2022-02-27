@@ -7,7 +7,6 @@ import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.api.repository.ApiUserRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +14,6 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class CinemaViewModel @Inject constructor(
     private val apiUserRepository: ApiUserRepository
 ):ViewModel() {

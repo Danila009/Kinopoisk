@@ -19,12 +19,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
@@ -44,7 +44,6 @@ import kotlinx.coroutines.flow.onEach
 @ExperimentalPagerApi
 @Composable
 fun StaffInfoScreen(
-    staffInfoViewModel: StaffInfoViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     staffId:Int,
@@ -52,6 +51,11 @@ fun StaffInfoScreen(
     keyStaffInfoScreenString: String
 ) {
     val context = LocalContext.current
+    val staffInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .staffInfoViewModel()
+
     val favoriteCheckStaff = remember { mutableStateOf(false) }
     val statePager = rememberPagerState(pageCount = 4)
     val staffInfo = remember { mutableStateOf(StaffInfo()) }

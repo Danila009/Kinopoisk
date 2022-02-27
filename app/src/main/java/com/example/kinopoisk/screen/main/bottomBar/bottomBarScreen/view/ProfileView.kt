@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -28,22 +27,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
 import androidx.navigation.NavController
 import com.example.kinopoisk.R
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.constants.SettingScreenConstants.Route.SETTING_ROUTE
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.FavoriteFilmView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.FavoriteStaffView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.HistoryView
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.profile.PurchaseView
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.utils.Converters
 import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ProfileView(
-    mainViewModel: MainViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController:NavController
 ) {
     val context = LocalContext.current
+    val mainViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .mainViewModel()
+
     val userInfo = remember { mutableStateOf(UserInfo()) }
     val checkImageDialog = remember { mutableStateOf(false) }
     val bitmapImage = remember {

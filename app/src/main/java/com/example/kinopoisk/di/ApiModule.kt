@@ -2,22 +2,18 @@ package com.example.kinopoisk.di
 
 import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.repository.ApiRepository
-import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.di.annotationName.KinopoiskOkHttpClient
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object ApiModule {
+class ApiModule {
 
     @Provides
     @Singleton

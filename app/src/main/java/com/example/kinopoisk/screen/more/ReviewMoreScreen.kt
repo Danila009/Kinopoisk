@@ -12,13 +12,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.kinopoisk.api.model.FilmInfo
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
@@ -30,11 +31,16 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ReviewMoreScreen(
-    filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
     filmId:Int
 ) {
+    val context = LocalContext.current
+    val filmInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmInfoViewModel()
+
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
 
     filmInfoViewModel.getFilmInfo(id = filmId)

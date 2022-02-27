@@ -23,13 +23,11 @@ import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.PersonPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val apiUserRepository: ApiUserRepository,

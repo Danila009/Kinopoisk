@@ -15,13 +15,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
@@ -32,10 +33,15 @@ import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun FilmTopScreen(
-    filmTopViewModel: FilmTopViewModel = hiltViewModel(),
     navController: NavController,
     nameTopViewState: NameTopViewState
 ) {
+    val context = LocalContext.current
+    val filmTopViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmTopViewModel()
+
     val check = remember { mutableStateOf(false) }
     val filmTop = filmTopViewModel.getTop(
         nameTopViewState.name

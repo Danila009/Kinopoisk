@@ -14,16 +14,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.user.UserInfo
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.view.BaseTextField
-import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -36,11 +36,17 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun AddReviewCinemaScreen(
-    cinemaViewModel: CinemaViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     cinemaId:Int
 ) {
+
+    val context = LocalContext.current
+    val cinemaViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .cinemaViewModel()
+
     val userInfo = remember { mutableStateOf(UserInfo()) }
     val rating = remember { mutableStateOf(5f) }
     val title = remember { mutableStateOf("") }

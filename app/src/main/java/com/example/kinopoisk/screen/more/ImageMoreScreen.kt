@@ -11,11 +11,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
@@ -32,11 +33,16 @@ import kotlinx.coroutines.launch
 @ExperimentalPagerApi
 @Composable
 fun ImageMoreScreen(
-    filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     filmId:Int
 ) {
+    val context = LocalContext.current
+    val filmInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmInfoViewModel()
+
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
     val statePager = rememberPagerState(pageCount = ImageViewState.values().size)
     val scope = rememberCoroutineScope()

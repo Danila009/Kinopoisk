@@ -9,17 +9,13 @@ import com.example.kinopoisk.utils.Constants.BASE_USER_URL
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
-@InstallIn(SingletonComponent::class)
-object UserApiModule {
+class UserApiModule {
 
     @Provides
     @Singleton
@@ -61,6 +57,6 @@ object UserApiModule {
     @Provides
     @Singleton
     fun providerUserTokenPreferences(
-        @ApplicationContext context: Context
+        context: Context
     ):SharedPreferences = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
 }

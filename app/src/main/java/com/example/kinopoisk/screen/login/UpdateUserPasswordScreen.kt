@@ -16,8 +16,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.screen.login.validate.validateAuthorization
 import com.example.kinopoisk.screen.login.view.EmailTextFieldView
@@ -27,10 +27,14 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
 fun UpdateUserPasswordScreen(
-    loginViewModel: LoginViewModel = hiltViewModel(),
     navController: NavController,
 ) {
     val context = LocalContext.current
+    val loginViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .loginViewModel()
+
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 

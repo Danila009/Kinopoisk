@@ -4,12 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.api.repository.ApiUserRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class SettingViewModel @Inject constructor(
     private val apiUserRepository: ApiUserRepository
 ):ViewModel() {

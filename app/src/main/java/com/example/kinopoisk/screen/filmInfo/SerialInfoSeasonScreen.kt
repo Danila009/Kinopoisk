@@ -12,15 +12,16 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.seasons.Episode
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.series.Serial
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -31,11 +32,16 @@ import java.util.ArrayList
 
 @Composable
 fun SerialInfoSeasonScreen(
-    filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     navController: NavController,
     filmId:Int,
     lifecycleScope: LifecycleCoroutineScope
 ) {
+    val context = LocalContext.current
+    val filmInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmInfoViewModel()
+
     val season = remember { mutableStateOf(Season()) }
     val seasonEpisode = remember { mutableStateOf(ArrayList<Episode>()) }
     val filmInfo = remember { mutableStateOf(FilmInfo()) }

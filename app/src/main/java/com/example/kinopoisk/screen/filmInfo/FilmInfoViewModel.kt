@@ -22,7 +22,6 @@ import com.example.kinopoisk.api.model.user.Purchase
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.screen.filmInfo.source.ImagePagingSource
 import com.example.kinopoisk.screen.filmInfo.source.ReviewPagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,7 +30,6 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class FilmInfoViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val apiUserRepository: ApiUserRepository

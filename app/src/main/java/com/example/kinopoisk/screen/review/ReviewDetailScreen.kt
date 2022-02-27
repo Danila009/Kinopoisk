@@ -11,14 +11,15 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.review.ReviewDetail
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.constants.FilmMoreScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
@@ -28,12 +29,17 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun ReviewDetailScreen(
-    reviewViewModel: ReviewViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     reviewId:Int,
     filmId:Int
 ) {
+    val context = LocalContext.current
+    val reviewViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .reviewViewModel()
+
     val reviewDetail = remember { mutableStateOf(ReviewDetail()) }
 
     reviewViewModel.getReviewDetail(id = reviewId)

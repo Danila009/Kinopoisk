@@ -7,7 +7,6 @@ import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.api.repository.ApiUserRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +14,6 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class StaffInfoViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val apiUserRepository: ApiUserRepository

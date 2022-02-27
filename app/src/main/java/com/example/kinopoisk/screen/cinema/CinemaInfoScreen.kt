@@ -17,18 +17,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.cinema.view.PhoneView
 import com.example.kinopoisk.screen.cinema.view.ReviewView
 import com.example.kinopoisk.screen.cinema.view.ScheduleView
 import com.example.kinopoisk.screen.cinema.view.WebView
-import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Constants
@@ -41,12 +40,16 @@ import kotlinx.coroutines.flow.onEach
 @ExperimentalPagerApi
 @Composable
 fun CinemaInfoScreen(
-    cinemaViewModel: CinemaViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
     cinemaId:Int
 ) {
     val context = LocalContext.current
+    val cinemaViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .cinemaViewModel()
+
     val cinema = remember { mutableStateOf(Cinema()) }
     val pagerStateImage = rememberPagerState(pageCount = cinema.value.photoItems.size)
     val token = context

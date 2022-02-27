@@ -11,28 +11,33 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.main.key.WebScreenKey
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun PersonScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
     navController: NavController,
     search:String
 ) {
+    val context = LocalContext.current
+    val mainViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .mainViewModel()
+
     val check = remember { mutableStateOf(false) }
 
     val person = mainViewModel.getSearchPerson(

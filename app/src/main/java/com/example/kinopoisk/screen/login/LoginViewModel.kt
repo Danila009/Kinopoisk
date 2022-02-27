@@ -11,12 +11,10 @@ import com.example.kinopoisk.api.model.user.Registration
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class LoginViewModel @Inject constructor(
     private val apiUserRepository: ApiUserRepository,
     private val sharedPreferences: SharedPreferences,

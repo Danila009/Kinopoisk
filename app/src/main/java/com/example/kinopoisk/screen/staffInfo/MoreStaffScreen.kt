@@ -10,11 +10,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -24,12 +25,17 @@ import kotlinx.coroutines.flow.onEach
 
 @Composable
 fun MoreStaffScreen(
-    staffInfoViewModel: StaffInfoViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
     staffId:Int,
     filmId:Int
 ) {
+    val context = LocalContext.current
+    val staffInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .staffInfoViewModel()
+
     val staff = remember { mutableStateOf(StaffInfo()) }
 
     staffInfoViewModel.getStaffInfo(staffId)

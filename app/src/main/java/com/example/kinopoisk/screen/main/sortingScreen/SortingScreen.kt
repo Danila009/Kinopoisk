@@ -19,18 +19,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.filmInfo.Countrie
 import com.example.kinopoisk.api.model.filmInfo.Genre
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.sortingScreen.tab.OrderTabData
 import com.example.kinopoisk.screen.main.sortingScreen.tab.TypeTabData
 import com.example.kinopoisk.screen.main.validate.SortingValidate
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -40,13 +39,17 @@ import java.util.ArrayList
 
 @Composable
 fun SortingScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
     genreString:String = "All",
     countriesString: String = "All"
 ) {
     val context = LocalContext.current
+    val mainViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .mainViewModel()
+
     val genreId = remember { mutableStateOf(ArrayList<Int>()) }
     val countriesId = remember { mutableStateOf(ArrayList<Int>()) }
     val genre = if (genreString == "All") listOf() else Converters().decodeFromString<List<Genre>>(genreString)

@@ -14,7 +14,6 @@ import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.screen.filmTop.source.TopPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,7 +22,6 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class FilmTopViewModel @Inject constructor(
     private val apiRepository: ApiRepository,
     private val apiUserRepository: ApiUserRepository

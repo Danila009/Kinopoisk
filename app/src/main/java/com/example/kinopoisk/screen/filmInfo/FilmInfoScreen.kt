@@ -17,7 +17,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -32,6 +31,7 @@ import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.history.History
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.*
@@ -47,12 +47,16 @@ import kotlinx.coroutines.flow.onEach
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun FilmInfoScreen(
-    filmInfoViewModel: FilmInfoViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
     filmId: Int,
 ) {
     val context = LocalContext.current
+    val filmInfoViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .filmInfoViewModel()
+
     val checkWeb = remember { mutableStateOf(false) }
     val userFavoriteCheck = remember { mutableStateOf(false) }
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
@@ -68,65 +72,67 @@ fun FilmInfoScreen(
     val shopCheck = remember { mutableStateOf(false) }
     val token = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE).getString(TOKEN_SHARED, "")
 
-    filmInfoViewModel.getFilmInfo(filmId)
-    filmInfoViewModel.responseFilmInfo.onEach {
-        filmInfo.value = it
-    }.launchWhenStarted(lifecycleScope)
+    LaunchedEffect(key1 = Unit, block = {
+        filmInfoViewModel.getFilmInfo(filmId)
+        filmInfoViewModel.responseFilmInfo.onEach {
+            filmInfo.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getBudget(filmId)
-    filmInfoViewModel.responseBudget.onEach {
-        budget.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getBudget(filmId)
+        filmInfoViewModel.responseBudget.onEach {
+            budget.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getFact(filmId)
-    filmInfoViewModel.responseFact.onEach {
-        fact.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getFact(filmId)
+        filmInfoViewModel.responseFact.onEach {
+            fact.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getStaff(filmId)
-    filmInfoViewModel.responseStaff.onEach {
-        staff.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getStaff(filmId)
+        filmInfoViewModel.responseStaff.onEach {
+            staff.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getSimilar(filmId)
-    filmInfoViewModel.responseSimilar.onEach {
-        similar.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getSimilar(filmId)
+        filmInfoViewModel.responseSimilar.onEach {
+            similar.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getSequelAndPrequel(filmId)
-    filmInfoViewModel.responseSequelAndPrequel.onEach {
-        sequelAndPrequel.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getSequelAndPrequel(filmId)
+        filmInfoViewModel.responseSequelAndPrequel.onEach {
+            sequelAndPrequel.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getSeason(filmId)
-    filmInfoViewModel.responseSeason.onEach {
-        season.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getSeason(filmId)
+        filmInfoViewModel.responseSeason.onEach {
+            season.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getDistribution(filmId)
-    filmInfoViewModel.responseDistribution.onEach {
-        distribution.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getDistribution(filmId)
+        filmInfoViewModel.responseDistribution.onEach {
+            distribution.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getUserFavoriteCheck(filmId)
-    filmInfoViewModel.responseUserFavoriteCheck.onEach {
-        userFavoriteCheck.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getUserFavoriteCheck(filmId)
+        filmInfoViewModel.responseUserFavoriteCheck.onEach {
+            userFavoriteCheck.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getShopCheck(filmId)
-    filmInfoViewModel.responseShopCheck.onEach {
-        shopCheck.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getShopCheck(filmId)
+        filmInfoViewModel.responseShopCheck.onEach {
+            shopCheck.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getShopId(filmId)
-    filmInfoViewModel.responseShopId.onEach {
-        shop.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getShopId(filmId)
+        filmInfoViewModel.responseShopId.onEach {
+            shop.value = it
+        }.launchWhenStarted(lifecycleScope)
 
-    filmInfoViewModel.getPurchase(idKinopoisk = filmId)
-    filmInfoViewModel.responsePurchaseCheck.onEach {
-        purchaseCheck.value = it
-    }.launchWhenStarted(lifecycleScope)
+        filmInfoViewModel.getPurchase(idKinopoisk = filmId)
+        filmInfoViewModel.responsePurchaseCheck.onEach {
+            purchaseCheck.value = it
+        }.launchWhenStarted(lifecycleScope)
+    })
 
     val image = filmInfoViewModel.getImage(
         id = filmId,
@@ -149,152 +155,154 @@ fun FilmInfoScreen(
                 )
             )
         })
-    }
-    if (checkWeb.value){
-        LaunchedEffect(key1 = Unit, block = {
-            filmInfo.value.webUrl?.let {
-                navController.navigate(FilmScreenRoute.WebScreen.base(
-                    filmId = filmId.toString(),
-                    keyString = Converters().encodeToString(WebScreenKey.FILM),
-                    webUrl = it
-                ))
-            }
-        })
-    }else{
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    elevation = 8.dp,
-                    backgroundColor = primaryBackground,
-                    title = {
-                        Text(text = filmInfo.value.nameRu)
-                    }, navigationIcon = {
-                        IconButton(onClick = {
-                            navController.navigate(MAIN_ROUTE)
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowLeft,
-                                contentDescription = null
-                            )
-                        }
-                    }, actions = {
-                        if (token!!.isNotEmpty()){
+        if (checkWeb.value){
+            LaunchedEffect(key1 = Unit, block = {
+                filmInfo.value.webUrl?.let {
+                    navController.navigate(FilmScreenRoute.WebScreen.base(
+                        filmId = filmId.toString(),
+                        keyString = Converters().encodeToString(WebScreenKey.FILM),
+                        webUrl = it
+                    ))
+                }
+            })
+        }else{
+            Scaffold(
+                topBar = {
+                    TopAppBar(
+                        elevation = 8.dp,
+                        backgroundColor = primaryBackground,
+                        title = {
+                            Text(text = filmInfo.value.nameRu)
+                        }, navigationIcon = {
                             IconButton(onClick = {
-                                if (userFavoriteCheck.value){
-                                    filmInfoViewModel.deleteFavoriteFilm(
-                                        kinopoiskId = filmId
-                                    )
-                                    userFavoriteCheck.value = false
-                                }else{
-                                    filmInfoViewModel.postFavoriteFilm(
-                                        FilmItem(
-                                            kinopoiskId = filmInfo.value.kinopoiskId,
-                                            imdbId = filmInfo.value.imdbId,
-                                            nameRu = filmInfo.value.nameRu,
-                                            nameEn = filmInfo.value.nameEn,
-                                            nameOriginal = filmInfo.value.nameOriginal,
-                                            ratingImdb = filmInfo.value.ratingImdb,
-                                            ratingKinopoisk = filmInfo.value.ratingKinopoisk,
-                                            year = filmInfo.value.year,
-                                            posterUrl = filmInfo.value.posterUrl,
-                                            posterUrlPreview = filmInfo.value.posterUrlPreview,
-                                            type = filmInfo.value.type
-                                        )
-                                    )
-                                    userFavoriteCheck.value = true
-                                }
+                                navController.navigate(MAIN_ROUTE)
                             }) {
                                 Icon(
-                                    imageVector = Icons.Default.Favorite,
-                                    contentDescription = null,
-                                    tint = if (userFavoriteCheck.value) Color.Red else Color.Gray
+                                    imageVector = Icons.Default.KeyboardArrowLeft,
+                                    contentDescription = null
                                 )
                             }
-                        }
-                    }
-                )
-            }, content = {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize(),
-                    backgroundColor = primaryBackground
-                ) {
-                    LazyColumn(content = {
-                        item {
-                            Column {
-
-                                FilmInfoView(
-                                    filmInfo = filmInfo,
-                                    filmId = filmId,
-                                    navController = navController,
-                                    season = season
-                                )
-
-                                if (shopCheck.value){
-                                    ShopView(
-                                        filmInfoViewModel = filmInfoViewModel,
-                                        shop = shop.value,
-                                        checkPurchase = purchaseCheck.value
+                        }, actions = {
+                            if (token!!.isNotEmpty()){
+                                IconButton(onClick = {
+                                    if (userFavoriteCheck.value){
+                                        filmInfoViewModel.deleteFavoriteFilm(
+                                            kinopoiskId = filmId
+                                        )
+                                        userFavoriteCheck.value = false
+                                    }else{
+                                        filmInfoViewModel.postFavoriteFilm(
+                                            FilmItem(
+                                                kinopoiskId = filmInfo.value.kinopoiskId,
+                                                imdbId = filmInfo.value.imdbId,
+                                                nameRu = filmInfo.value.nameRu,
+                                                nameEn = filmInfo.value.nameEn,
+                                                nameOriginal = filmInfo.value.nameOriginal,
+                                                ratingImdb = filmInfo.value.ratingImdb,
+                                                ratingKinopoisk = filmInfo.value.ratingKinopoisk,
+                                                year = filmInfo.value.year,
+                                                posterUrl = filmInfo.value.posterUrl,
+                                                posterUrlPreview = filmInfo.value.posterUrlPreview,
+                                                type = filmInfo.value.type
+                                            )
+                                        )
+                                        userFavoriteCheck.value = true
+                                    }
+                                }) {
+                                    Icon(
+                                        imageVector = Icons.Default.Favorite,
+                                        contentDescription = null,
+                                        tint = if (userFavoriteCheck.value) Color.Red else Color.Gray
                                     )
                                 }
+                            }
+                        }
+                    )
+                }, content = {
+                    Scaffold(
+                        modifier = Modifier.fillMaxSize(),
+                        backgroundColor = primaryBackground
+                    ) {
+                        LazyColumn(content = {
+                            item {
+                                Column {
 
-                                RatingView(
-                                    filmInfo = filmInfo
-                                )
+                                    FilmInfoView(
+                                        filmInfo = filmInfo,
+                                        filmId = filmId,
+                                        navController = navController,
+                                        season = season
+                                    )
 
-                                StaffView(
-                                    staff = staff,
-                                    navController = navController,
-                                    filmId = filmId.toString()
-                                )
-
-                                ReviewView(
-                                    navController = navController,
-                                    review = review,
-                                    filmId = filmId.toString()
-                                )
-
-                                ImageView(
-                                    navController = navController,
-                                    image = image,
-                                    filmId = filmId.toString()
-                                )
-
-                                FactView(
-                                    fact = fact
-                                )
-
-                                BudgetView(
-                                    budget = budget,
-                                    distribution = distribution
-                                )
-
-                                SequelAndPrequelView(
-                                    navController = navController,
-                                    sequelAndPrequel = sequelAndPrequel
-                                )
-
-                                SimilarView(
-                                    navController = navController,
-                                    similar = similar
-                                )
-
-                                filmInfo.value.webUrl?.let {
-                                    TextButton(
-                                        modifier = Modifier.padding(5.dp),
-                                        onClick = { checkWeb.value = true }
-                                    ) {
-                                        Text(
-                                            text = "КиноПоиск ->",
-                                            color = secondaryBackground,
-                                            fontWeight = FontWeight.Bold
+                                    if (shopCheck.value){
+                                        ShopView(
+                                            filmInfoViewModel = filmInfoViewModel,
+                                            shop = shop.value,
+                                            checkPurchase = purchaseCheck.value
                                         )
+                                    }
+
+                                    RatingView(
+                                        filmInfo = filmInfo
+                                    )
+
+                                    StaffView(
+                                        staff = staff,
+                                        navController = navController,
+                                        filmId = filmId.toString()
+                                    )
+
+                                    ReviewView(
+                                        navController = navController,
+                                        review = review,
+                                        filmId = filmId.toString()
+                                    )
+
+                                    ImageView(
+                                        navController = navController,
+                                        image = image,
+                                        filmId = filmId.toString()
+                                    )
+
+                                    FactView(
+                                        fact = fact
+                                    )
+
+                                    BudgetView(
+                                        budget = budget,
+                                        distribution = distribution
+                                    )
+
+                                    SequelAndPrequelView(
+                                        navController = navController,
+                                        sequelAndPrequel = sequelAndPrequel
+                                    )
+
+                                    SimilarView(
+                                        navController = navController,
+                                        similar = similar
+                                    )
+
+                                    filmInfo.value.webUrl?.let {
+                                        TextButton(
+                                            modifier = Modifier.padding(5.dp),
+                                            onClick = { checkWeb.value = true }
+                                        ) {
+                                            Text(
+                                                text = "КиноПоиск ->",
+                                                color = secondaryBackground,
+                                                fontWeight = FontWeight.Bold
+                                            )
+                                        }
                                     }
                                 }
                             }
-                        }
-                    })
+                        })
+                    }
                 }
-            }
-        )
+            )
+        }
+    }else{
+        CircularProgressIndicator()
     }
 }

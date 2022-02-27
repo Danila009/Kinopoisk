@@ -2,7 +2,6 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
     id("org.jetbrains.kotlin.plugin.serialization") version("1.5.21")
 }
 
@@ -96,8 +95,7 @@ dependencies {
     //Rating bar
     implementation ("io.github.a914-gowtham:compose-ratingbar:1.2.3")
 
-    //Hilt
-    implementation("com.google.dagger:hilt-android:2.40.5")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
-    kapt("com.google.dagger:hilt-compiler:2.40.5")
+    //Dagger
+    implementation("com.google.dagger:dagger:2.40.5")
+    kapt("com.google.dagger:dagger-compiler:2.40.5")
 }

@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.user.Authorization
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.screen.login.validate.validateAuthorization
@@ -28,10 +28,14 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
 fun AuthorizationScreen(
-    loginViewModel: LoginViewModel = hiltViewModel(),
     navController: NavController
 ) {
     val context = LocalContext.current
+    val loginViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .loginViewModel()
+
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 

@@ -11,13 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.filmInfo.Genre
+import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
-import com.example.kinopoisk.screen.main.viewModel.MainViewModel
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -27,10 +27,15 @@ import java.util.ArrayList
 
 @Composable
 fun GenreScreen(
-    mainViewModel: MainViewModel = hiltViewModel(),
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
 ) {
+    val context = LocalContext.current
+    val mainViewModel = DaggerAppComponent.builder()
+        .context(context = context)
+        .build()
+        .mainViewModel()
+
     val genreCheck = remember { mutableStateOf(ArrayList<Genre>()) }
     val genre = remember { mutableStateOf(listOf<Genre>()) }
 

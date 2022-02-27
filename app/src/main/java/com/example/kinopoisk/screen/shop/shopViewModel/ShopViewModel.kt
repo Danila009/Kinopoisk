@@ -14,13 +14,11 @@ import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.shop.source.ShopPagingShop
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import java.lang.Exception
 import javax.inject.Inject
 
-@HiltViewModel
 class ShopViewModel @Inject constructor(
     private val userRepository: ApiUserRepository,
     private val userPreferenceRepository: UserPreferenceRepository,
