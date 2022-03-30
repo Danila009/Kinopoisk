@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1065051917747",
+    "project_id": "kinopoisk-327ef",
+    "storage_bucket": "kinopoisk-327ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065051917747:android:e6d23d7fc595f36f840fc6",
+        "android_client_info": {
+          "package_name": "com.example.kinopoisk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0_CatABXrdp_KK_Oal3EMDRGIpTE5I50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
