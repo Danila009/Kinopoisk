@@ -14,3 +14,12 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kinopoisk"
 include ':app'
+include ':core:core_network_domain'
+include ':core:core_network_data'
+include ':core:core_utils'
+include ':core:core_ui'
+include ':feature:feature_authorization'
+include ':core:core_database_domain'
+include ':core:core_database_data'
+include ':feature:feature_registration'
+include ':feature:feature_home'

@@ -15,8 +15,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.LifecycleCoroutineScope
 import com.example.kinopoisk.R
-import com.example.kinopoisk.screen.filmTop.viewState.NameTopViewState
-import com.example.kinopoisk.utils.viewState.ViewStatePremiere
+import com.example.core_utils.state.NameTopState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.serialization.decodeFromString
@@ -67,12 +66,12 @@ class Converters {
     }
 
     fun getNameTop(
-        nameTopViewState: NameTopViewState
+        nameTopViewState: NameTopState
     ):String{
         return when(nameTopViewState){
-            NameTopViewState.TOP_250_BEST_FILMS -> "250 лучших фильмов"
-            NameTopViewState.TOP_100_POPULAR_FILMS -> "Популярные фильмы и сериалы"
-            NameTopViewState.TOP_AWAIT_FILMS -> "Ожидаемые фильмы"
+            NameTopState.TOP_250_BEST_FILMS -> "250 лучших фильмов"
+            NameTopState.TOP_100_POPULAR_FILMS -> "Популярные фильмы и сериалы"
+            NameTopState.TOP_AWAIT_FILMS -> "Ожидаемые фильмы"
         }
     }
 
@@ -83,36 +82,6 @@ class Converters {
             int until string.length,
             "..."
         )
-    }
-
-    fun getDatePremiere(
-        viewStatePremiere: ViewStatePremiere
-    ):String{
-        val time = Calendar.getInstance().time
-        return when(viewStatePremiere){
-            ViewStatePremiere.YEAR -> {
-                val formatter = SimpleDateFormat("yyyy", Locale.getDefault())
-                formatter.format(time)
-            }
-            ViewStatePremiere.MONTH -> {
-                val formatter = SimpleDateFormat("MM", Locale.getDefault())
-                return when(formatter.format(time).toInt()){
-                    1-> "JANUARY"
-                    2-> "FEBRUARY"
-                    3-> "MARCH"
-                    4-> "APRIL"
-                    5-> "MAY"
-                    6-> "JUNE"
-                    7-> "JULY"
-                    8-> "AUGUST"
-                    9-> "SEPTEMBER"
-                    10-> "OCTOBER"
-                    11-> "NOVEMBER"
-                    12-> "DECEMBER"
-                    else -> ""
-                }
-            }
-        }
     }
 
     fun rating(rating: Float): Color {

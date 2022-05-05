@@ -23,9 +23,8 @@ import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
-import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenRoute
-import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.navigation.shopNavGraph.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.view.DialogPriceFilmShopView
 import com.example.kinopoisk.ui.theme.primaryBackground
 

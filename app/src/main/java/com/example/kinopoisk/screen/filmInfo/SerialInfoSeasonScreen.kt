@@ -22,7 +22,7 @@ import com.example.kinopoisk.api.model.seasons.Episode
 import com.example.kinopoisk.api.model.seasons.Season
 import com.example.kinopoisk.api.model.series.Serial
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters

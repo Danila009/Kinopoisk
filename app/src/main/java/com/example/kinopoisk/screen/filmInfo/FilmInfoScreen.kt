@@ -32,7 +32,7 @@ import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState

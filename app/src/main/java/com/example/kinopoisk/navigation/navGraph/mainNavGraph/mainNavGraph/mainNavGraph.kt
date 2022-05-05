@@ -4,9 +4,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.cinemaNavGraph
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.filmInfoNavGraph
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph.filmTopNavGraph
+import com.example.kinopoisk.navigation.navGraph.filmNavGraph.playlistNavGraph.filmTopNavGraph
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.sortingFilmNavGraph
@@ -16,12 +17,15 @@ import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.logi
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.settingNavGraph
 import com.example.kinopoisk.screen.main.MainScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
+import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalSerializationApi
 @ExperimentalPagerApi
 @ExperimentalFoundationApi
 fun NavGraphBuilder.mainNavGraph(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
+    appComponent: AppComponent
 ) {
     navigation(
         startDestination = MainScreenRoute.MainRoute.Main.route,
@@ -51,7 +55,8 @@ fun NavGraphBuilder.mainNavGraph(
                 lifecycleScope = lifecycleScope
             )
             loginNavGraph(
-                navController = navController
+                navController = navController,
+                appComponent = appComponent
             )
             shopNavGraph(
                 navController = navController,
@@ -61,6 +66,7 @@ fun NavGraphBuilder.mainNavGraph(
                 MainScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
+                    appComponent = appComponent
                 )
             }
         }

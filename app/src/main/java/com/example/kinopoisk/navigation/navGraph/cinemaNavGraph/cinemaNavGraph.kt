@@ -3,9 +3,9 @@ package com.example.kinopoisk.navigation.navGraph.cinemaNavGraph
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenConstants.Route.CINEMA_ROUTE
-import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
+import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
+import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Route.CINEMA_ROUTE
+import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
 import com.example.kinopoisk.screen.cinema.CinemaInfoScreen
 import com.example.kinopoisk.screen.cinema.CinemaMapScreen

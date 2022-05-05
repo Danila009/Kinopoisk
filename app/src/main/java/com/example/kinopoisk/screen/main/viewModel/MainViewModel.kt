@@ -13,8 +13,8 @@ import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.api.model.person.PersonItem
-import com.example.kinopoisk.api.model.premiere.Premiere
-import com.example.kinopoisk.api.model.premiere.ReleaseItem
+import com.example.core_network_domain.model.movie.premiere.Premiere
+import com.example.core_network_domain.model.movie.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.PhotoUser
 import com.example.kinopoisk.api.model.user.UserInfo
@@ -75,19 +75,6 @@ class MainViewModel @Inject constructor(
                 apiRepository = apiRepository
             )
         }.flow.cachedIn(viewModelScope)
-    }
-
-    fun getPremiere(year:Int,month:String){
-        viewModelScope.launch {
-            try {
-                _responsePremiere.value = apiRepository.getPremiere(
-                    year = year,
-                    month = month
-                ).body()!!
-            }catch (e: Exception){
-                Log.d("Retrofit:",e.message.toString())
-            }
-        }
     }
 
     fun getRelease(

@@ -22,7 +22,7 @@ import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
+import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.example.kinopoisk.screen.cinema.view.BaseTextField
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground

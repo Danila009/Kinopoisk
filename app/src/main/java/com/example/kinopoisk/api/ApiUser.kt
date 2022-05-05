@@ -13,7 +13,6 @@ import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.utils.Constants
 import com.example.kinopoisk.utils.Constants.ADMIN_FILM_LIST_URL
 import com.example.kinopoisk.utils.Constants.ADMIN_SHOP_ADD_FILM_ITEM_URL
-import com.example.kinopoisk.utils.Constants.AUTHORIZATION_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_ID_URL
 import com.example.kinopoisk.utils.Constants.CINEMA_URL
 import com.example.kinopoisk.utils.Constants.FILM_LIST_ID_URL
@@ -23,7 +22,6 @@ import com.example.kinopoisk.utils.Constants.HISTORY_USER_URL
 import com.example.kinopoisk.utils.Constants.NEWS_MOVIE_URL
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_ID_KINOPOISK_URK
 import com.example.kinopoisk.utils.Constants.PURCHASE_USER_URK
-import com.example.kinopoisk.utils.Constants.REGISTRATION_URL
 import com.example.kinopoisk.utils.Constants.SERIAL_CHECK_URL
 import com.example.kinopoisk.utils.Constants.SERIAL_URK
 import com.example.kinopoisk.utils.Constants.SHOP_CHECK_URL
@@ -41,16 +39,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiUser {
-
-    @POST(AUTHORIZATION_URL)
-    suspend fun postAuthorization(
-        @Body authorization: Authorization
-    ):Response<Header>
-
-    @POST(REGISTRATION_URL)
-    suspend fun postRegistration(
-        @Body registration: Registration
-    )
 
     @GET(USER_INFO_URL)
     suspend fun getUserInfo():Response<UserInfo>

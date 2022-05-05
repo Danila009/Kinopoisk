@@ -1,12 +1,9 @@
 package com.example.kinopoisk.di
 
-import android.content.Context
-import android.content.SharedPreferences
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.di.annotationName.UserOkHttpClient
 import com.example.kinopoisk.utils.Constants.BASE_USER_URL
-import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -19,44 +16,24 @@ class UserApiModule {
 
     @Provides
     @Singleton
-    fun providerUserApi(
+    fun providerUserApiRepository(
         apiUser: ApiUser,
     ) = ApiUserRepository(
         apiUser = apiUser
     )
 
+    @[Provides Singleton]
+    fun providerApiUser(
+        retrofit: Retrofit
+    ):ApiUser = retrofit.create(ApiUser::class.java)
+
     @Provides
     @Singleton
     fun providerUserRetrofit(
         @UserOkHttpClient okHttpClient: OkHttpClient
-    ): ApiUser = Retrofit.Builder()
+    ): Retrofit = Retrofit.Builder()
         .baseUrl(BASE_USER_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .client(okHttpClient)
         .build()
-        .create(ApiUser::class.java)
-
-    @Provides
-    @Singleton
-    @UserOkHttpClient
-    fun providerUserOkhttp(
-        sharedPreferences: SharedPreferences
-    ):OkHttpClient = OkHttpClient.Builder()
-        .addInterceptor {
-            val request = it.request()
-                .newBuilder()
-                .addHeader(
-                    name = "Authorization",
-                    value = "Bearer ${sharedPreferences.getString(TOKEN_SHARED, "")}"
-                )
-                .build()
-            it.proceed(request)
-        }
-        .build()
-
-    @Provides
-    @Singleton
-    fun providerUserTokenPreferences(
-        context: Context
-    ):SharedPreferences = context.getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
 }

@@ -17,8 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.core_utils.navigation.loginNavGraph.LoginScreenRoute
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.constants.LoginScreenRoute
 import com.example.kinopoisk.screen.login.validate.validateAuthorization
 import com.example.kinopoisk.screen.login.view.EmailTextFieldView
 import com.example.kinopoisk.screen.login.view.PasswordTextFieldView
@@ -30,10 +30,6 @@ fun UpdateUserPasswordScreen(
     navController: NavController,
 ) {
     val context = LocalContext.current
-    val loginViewModel = DaggerAppComponent.builder()
-        .context(context = context)
-        .build()
-        .loginViewModel()
 
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -87,10 +83,10 @@ fun UpdateUserPasswordScreen(
                             password = password.value,
                             context = context
                         )){
-                            loginViewModel.putUserPassword(
-                                email = email.value,
-                                password = password.value,
-                            )
+//                            loginViewModel.putUserPassword(
+//                                email = email.value,
+//                                password = password.value,
+//                            )
                             navController.navigate(LoginScreenRoute.Authorization.route)
                             Toast.makeText(context, "Пароль изменен", Toast.LENGTH_SHORT).show()
                         }

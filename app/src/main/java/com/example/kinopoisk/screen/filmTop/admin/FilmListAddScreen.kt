@@ -24,8 +24,8 @@ import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph.constants.FilmTopScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.cinema.view.BaseTextField
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -147,7 +147,7 @@ fun FilmListAddScreen(
                                     vertical = 5.dp
                                 ), shape = AbsoluteRoundedCornerShape(15.dp),
                             onClick = {
-                                navController.navigate(FilmTopScreenRoute.FilmListItemAdd.route)
+                                navController.navigate(PlaylistScreenRoute.FilmListItemAdd.route)
                             }) {
                             Text(text = "Add film")
                         }

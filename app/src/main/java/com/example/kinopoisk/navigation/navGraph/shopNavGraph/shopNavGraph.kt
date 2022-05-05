@@ -5,8 +5,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenConstants.Route.SHOP_ROUTE
-import com.example.kinopoisk.navigation.navGraph.shopNavGraph.constants.ShopScreenRoute
+import com.example.core_utils.navigation.shopNavGraph.ShopScreenConstants.Route.SHOP_ROUTE
+import com.example.core_utils.navigation.shopNavGraph.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.ShopAddFilmItemScreen
 import com.example.kinopoisk.screen.shop.ShopScreen
 

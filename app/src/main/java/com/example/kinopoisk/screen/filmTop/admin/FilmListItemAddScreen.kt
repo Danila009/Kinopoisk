@@ -22,8 +22,8 @@ import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmTopNavGraph.constants.FilmTopScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -51,7 +51,7 @@ fun FilmListItemAddScreen(
                     Text(text = "film list add item")
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(FilmTopScreenRoute.FilmListAdd.base())
+                        navController.navigate(PlaylistScreenRoute.FilmListAdd.base())
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
@@ -70,7 +70,7 @@ fun FilmListItemAddScreen(
                         vertical = 5.dp
                     ), shape = AbsoluteRoundedCornerShape(15.dp),
                 onClick = { navController.navigate(
-                    FilmTopScreenRoute.FilmListAdd.base(
+                    PlaylistScreenRoute.FilmListAdd.base(
                         filmList = Converters().encodeToString(filmAddList.value)
                     )
                 ) }

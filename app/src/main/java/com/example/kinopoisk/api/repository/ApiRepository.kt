@@ -7,12 +7,11 @@ import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
 import com.example.kinopoisk.api.model.person.Person
-import com.example.kinopoisk.api.model.premiere.Premiere
-import com.example.kinopoisk.api.model.premiere.Release
+import com.example.core_network_domain.model.movie.premiere.Premiere
+import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
-import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top

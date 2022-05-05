@@ -15,13 +15,6 @@ import javax.inject.Inject
 class ApiUserRepository @Inject constructor(
     private val apiUser: ApiUser
 ) {
-    suspend fun postAuthorization(
-        authorization: Authorization
-    ):Response<Header> = apiUser.postAuthorization(authorization = authorization)
-
-    suspend fun postRegistration(
-        registration: Registration
-    ) = apiUser.postRegistration(registration = registration)
 
     suspend fun getUserInfo():Response<UserInfo> = apiUser.getUserInfo()
 

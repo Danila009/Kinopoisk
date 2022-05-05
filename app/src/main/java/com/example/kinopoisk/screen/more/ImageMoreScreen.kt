@@ -17,8 +17,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.constants.FilmScreenRoute
-import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
 import com.example.kinopoisk.screen.more.view.ImageView
 import com.example.kinopoisk.screen.more.view.TabView

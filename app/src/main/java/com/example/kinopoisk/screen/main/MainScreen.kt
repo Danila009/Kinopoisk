@@ -13,21 +13,25 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import com.example.feature_home.screen.HomeScreen
+import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
 import com.example.kinopoisk.screen.main.bottomBar.BottomBar
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.HomeScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.PersonScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.ProfileScreen
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.view.SearchView
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
+import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalSerializationApi
 @ExperimentalFoundationApi
 @Composable
 fun MainScreen(
     navController: NavController,
     lifecycleScope:LifecycleCoroutineScope,
+    appComponent: AppComponent
 ) {
     val filmSearch = remember { mutableStateOf("") }
     val personSearch = remember { mutableStateOf("") }
@@ -76,7 +80,7 @@ fun MainScreen(
             ) {
                 when(idBar.value){
                     BottomBar.Home.name -> HomeScreen(
-                        lifecycleScope = lifecycleScope,
+                        homeViewModel = appComponent.homeViewModel(),
                         navController = navController
                     )
                     BottomBar.Films.name -> FilmsScreen(

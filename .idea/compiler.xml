@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <bytecodeTargetLevel target="11" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="Kinopoisk.app" target="11" />
+      <module name="Kinopoisk.core.core_database_data" target="11" />
+      <module name="Kinopoisk.core.core_network_data" target="11" />
+      <module name="Kinopoisk.core.core_ui" target="11" />
+      <module name="Kinopoisk.core.core_utils" target="11" />
+      <module name="Kinopoisk.feature.feature_authorization" target="11" />
+      <module name="Kinopoisk.feature.feature_home" target="11" />
+      <module name="Kinopoisk.feature.feature_registration" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

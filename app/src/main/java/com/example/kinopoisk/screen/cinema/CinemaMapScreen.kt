@@ -11,8 +11,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.constants.CinemaScreenRoute
-import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
+import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.example.kinopoisk.utils.launchWhenStarted
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap

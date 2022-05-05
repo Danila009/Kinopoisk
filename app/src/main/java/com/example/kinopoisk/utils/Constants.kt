@@ -22,9 +22,7 @@ object Constants {
     const val FILM_DISTRIBUTION_ID_URL = "/api/v2.2/films/{id}/distributions"
     const val SEARCH_PERSON_URL = "/api/v1/persons"
 
-    const val BASE_USER_URL = "http://10.0.2.2:5000"
-    const val AUTHORIZATION_URL = "/Authorization"
-    const val REGISTRATION_URL = "/Registration"
+    const val BASE_USER_URL = "https://api.cfif31.ru"
     const val USER_INFO_URL = "/User/Info"
     const val USER_FAVORITE_FILM_URL = "/Movie/User/Favorite"
     const val USER_FAVORITE_FILM_ID_KINOPOISK_URL = "/Movie/User/Favorite/{idKinopoisk}"
