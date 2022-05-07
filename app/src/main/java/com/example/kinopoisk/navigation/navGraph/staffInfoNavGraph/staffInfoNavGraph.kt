@@ -3,12 +3,11 @@ package com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.kinopoisk.navigation.*
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.FILM_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.KEY_STAFF_SCREEN_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Argument.STAFF_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoConstants.Route.STAFF_INFO_ROUTE
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoConstants.Argument.FILM_ID_ARGUMENT
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoConstants.Argument.KEY_STAFF_SCREEN_ARGUMENT
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoConstants.Argument.STAFF_ID_ARGUMENT
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoConstants.Route.STAFF_INFO_ROUTE
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.staffInfo.MoreStaffScreen
 import com.example.kinopoisk.screen.staffInfo.StaffInfoScreen
 import com.google.accompanist.pager.ExperimentalPagerApi

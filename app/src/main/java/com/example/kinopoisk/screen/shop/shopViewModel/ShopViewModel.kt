@@ -12,7 +12,6 @@ import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.shop.source.ShopPagingShop
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -76,7 +75,7 @@ class ShopViewModel @Inject constructor(
         keyword:String = ""
     ):Flow<PagingData<FilmItem>>  {
         return  Pager(PagingConfig(pageSize = 1)){
-            FilmPagingSource(
+            com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource(
                 genres = genres,
                 countries = countries,
                 order = order,

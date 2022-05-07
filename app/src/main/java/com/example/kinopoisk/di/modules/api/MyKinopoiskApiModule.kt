@@ -22,6 +22,30 @@ import javax.inject.Singleton
 @Module
 class MyKinopoiskApiModule {
 
+    @[Provides Singleton]
+    fun providerUserContentRepository(
+        userContentApi: UserContentApi
+    ):UserContentRepository = UserContentRepositoryImpl(
+        userContentApi = userContentApi
+    )
+
+    @[Provides Singleton]
+    fun providerUserContentApi(
+        @MyKinopoiskApi retrofit: Retrofit
+    ):UserContentApi = retrofit.create(UserContentApi::class.java)
+
+    @[Provides Singleton]
+    fun providerHistoryRepository(
+        historyApi: HistoryApi
+    ):HistoryRepository = HistoryRepositoryImpl(
+        historyApi = historyApi
+    )
+
+    @[Provides Singleton]
+    fun providerHistoryApi(
+        @MyKinopoiskApi retrofit: Retrofit
+    ):HistoryApi = retrofit.create(HistoryApi::class.java)
+
     @[Provides Singleton ExperimentalSerializationApi]
     fun providerPlaylistRepository(
         playlistApi: PlaylistApi
@@ -57,18 +81,6 @@ class MyKinopoiskApiModule {
     fun providerShopApi(
         @MyKinopoiskApi retrofit: Retrofit
     ):ShopApi = retrofit.create(ShopApi::class.java)
-
-    @[Provides Singleton]
-    fun providerMovieRepository(
-        movieApi: MovieApi
-    ): MovieRepository = MovieRepositoryImpl(
-        movieApi = movieApi
-    )
-
-    @[Provides Singleton]
-    fun providerMovieApi(
-        retrofit: Retrofit
-    ): MovieApi = retrofit.create(MovieApi::class.java)
 
     @[Provides Singleton]
     fun providerUserRepository(

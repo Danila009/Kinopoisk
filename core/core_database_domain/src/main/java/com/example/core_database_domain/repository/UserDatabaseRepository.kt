@@ -12,4 +12,6 @@ interface UserDatabaseRepository {
     suspend fun savaUserRole(userRole: UserRole)
 
     fun getUserRole():Flow<UserRole>
+
+    fun getStatusRegistration():Flow<Boolean>
 }

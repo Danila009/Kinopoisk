@@ -2,7 +2,7 @@ package com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.kinopoisk.api.model.person.PersonItem
+import com.example.core_network_domain.model.person.PersonItem
 import com.example.kinopoisk.api.repository.ApiRepository
 import java.lang.Exception
 

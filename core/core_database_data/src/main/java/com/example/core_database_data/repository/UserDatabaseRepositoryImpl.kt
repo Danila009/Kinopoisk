@@ -43,6 +43,13 @@ class UserDatabaseRepositoryImpl @Inject constructor(
             }
     }
 
+    override fun getStatusRegistration(): Flow<Boolean> {
+        return context.userDataStore.data
+            .map { preferences ->
+                preferences[USER_STATUS_REGISTRATION] ?: false
+            }
+    }
+
     companion object{
         const val TOKEN_SHARED = "token_share"
 

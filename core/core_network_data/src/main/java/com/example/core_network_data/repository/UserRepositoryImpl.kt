@@ -4,6 +4,7 @@ import com.example.core_network_data.api.UserApi
 import com.example.core_network_domain.model.user.Authorization
 import com.example.core_network_domain.model.user.AuthorizationHeader
 import com.example.core_network_domain.model.user.Registration
+import com.example.core_network_domain.model.user.User
 import com.example.core_network_domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -16,5 +17,9 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun registration(registration: Registration):Void {
         return userApi.registration(registration)
+    }
+
+    override suspend fun getUserInfo(): User {
+        return userApi.getUserInfo().body() ?: User()
     }
 }

@@ -5,7 +5,7 @@ import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
-import com.example.kinopoisk.api.model.person.Person
+import com.example.core_network_domain.model.person.Person
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.kinopoisk.api.model.review.Review

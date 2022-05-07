@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.staff.Staff
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
-import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
+import com.example.core_utils.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 
@@ -60,7 +60,7 @@ fun StaffView(
                                 navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
                                     staffId = item.staffId.toString(),
                                     filmId = filmId,
-                                    key = Converters().encodeToString(StaffInfoScreenKey.FILM)
+                                    key = StaffInfoScreenKey.FILM.name
                                 ))
                             }
                     ) {
@@ -136,7 +136,7 @@ fun StaffView(
                                 navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
                                     staffId = item.staffId.toString(),
                                     filmId = filmId,
-                                    key = Converters().encodeToString(StaffInfoScreenKey.FILM)
+                                    key = StaffInfoScreenKey.FILM.name
                                 ))
                             }
                     ) {

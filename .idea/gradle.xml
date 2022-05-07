@@ -20,7 +20,10 @@
             <option value="$PROJECT_DIR$/core/core_utils" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/feature_authorization" />
+            <option value="$PROJECT_DIR$/feature/feature_films" />
             <option value="$PROJECT_DIR$/feature/feature_home" />
+            <option value="$PROJECT_DIR$/feature/feature_persons" />
+            <option value="$PROJECT_DIR$/feature/feature_profile" />
             <option value="$PROJECT_DIR$/feature/feature_registration" />
           </set>
         </option>

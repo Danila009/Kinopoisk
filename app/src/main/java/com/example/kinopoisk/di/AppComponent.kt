@@ -2,7 +2,10 @@ package com.example.kinopoisk.di
 
 import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
+import com.example.feature_films.viewModel.FilmsViewModel
 import com.example.feature_home.viewModel.HomeViewModel
+import com.example.feature_persons.viewModel.PersonsViewModel
+import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_registration.viewModel.RegistrationViewModel
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
@@ -43,6 +46,9 @@ interface AppComponent {
     fun registrationViewModel():RegistrationViewModel
     @ExperimentalSerializationApi
     fun homeViewModel():HomeViewModel
+    fun filmsViewModel(): FilmsViewModel
+    fun personViewModel():PersonsViewModel
+    fun profileViewModel():ProfileViewModel
 
     @Component.Builder
     interface Builder{

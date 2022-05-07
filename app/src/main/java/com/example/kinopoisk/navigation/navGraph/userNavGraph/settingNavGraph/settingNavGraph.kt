@@ -4,8 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.constants.SettingScreenConstants.Route.SETTING_ROUTE
-import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.constants.SettingScreenRoute
+import com.example.core_utils.navigation.settingNavGraph.SettingScreenConstants.Route.SETTING_ROUTE
+import com.example.core_utils.navigation.settingNavGraph.SettingScreenRoute
 import com.example.kinopoisk.screen.setting.SettingUserScreen
 
 fun NavGraphBuilder.settingNavGraph(

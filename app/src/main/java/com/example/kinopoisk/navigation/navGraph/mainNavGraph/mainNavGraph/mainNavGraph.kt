@@ -33,7 +33,8 @@ fun NavGraphBuilder.mainNavGraph(
         builder = {
             sortingFilmNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope
+                lifecycleScope = lifecycleScope,
+                appComponent = appComponent
             )
             cinemaNavGraph(
                 navController = navController,
@@ -65,7 +66,6 @@ fun NavGraphBuilder.mainNavGraph(
             composable(MainScreenRoute.MainRoute.Main.route){
                 MainScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
                     appComponent = appComponent
                 )
             }

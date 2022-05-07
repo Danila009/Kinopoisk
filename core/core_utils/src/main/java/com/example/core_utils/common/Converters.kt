@@ -29,8 +29,8 @@ fun getDatePremiere(
             formatter.format(time)
         }
         StatePremiere.MONTH -> {
-            val formatter = SimpleDateFormat("EEEE", Locale.getDefault())
-            formatter.format(time)
+            val formatter = SimpleDateFormat("MMMM", Locale.getDefault())
+            formatter.format(time).uppercase()
         }
     }
 }

@@ -36,7 +36,7 @@ import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScree
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
-import com.example.kinopoisk.screen.main.key.WebScreenKey
+import com.example.core_utils.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
@@ -160,7 +160,7 @@ fun FilmInfoScreen(
                 filmInfo.value.webUrl?.let {
                     navController.navigate(FilmScreenRoute.WebScreen.base(
                         filmId = filmId.toString(),
-                        keyString = Converters().encodeToString(WebScreenKey.FILM),
+                        keyString = WebScreenKey.FILM.name,
                         webUrl = it
                     ))
                 }

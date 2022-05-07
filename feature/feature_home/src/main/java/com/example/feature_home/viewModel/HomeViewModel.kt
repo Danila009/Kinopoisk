@@ -14,6 +14,7 @@ import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.shop.Shop
 import com.example.core_network_domain.useCase.cinema.GetCinemaUseCase
 import com.example.core_network_domain.useCase.movie.GetPremiereUseCase
+import com.example.core_network_domain.useCase.movie.GetReleaseUseCase
 import com.example.core_network_domain.useCase.playlist.GetPlaylistUseCase
 import com.example.core_network_domain.useCase.shop.GetShopUseCase
 import com.example.feature_home.source.ReleasePagingSource
@@ -28,6 +29,7 @@ class HomeViewModel @Inject constructor(
     private val getShopUseCase: GetShopUseCase,
     private val getCinemaUseCase: GetCinemaUseCase,
     private val getPlaylistUseCase: GetPlaylistUseCase,
+    private val getReleaseUseCase: GetReleaseUseCase,
     getUserRoleUseCase: GetUserRoleUseCase
 ):ViewModel() {
 
@@ -59,7 +61,8 @@ class HomeViewModel @Inject constructor(
         return Pager(PagingConfig(pageSize = 1)){
             ReleasePagingSource(
                 year = year,
-                mont = month
+                mont = month,
+                getReleaseUseCase = getReleaseUseCase
             )
         }.flow.cachedIn(viewModelScope)
     }

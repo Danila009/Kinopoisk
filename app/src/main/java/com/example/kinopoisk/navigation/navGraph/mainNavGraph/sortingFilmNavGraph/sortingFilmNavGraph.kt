@@ -4,6 +4,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.feature_films.screen.FilmsScreen
+import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ARGUMENT
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ID_ARGUMENT
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.GENRE_ARGUMENT
@@ -16,7 +18,6 @@ import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGrap
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.YEAR_TO_ARGUMENT
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Route.SORTING_FILM_ROUTE
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.FilmsScreen
 import com.example.kinopoisk.screen.main.sortingScreen.CountriesScreen
 import com.example.kinopoisk.screen.main.sortingScreen.GenreScreen
 import com.example.kinopoisk.screen.main.sortingScreen.SortingScreen
@@ -25,7 +26,8 @@ import com.example.kinopoisk.utils.Converters
 @ExperimentalFoundationApi
 fun NavGraphBuilder.sortingFilmNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope
+    lifecycleScope: LifecycleCoroutineScope,
+    appComponent: AppComponent
 ) {
     navigation(
         startDestination = SortingScreenRoute.SortingFilm.route,
@@ -93,7 +95,8 @@ fun NavGraphBuilder.sortingFilmNavGraph(
                     countries = Converters().decodeFromString(
                         it.arguments?.getString(COUNTRIES_ID_ARGUMENT).toString()
                     ),
-                    navController = navController
+                    navController = navController,
+                    filmsViewMode = appComponent.filmsViewModel()
                 )
             }
             composable(SortingScreenRoute.Genre.route){

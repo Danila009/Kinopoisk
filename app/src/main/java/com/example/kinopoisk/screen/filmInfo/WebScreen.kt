@@ -9,7 +9,7 @@ import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.WebView
-import com.example.kinopoisk.screen.main.key.WebScreenKey
+import com.example.core_utils.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
 
@@ -21,7 +21,7 @@ fun WebScreen(
     cinemaId:Int?,
     keyWebScreen:String
 ) {
-    val key = Converters().decodeFromString<WebScreenKey>(keyWebScreen)
+    val key = enumValueOf<WebScreenKey>(keyWebScreen)
 
     Scaffold(
         topBar = {

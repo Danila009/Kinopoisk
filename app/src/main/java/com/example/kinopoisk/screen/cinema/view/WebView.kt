@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.kinopoisk.screen.main.key.WebScreenKey
+import com.example.core_utils.key.WebScreenKey
 import com.example.kinopoisk.utils.Converters
 
 @Composable
@@ -28,7 +28,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = Converters().encodeToString(WebScreenKey.CINEMA),
+                                keyString = WebScreenKey.CINEMA.name,
                                 webUrl = cinema.website,
                                 cinemaId = cinema.id.toString()
                             )
@@ -45,7 +45,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = Converters().encodeToString(WebScreenKey.CINEMA),
+                                keyString = WebScreenKey.CINEMA.name,
                                 webUrl = cinema.webVk,
                                 cinemaId = cinema.id.toString()
                             )
@@ -63,7 +63,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = Converters().encodeToString(WebScreenKey.CINEMA),
+                                keyString = WebScreenKey.CINEMA.name,
                                 webUrl = cinema.webInstagram,
                                 cinemaId = cinema.id.toString()
                             )
@@ -81,7 +81,7 @@ fun WebView(
                     IconButton(onClick = {
                     navController.navigate(
                         FilmScreenRoute.WebScreen.base(
-                            keyString = Converters().encodeToString(WebScreenKey.CINEMA),
+                            keyString = WebScreenKey.CINEMA.name,
                             webUrl = cinema.webFacebook,
                             cinemaId = cinema.id.toString()
                         )

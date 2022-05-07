@@ -1,6 +1,6 @@
 package com.example.core_network_domain.model.playlist
 
-import com.example.core_network_domain.model.movie.Movie
+import com.example.core_network_domain.model.movie.MovieItem
 import com.example.core_network_domain.model.user.User
 import com.example.core_network_domain.serialization.DateTimeSerialization
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -16,5 +16,5 @@ data class Playlist(
     val totalMovie:Int,
     val totalPlaylistSubscription:Int,
     val adminUsers:List<User>,
-    val movies:List<Movie>
+    val movies:List<MovieItem>
 )

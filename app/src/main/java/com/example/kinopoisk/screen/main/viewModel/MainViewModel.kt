@@ -9,10 +9,9 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
-import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.filmInfo.filter.Filter
-import com.example.kinopoisk.api.model.person.PersonItem
+import com.example.core_network_domain.model.person.PersonItem
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.ReleaseItem
 import com.example.kinopoisk.api.model.shop.Shop
@@ -20,7 +19,6 @@ import com.example.kinopoisk.api.model.user.PhotoUser
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.preferenceManager.UserPreferenceRepository
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.PersonPagingSource
 import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.ReleasePagingSource
 import kotlinx.coroutines.flow.*
@@ -50,32 +48,6 @@ class MainViewModel @Inject constructor(
     private val _responseFilmList:MutableStateFlow<List<AdminFilmList>> = MutableStateFlow(listOf())
     val responseFilmList:StateFlow<List<AdminFilmList>> = _responseFilmList.asStateFlow()
 
-    fun getFilm(
-        genres:List<Int> = listOf(),
-        countries:List<Int> = listOf(),
-        order:String = "RATING",
-        type:String = "ALL",
-        ratingFrom:Int = 0,
-        ratingTo:Int = 10,
-        yearFrom:Int = 1000,
-        yearTo:Int = 3000,
-        keyword:String = ""
-    ):Flow<PagingData<FilmItem>>  {
-         return  Pager(PagingConfig(pageSize = 1)){
-            FilmPagingSource(
-                genres = genres,
-                countries = countries,
-                order = order,
-                type = type,
-                ratingFrom = ratingFrom,
-                ratingTo = ratingTo,
-                yearFrom = yearFrom,
-                yearTo = yearTo,
-                keyword = keyword,
-                apiRepository = apiRepository
-            )
-        }.flow.cachedIn(viewModelScope)
-    }
 
     fun getRelease(
         year: Int,

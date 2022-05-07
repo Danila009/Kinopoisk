@@ -8,10 +8,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import java.lang.Exception
 
-class ReleasePagingSource @AssistedInject constructor(
-    private val getReleaseUseCase: GetReleaseUseCase? = null,
-    @Assisted private val year:Int,
-    @Assisted private val mont:String
+class ReleasePagingSource (
+    private val getReleaseUseCase: GetReleaseUseCase,
+    private val year:Int,
+    private val mont:String
 ):PagingSource<Int, ReleaseItem>() {
     override fun getRefreshKey(state: PagingState<Int, ReleaseItem>): Int? {
         return state.anchorPosition
@@ -20,7 +20,7 @@ class ReleasePagingSource @AssistedInject constructor(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, ReleaseItem> {
         return try {
             val nextPage = params.key ?:1
-            val release = getReleaseUseCase!!.invoke(
+            val release = getReleaseUseCase.invoke(
                 year = year,
                 month = mont,
                 page = nextPage

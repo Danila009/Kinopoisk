@@ -13,7 +13,6 @@ import com.example.kinopoisk.api.model.topFilm.TopItem
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.screen.filmTop.source.TopPagingSource
-import com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -62,7 +61,7 @@ class FilmTopViewModel @Inject constructor(
         keyword:String = ""
     ):Flow<PagingData<FilmItem>>  {
         return  Pager(PagingConfig(pageSize = 1)){
-            FilmPagingSource(
+            com.example.kinopoisk.screen.main.bottomBar.bottomBarScreen.source.FilmPagingSource(
                 genres = genres,
                 countries = countries,
                 order = order,

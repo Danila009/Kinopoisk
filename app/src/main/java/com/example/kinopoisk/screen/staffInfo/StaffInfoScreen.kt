@@ -27,8 +27,8 @@ import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.constants.StaffInfoScreenRoute
-import com.example.kinopoisk.screen.main.key.StaffInfoScreenKey
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
+import com.example.core_utils.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
 import com.example.kinopoisk.ui.theme.primaryBackground
@@ -59,7 +59,7 @@ fun StaffInfoScreen(
     val favoriteCheckStaff = remember { mutableStateOf(false) }
     val statePager = rememberPagerState(pageCount = 4)
     val staffInfo = remember { mutableStateOf(StaffInfo()) }
-    val keyStaffInfoScreen = Converters().decodeFromString<StaffInfoScreenKey>(keyStaffInfoScreenString)
+    val keyStaffInfoScreen = enumValueOf<StaffInfoScreenKey>(keyStaffInfoScreenString)
     val token = context
         .getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
         .getString(TOKEN_SHARED, "")
