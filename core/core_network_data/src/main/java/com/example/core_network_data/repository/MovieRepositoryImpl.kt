@@ -3,9 +3,11 @@ package com.example.core_network_data.repository
 import android.util.Log
 import com.example.core_network_data.api.MovieApi
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
+import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.repository.MovieRepository
 import javax.inject.Inject
 
@@ -41,4 +43,13 @@ class MovieRepositoryImpl @Inject constructor(
     override suspend fun getFilter(): Filter {
         return movieApi.getFilter().body() ?: Filter()
     }
+
+    override suspend fun getFilmInfo(id: Int): FilmInfo {
+        return movieApi.getFilmInfo(id).body() ?: FilmInfo()
+    }
+
+    override suspend fun getSeason(id: Int): Season {
+        return movieApi.getSeason(id).body() ?: Season()
+    }
+
 }

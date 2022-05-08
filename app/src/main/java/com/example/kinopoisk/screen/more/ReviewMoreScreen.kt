@@ -18,7 +18,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.example.kinopoisk.api.model.FilmInfo
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute

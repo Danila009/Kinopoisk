@@ -47,4 +47,6 @@ object Constants {
     const val TOKEN_SHARED = "token_share"
 
     const val TOKEN_KEY = "ab67ce7d-90cf-4d1b-b354-7474b82c9f38"
+
+    const val RICK_AND_MORTY_BASE_URL = "https://rickandmortyapi.com"
 }

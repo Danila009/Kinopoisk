@@ -6,19 +6,18 @@ import kotlinx.serialization.Serializer
 import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.text.SimpleDateFormat
-import java.util.*
 
 @ExperimentalSerializationApi
 @Serializer(forClass = String::class)
 internal object DateTimeSerialization : KSerializer<String> {
 
     @Suppress("SimpleDateFormat")
-    private val df = SimpleDateFormat("dd-MM-yyyy mm")
+    private val df = SimpleDateFormat("dd-MM-yyyy")
+
     override fun deserialize(decoder: Decoder): String {
-        val netDate = Date(java.lang.Long.parseLong(decoder.decodeInt().toString()) * 1000)
-        return df.format(netDate)
+        return df.parse(decoder.decodeString()).toString()
     }
     override fun serialize(encoder: Encoder, value: String) {
-        encoder.encodeString(df.format(value))
+        encoder.encodeString(df.format(value)).toString()
     }
 }

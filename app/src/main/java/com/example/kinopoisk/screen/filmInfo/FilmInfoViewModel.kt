@@ -9,13 +9,12 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.api.repository.ApiUserRepository
-import com.example.kinopoisk.api.model.FilmInfo
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.review.ReviewItem
-import com.example.kinopoisk.api.model.seasons.Season
-import com.example.kinopoisk.api.model.series.Serial
+import com.example.core_network_domain.model.serial.Season
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.Purchase
@@ -58,8 +57,6 @@ class FilmInfoViewModel @Inject constructor(
     val responseShopId:StateFlow<Shop> = _responseShopId.asStateFlow()
     private val _responsePurchaseCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
     val responsePurchaseCheck:StateFlow<Boolean> = _responsePurchaseCheck.asStateFlow()
-    private val _responseSeriesCheck:MutableStateFlow<Boolean> = MutableStateFlow(false)
-    val responseSeriesCheck:StateFlow<Boolean> = _responseSeriesCheck.asStateFlow()
 
     fun getFilmInfo(id:Int){
         viewModelScope.launch {
@@ -245,36 +242,6 @@ class FilmInfoViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _responsePurchaseCheck.value = apiUserRepository.getPurchase(idKinopoisk = idKinopoisk).body()!!
-            }catch (e:Exception){
-                Log.d("Retrofit:",e.message.toString())
-            }
-        }
-    }
-
-    fun getSeriesCheck(
-        kinopoiskId:Int,
-        season:Int,
-        series:Int
-    ){
-        viewModelScope.launch {
-            try {
-                _responseSeriesCheck.value = apiUserRepository.getSeriesCheck(
-                    kinopoiskId = kinopoiskId,
-                    season = season,
-                    series = series
-                ).body()!!
-            }catch (e:Exception){
-                Log.d("Retrofit:",e.message.toString())
-            }
-        }
-    }
-
-    fun postSeries(serial: Serial){
-        viewModelScope.launch {
-            try {
-                apiUserRepository.postSeries(
-                    serial = serial
-                )
             }catch (e:Exception){
                 Log.d("Retrofit:",e.message.toString())
             }

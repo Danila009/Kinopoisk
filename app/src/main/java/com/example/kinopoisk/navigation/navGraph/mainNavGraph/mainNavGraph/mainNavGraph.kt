@@ -49,6 +49,7 @@ fun NavGraphBuilder.mainNavGraph(
             filmInfoNavGraph(
                 navController = navController,
                 lifecycleScope = lifecycleScope,
+                appComponent = appComponent
             )
             filmTopNavGraph(
                 navController = navController,

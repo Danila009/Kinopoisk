@@ -15,6 +15,7 @@
       <module name="Kinopoisk.feature.feature_persons" target="11" />
       <module name="Kinopoisk.feature.feature_profile" target="11" />
       <module name="Kinopoisk.feature.feature_registration" target="11" />
+      <module name="Kinopoisk.feature.feature_serial_info" target="11" />
       <module name="Kinopoisk.feature.feature_settings" target="11" />
       <module name="Kinopoisk.feature.feature_sorting" target="11" />
       <module name="Kinopoisk.feature.feature_update_user_password" target="11" />

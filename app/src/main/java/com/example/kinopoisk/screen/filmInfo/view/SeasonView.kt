@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.api.model.seasons.Season
+import com.example.core_network_domain.model.movie.FilmInfo
+import com.example.core_network_domain.model.serial.Season
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
@@ -40,7 +40,9 @@ fun SeasonView(
                     )
                 }
                 TextButton(
-                    onClick = { navController.navigate(FilmScreenRoute.SerialInfoSeason.base(filmId.toString())) },
+                    onClick = { navController.navigate(
+                        FilmScreenRoute.SerialInfoSeason.base(filmId.toString())
+                    ) },
                     modifier = Modifier.padding(5.dp)
                 ) {
                     Text(

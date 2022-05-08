@@ -1,5 +1,7 @@
 package com.example.feature_web.view
 
+import android.graphics.Bitmap
+import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -12,7 +14,11 @@ import androidx.webkit.WebViewFeature
 
 @Composable
 fun WebView(
-    url:String
+    baseUrl:String,
+    progress:(Int) -> Unit,
+    favicon:(Bitmap?) -> Unit,
+    url:(String?) -> Unit,
+    title:(String?) -> Unit
 ) {
     AndroidView(modifier = Modifier.fillMaxSize(),factory = {
         WebView(it).apply {
@@ -20,16 +26,28 @@ fun WebView(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT
             )
+
+            settings.databaseEnabled = true
+
             if(WebViewFeature.isFeatureSupported(WebViewFeature.FORCE_DARK)){
                 WebSettingsCompat.setForceDark(
                     this.settings,
                     WebSettingsCompat.FORCE_DARK_ON
                 )
             }
+
+            Log.e("WebView:Scroll","${this.scrollX}/${this.scrollY}")
+
             webViewClient = WebViewClient()
-            loadUrl(url)
+            loadUrl(baseUrl)
         }
     }, update = {
-        it.loadUrl(url)
+        it.apply {
+            loadUrl(baseUrl)
+            url(this.url)
+            favicon(getFavicon())
+            progress(this.progress)
+            title(this.title)
+        }
     })
 }

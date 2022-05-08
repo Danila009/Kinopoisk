@@ -1,9 +1,15 @@
 package com.example.feature_web.screen
 
+import android.content.Context.MODE_PRIVATE
+import android.util.Log
+import android.webkit.WebIconDatabase
+import android.webkit.WebViewDatabase
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.replaceRange
@@ -14,6 +20,13 @@ fun WebScreen(
     navController: NavController,
     webUrl:String
 ) {
+    val context = LocalContext.current
+
+    LaunchedEffect(key1 = Unit, block = {
+        WebViewDatabase.getInstance(context)
+//        WebIconDatabase.getInstance().open(context.getDir("icons", MODE_PRIVATE).path)
+    })
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -33,7 +46,19 @@ fun WebScreen(
                 }
             )
         }, content = {
-            WebView(url = webUrl)
+            WebView(
+                baseUrl = webUrl,
+                title = {
+                    Log.e("WebView:Title", it.toString())
+                },
+                progress = {
+                    Log.e("WebView:Progress", it.toString())
+                }, favicon = {
+                    Log.e("WebView:Favicon", it.toString())
+                }, url = {
+                    Log.e("WebView:Url", it.toString())
+                }
+            )
         }
     )
 }

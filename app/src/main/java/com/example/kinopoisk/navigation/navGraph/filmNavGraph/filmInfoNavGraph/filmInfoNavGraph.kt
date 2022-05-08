@@ -7,17 +7,19 @@ import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScree
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.WEB_URL_ARGUMENT
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Route.FILM_INFO_ROUTE
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.feature_serial_info.screen.SerialInfoScreen
 import com.example.feature_web.screen.WebScreen
+import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.filmMoreNavGraph
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.reviewFilmNavGraph
 import com.example.kinopoisk.screen.filmInfo.FilmInfoScreen
-import com.example.kinopoisk.screen.filmInfo.SerialInfoSeasonScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
 fun NavGraphBuilder.filmInfoNavGraph(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
+    appComponent: AppComponent
 ) {
     navigation(
         startDestination = FilmScreenRoute.FilmInfo.route,
@@ -53,10 +55,10 @@ fun NavGraphBuilder.filmInfoNavGraph(
                     }
                 )
             ) {
-                SerialInfoSeasonScreen(
+                SerialInfoScreen(
                     navController = navController,
                     filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt(),
-                    lifecycleScope = lifecycleScope
+                    serialInfoViewModel = appComponent.serialInfoViewModel()
                 )
             }
             composable(

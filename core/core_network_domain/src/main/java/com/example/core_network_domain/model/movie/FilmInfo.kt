@@ -1,8 +1,8 @@
-package com.example.kinopoisk.api.model
+package com.example.core_network_domain.model.movie
 
-import com.example.kinopoisk.api.model.filmInfo.Countrie
-import com.example.kinopoisk.api.model.filmInfo.Genre
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class FilmInfo(
     val kinopoiskId:Int = 0,
     val imdbId:String = "",

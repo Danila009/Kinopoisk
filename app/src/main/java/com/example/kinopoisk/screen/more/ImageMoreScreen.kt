@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.FilmInfo
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState

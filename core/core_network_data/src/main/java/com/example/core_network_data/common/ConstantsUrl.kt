@@ -6,6 +6,8 @@ object ConstantsUrl {
     const val PREMIERE_URL = "/api/v2.2/films/premieres"
     const val RELEASE_URL = "/api/v2.1/films/releases"
     const val FILTER_URL = "/api/v2.2/films/filters"
+    const val FILM_INFO_ID_URL = "/api/v2.2/films/{id}"
+    const val SEASONS_ID_URL = "/api/v2.2/films/{id}/seasons"
 
     const val SHOP_URL = "/kinopoisk/Shop"
 
@@ -26,4 +28,8 @@ object ConstantsUrl {
     const val REGISTRATION_URL = "/kinopoisk/Registration"
     const val USER_INFO_URL = "/kinopoisk/User/Info"
     const val UPDATE_PASSWORD_URL = "/kinopoisk/User/Update/Password"
+
+    const val RIAK_AND_MORTY_CHARACTER_URL = "/api/character"
+    const val RIAK_AND_MORTY_LOCATION_URL = "/api/location"
+    const val RIAK_AND_MORTY_EPISODES_URL = "/api/episode"
 }

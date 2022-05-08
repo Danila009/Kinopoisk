@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/feature/feature_persons" />
             <option value="$PROJECT_DIR$/feature/feature_profile" />
             <option value="$PROJECT_DIR$/feature/feature_registration" />
+            <option value="$PROJECT_DIR$/feature/feature_serial_info" />
             <option value="$PROJECT_DIR$/feature/feature_settings" />
             <option value="$PROJECT_DIR$/feature/feature_sorting" />
             <option value="$PROJECT_DIR$/feature/feature_update_user_password" />

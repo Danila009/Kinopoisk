@@ -9,10 +9,12 @@ import com.example.feature_home.viewModel.HomeViewModel
 import com.example.feature_persons.viewModel.PersonsViewModel
 import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_registration.viewModel.RegistrationViewModel
+import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import com.example.feature_settings.viewModel.SettingViewModel
 import com.example.feature_sorting.viewModel.SortingViewModel
 import com.example.feature_update_user_password.viewModel.UpdateUserPasswordViewModel
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
+import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
@@ -30,7 +32,8 @@ import javax.inject.Singleton
         ApiModule::class,
         UserApiModule::class,
         UserDatabaseModule::class,
-        MyKinopoiskApiModule::class
+        MyKinopoiskApiModule::class,
+        RickAndMortyApiModule::class
     ]
 )
 @Singleton
@@ -55,6 +58,7 @@ interface AppComponent {
     fun genreViewModel():GenreViewModel
     fun countriesViewModel():CountriesViewModel
     fun updatePasswordCViewModel():UpdateUserPasswordViewModel
+    fun serialInfoViewModel(): SerialInfoViewModel
 
     @Component.Builder
     interface Builder{

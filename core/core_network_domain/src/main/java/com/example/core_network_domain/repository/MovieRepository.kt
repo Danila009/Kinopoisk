@@ -1,9 +1,11 @@
 package com.example.core_network_domain.repository
 
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
+import com.example.core_network_domain.model.serial.Season
 
 interface MovieRepository {
 
@@ -25,4 +27,8 @@ interface MovieRepository {
     ):Film
 
     suspend fun getFilter():Filter
+
+    suspend fun getFilmInfo(id:Int):FilmInfo
+
+    suspend fun getSeason(id:Int):Season
 }

@@ -2,12 +2,12 @@ package com.example.kinopoisk.api.repository
 
 import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.model.Film
-import com.example.kinopoisk.api.model.FilmInfo
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
-import com.example.kinopoisk.api.model.seasons.Season
+import com.example.core_network_domain.model.serial.Season
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top

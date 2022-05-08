@@ -13,8 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.api.model.FilmInfo
-import com.example.kinopoisk.api.model.seasons.Season
+import com.example.core_network_domain.model.movie.FilmInfo
+import com.example.core_network_domain.model.serial.Season
 import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable

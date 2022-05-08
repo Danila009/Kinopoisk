@@ -20,14 +20,14 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.kinopoisk.api.model.FilmInfo
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.filmInfo.Budget
 import com.example.kinopoisk.api.model.filmInfo.Fact
 import com.example.kinopoisk.api.model.filmInfo.SequelAndPrequel
 import com.example.kinopoisk.api.model.filmInfo.Similar
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
-import com.example.kinopoisk.api.model.seasons.Season
+import com.example.core_network_domain.model.serial.Season
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.history.History
@@ -223,7 +223,6 @@ fun FilmInfoScreen(
                         LazyColumn(content = {
                             item {
                                 Column {
-
                                     FilmInfoView(
                                         filmInfo = filmInfo,
                                         filmId = filmId,

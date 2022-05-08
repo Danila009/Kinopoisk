@@ -1,15 +1,20 @@
 package com.example.core_network_data.api
 
+import com.example.core_network_data.common.ConstantsUrl.FILM_INFO_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.FILM_URL
 import com.example.core_network_data.common.ConstantsUrl.FILTER_URL
 import com.example.core_network_data.common.ConstantsUrl.PREMIERE_URL
 import com.example.core_network_data.common.ConstantsUrl.RELEASE_URL
+import com.example.core_network_data.common.ConstantsUrl.SEASONS_ID_URL
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
+import com.example.core_network_domain.model.serial.Season
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MovieApi {
@@ -43,4 +48,14 @@ interface MovieApi {
 
     @GET(FILTER_URL)
     suspend fun getFilter():Response<Filter>
+
+    @GET(FILM_INFO_ID_URL)
+    suspend fun getFilmInfo(
+        @Path("id") id:Int
+    ):Response<FilmInfo>
+
+    @GET(SEASONS_ID_URL)
+    suspend fun getSeason(
+        @Path("id") id: Int
+    ):Response<Season>
 }
