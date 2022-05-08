@@ -5,10 +5,6 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
-import com.example.kinopoisk.api.model.filmInfo.filter.Filter
-import com.example.core_network_domain.model.person.Person
-import com.example.core_network_domain.model.movie.premiere.Premiere
-import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
@@ -59,24 +55,6 @@ class ApiRepository @Inject constructor(
 
     suspend fun getSeason(id: Int):Response<Season> = apiKinopoisk.getSeason(id)
 
-    suspend fun getPremiere(
-        year:Int,
-        month:String
-    ):Response<Premiere> = apiKinopoisk.getPremiere(
-        year = year,
-        month = month
-    )
-
-    suspend fun getRelease(
-        year: Int,
-        month: String,
-        page: Int = 1
-    ):Response<Release> = apiKinopoisk.getRelease(
-        year = year,
-        month = month,
-        page = page
-    )
-
     suspend fun getTop(
         type: String,
         page: Int = 1
@@ -120,14 +98,4 @@ class ApiRepository @Inject constructor(
     ):Response<Distribution> = apiKinopoisk.getDistribution(
         id = id
     )
-
-    suspend fun getSearchPerson(
-        name:String,
-        page:Int = 1
-    ):Response<Person> = apiKinopoisk.getSearchPerson(
-        name = name,
-        page = page
-    )
-
-    suspend fun getFilter():Response<Filter> = apiKinopoisk.getFilter()
 }

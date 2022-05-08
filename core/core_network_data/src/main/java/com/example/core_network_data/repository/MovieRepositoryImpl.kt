@@ -3,6 +3,7 @@ package com.example.core_network_data.repository
 import android.util.Log
 import com.example.core_network_data.api.MovieApi
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.core_network_domain.repository.MovieRepository
@@ -35,5 +36,9 @@ class MovieRepositoryImpl @Inject constructor(
         return movieApi.getFilm(
             genres, countries, order, type, ratingFrom, ratingTo, yearFrom, yearTo, keyword, page
         ).body() ?: Film()
+    }
+
+    override suspend fun getFilter(): Filter {
+        return movieApi.getFilter().body() ?: Filter()
     }
 }

@@ -26,7 +26,7 @@ interface HistoryApi{
     )
 
     @DELETE(HISTORY_MOVIE_URL)
-    suspend fun deleteHistoryMovie()
+    suspend fun deleteHistoryMovie():Response<Unit>
 
     @DELETE("$HISTORY_MOVIE_URL/id")
     suspend fun deleteHistoryMovie(id:Int)
@@ -42,7 +42,7 @@ interface HistoryApi{
     )
 
     @DELETE(HISTORY_SEARCH_URL)
-    suspend fun deleteHistorySearch()
+    suspend fun deleteHistorySearch():Response<Unit>
 
     @DELETE("$HISTORY_SEARCH_URL/id")
     suspend fun deleteHistorySearch(id:Int)

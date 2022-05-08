@@ -7,6 +7,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,7 +23,9 @@ import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_ui.view.SearchView
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenRoute
 import com.example.feature_films.viewModel.FilmsViewModel
 
 @ExperimentalFoundationApi
@@ -35,12 +39,14 @@ fun FilmsScreen(
     ratingTo:Int = 10,
     yearFrom:Int = 1000,
     yearTo:Int = 3000,
-    keyword:String = "",
     genres:List<Int> = listOf(),
     countries:List<Int> = listOf()
 ) {
 
     val check = remember { mutableStateOf(false) }
+
+    val search = remember { mutableStateOf("") }
+
     val filmList = filmsViewMode.getFilm(
         genres = genres,
         countries = countries,
@@ -50,85 +56,108 @@ fun FilmsScreen(
         ratingTo = ratingTo,
         yearFrom = yearFrom,
         yearTo = yearTo,
-        keyword = keyword
+        keyword = search.value
     ).collectAsLazyPagingItems()
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = primaryBackground
-    ) {
-        LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
-            items(filmList){ item ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(140.dp)
-                        .padding(horizontal = 9.dp, vertical = 5.dp)
-                        .clickable {
-                            navController.navigate(
-                                FilmScreenRoute.FilmInfo.base(
-                                    item?.kinopoiskId.toString()
-                                )
-                            )
-                        },
-                    shape = AbsoluteRoundedCornerShape(15.dp),
-                    backgroundColor = primaryBackground,
-                    elevation = 8.dp
-                ) {
-                    Row(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Start
-                    ) {
-                        Image(
-                            painter = rememberImagePainter(
-                                data = item?.posterUrl,
-                                builder = {
-                                    crossfade(true)
-                                }
-                            ),
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                backgroundColor = primaryBackground,
+                elevation = 8.dp,
+                title = {
+                    SearchView(
+                        search = search
+                    )
+                },
+                actions = {
+                    IconButton(onClick = { navController.navigate(SortingScreenRoute.SortingFilm.base()) }) {
+                        Icon(
+                            imageVector = Icons.Default.Menu,
                             contentDescription = null,
-                            modifier = Modifier
-                                .padding(5.dp)
-                                .width(100.dp)
-                                .clip(AbsoluteRoundedCornerShape(10.dp))
-                        )
-                        Text(
-                            text = item?.nameRu.toString(),
-                            modifier = Modifier.padding(5.dp)
+                            tint = secondaryBackground
                         )
                     }
                 }
-            }
-
-            item {
-                if (check.value){
-                    Column(
-                        Modifier.fillMaxWidth(),
-                        horizontalAlignment = Alignment.CenterHorizontally
+            )
+        }
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = primaryBackground
+        ) {
+            LazyColumn(modifier = Modifier.fillMaxWidth(),content = {
+                items(filmList){ item ->
+                    Card(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(140.dp)
+                            .padding(horizontal = 9.dp, vertical = 5.dp)
+                            .clickable {
+                                navController.navigate(
+                                    FilmScreenRoute.FilmInfo.base(
+                                        item?.kinopoiskId.toString()
+                                    )
+                                )
+                            },
+                        shape = AbsoluteRoundedCornerShape(15.dp),
+                        backgroundColor = primaryBackground,
+                        elevation = 8.dp
                     ) {
-                        CircularProgressIndicator(
-                            color = secondaryBackground
-                        )
+                        Row(
+                            modifier = Modifier.fillMaxSize(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+                        ) {
+                            Image(
+                                painter = rememberImagePainter(
+                                    data = item?.posterUrl,
+                                    builder = {
+                                        crossfade(true)
+                                    }
+                                ),
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .padding(5.dp)
+                                    .width(100.dp)
+                                    .clip(AbsoluteRoundedCornerShape(10.dp))
+                            )
+                            Text(
+                                text = item?.nameRu.toString(),
+                                modifier = Modifier.padding(5.dp)
+                            )
+                        }
                     }
                 }
-            }
 
-            item {
-                Spacer(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(60.dp)
-                )
-            }
-
-            filmList.apply {
-                when{
-                    loadState.refresh is LoadState.Loading -> check.value = false
-
-                    loadState.append is LoadState.Loading -> check.value = true
+                item {
+                    if (check.value){
+                        Column(
+                            Modifier.fillMaxWidth(),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            CircularProgressIndicator(
+                                color = secondaryBackground
+                            )
+                        }
+                    }
                 }
-            }
-        })
+
+                item {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(60.dp)
+                    )
+                }
+
+                filmList.apply {
+                    when{
+                        loadState.refresh is LoadState.Loading -> check.value = false
+
+                        loadState.append is LoadState.Loading -> check.value = true
+                    }
+                }
+            })
+        }
     }
 }

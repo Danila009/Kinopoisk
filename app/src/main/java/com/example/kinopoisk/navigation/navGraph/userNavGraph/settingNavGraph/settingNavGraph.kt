@@ -6,10 +6,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.core_utils.navigation.settingNavGraph.SettingScreenConstants.Route.SETTING_ROUTE
 import com.example.core_utils.navigation.settingNavGraph.SettingScreenRoute
-import com.example.kinopoisk.screen.setting.SettingUserScreen
+import com.example.feature_settings.screen.SettingUserScreen
+import com.example.kinopoisk.di.AppComponent
 
 fun NavGraphBuilder.settingNavGraph(
-    navController: NavController
+    navController: NavController,
+    appComponent: AppComponent
 ) {
     navigation(
         startDestination = SettingScreenRoute.SettingUser.route,
@@ -17,7 +19,8 @@ fun NavGraphBuilder.settingNavGraph(
         builder = {
             composable(SettingScreenRoute.SettingUser.route){
                 SettingUserScreen(
-                    navController = navController
+                    navController = navController,
+                    settingViewModel = appComponent.settingViewModel()
                 )
             }
         }

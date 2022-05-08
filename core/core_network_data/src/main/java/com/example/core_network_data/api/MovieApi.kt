@@ -1,9 +1,11 @@
 package com.example.core_network_data.api
 
 import com.example.core_network_data.common.ConstantsUrl.FILM_URL
+import com.example.core_network_data.common.ConstantsUrl.FILTER_URL
 import com.example.core_network_data.common.ConstantsUrl.PREMIERE_URL
 import com.example.core_network_data.common.ConstantsUrl.RELEASE_URL
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import retrofit2.Response
@@ -38,4 +40,7 @@ interface MovieApi {
         @Query("month") month:String,
         @Query("page") page:Int
     ):Response<Release>
+
+    @GET(FILTER_URL)
+    suspend fun getFilter():Response<Filter>
 }

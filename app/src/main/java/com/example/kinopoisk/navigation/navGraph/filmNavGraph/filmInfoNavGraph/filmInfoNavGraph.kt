@@ -3,17 +3,15 @@ package com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
-import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.FILM_ID_ARGUMENT
-import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.KEY_WEB_SCREEN_ARGUMENT
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.WEB_URL_ARGUMENT
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Route.FILM_INFO_ROUTE
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.feature_web.screen.WebScreen
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.filmMoreNavGraph
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.reviewFilmNavGraph
 import com.example.kinopoisk.screen.filmInfo.FilmInfoScreen
 import com.example.kinopoisk.screen.filmInfo.SerialInfoSeasonScreen
-import com.example.kinopoisk.screen.filmInfo.WebScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
@@ -62,27 +60,16 @@ fun NavGraphBuilder.filmInfoNavGraph(
                 )
             }
             composable(
-                FilmScreenRoute.WebScreen.route,
+                route = FilmScreenRoute.WebScreen.route,
                 arguments = listOf(
-                    navArgument(FILM_ID_ARGUMENT){
-                        nullable = true
-                        type = NavType.StringType
-                    }, navArgument(KEY_WEB_SCREEN_ARGUMENT){
-                        type = NavType.StringType
-                    }, navArgument(WEB_URL_ARGUMENT){
-                        type = NavType.StringType
-                    }, navArgument(CINEMA_ID_ARGUMENT){
-                        nullable = true
+                    navArgument(WEB_URL_ARGUMENT){
                         type = NavType.StringType
                     }
                 )
             ){
                 WebScreen(
                     navController = navController,
-                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT),
-                    keyWebScreen = it.arguments?.getString(KEY_WEB_SCREEN_ARGUMENT).toString(),
                     webUrl = it.arguments?.getString(WEB_URL_ARGUMENT).toString(),
-                    cinemaId = it.arguments?.getString(CINEMA_ID_ARGUMENT)?.toInt()
                 )
             }
         }

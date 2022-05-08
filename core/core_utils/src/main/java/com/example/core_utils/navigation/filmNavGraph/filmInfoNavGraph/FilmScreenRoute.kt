@@ -11,12 +11,10 @@ sealed class FilmScreenRoute(val route:String){
             filmId:String
         ):String = "serial_info_season?filmId=$filmId"
     }
-    object WebScreen: FilmScreenRoute("web_screen?filmId={filmId}&keyWebScreen={keyWebScreen}&webUrl={webUrl}&cinemaId={cinemaId}"){
+    object WebScreen: FilmScreenRoute("web_screen?webUrl={webUrl}"
+    ){
         fun base(
-            filmId:String? = null,
-            keyString: String,
             webUrl:String,
-            cinemaId:String? = null
-        ):String = "web_screen?filmId=$filmId&keyWebScreen=$keyString&webUrl=$webUrl&cinemaId=$cinemaId"
+        ):String = "web_screen?webUrl=$webUrl"
     }
 }

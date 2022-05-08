@@ -16,4 +16,9 @@ interface UserRepository {
     ):Void
 
     suspend fun getUserInfo():User
+
+    suspend fun putUpdatePassword(
+        email:String,
+        password:String
+    ):String
 }

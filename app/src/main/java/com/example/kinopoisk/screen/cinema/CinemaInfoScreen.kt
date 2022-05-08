@@ -23,7 +23,7 @@ import coil.compose.rememberImagePainter
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.cinema.view.PhoneView
 import com.example.kinopoisk.screen.cinema.view.ReviewView
 import com.example.kinopoisk.screen.cinema.view.ScheduleView

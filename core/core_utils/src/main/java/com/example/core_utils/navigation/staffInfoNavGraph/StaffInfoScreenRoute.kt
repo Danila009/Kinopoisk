@@ -8,10 +8,9 @@ sealed class StaffInfoScreenRoute(val route:String) {
             key:String
         ):String = "staff_info?staffId=$staffId&filmId=$filmId&keyStaffScreen=$key"
     }
-    object MoreStaff:StaffInfoScreenRoute("more_staff?staffId={staffId}&filmId={filmId}"){
+    object MoreStaff:StaffInfoScreenRoute("more_staff?staffId={staffId}"){
         fun base(
-            staffIf: String,
-            filmId:String
-        ):String = "more_staff?staffId=$staffIf&filmId=$filmId"
+            staffIf: String
+        ):String = "more_staff?staffId=$staffIf"
     }
 }

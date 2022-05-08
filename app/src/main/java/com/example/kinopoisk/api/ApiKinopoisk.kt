@@ -4,10 +4,6 @@ import com.example.kinopoisk.api.model.Film
 import com.example.kinopoisk.api.model.FilmInfo
 import com.example.kinopoisk.api.model.filmInfo.*
 import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
-import com.example.kinopoisk.api.model.filmInfo.filter.Filter
-import com.example.core_network_domain.model.person.Person
-import com.example.core_network_domain.model.movie.premiere.Premiere
-import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.kinopoisk.api.model.review.Review
 import com.example.kinopoisk.api.model.review.ReviewDetail
 import com.example.kinopoisk.api.model.seasons.Season
@@ -19,13 +15,9 @@ import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_DISTRIBUTION_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
-import com.example.kinopoisk.utils.Constants.FILTER_URL
 import com.example.kinopoisk.utils.Constants.IMAGE_ID_URL
-import com.example.kinopoisk.utils.Constants.PREMIERE_URL
-import com.example.kinopoisk.utils.Constants.RELEASE_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_ID_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_URL
-import com.example.kinopoisk.utils.Constants.SEARCH_PERSON_URL
 import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
 import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
 import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
@@ -88,19 +80,6 @@ interface ApiKinopoisk {
         @Path("id") id: Int
     ):Response<Season>
 
-    @GET(PREMIERE_URL)
-    suspend fun getPremiere(
-        @Query("year") year:Int,
-        @Query("month") month: String
-    ):Response<Premiere>
-
-    @GET(RELEASE_URL)
-    suspend fun getRelease(
-        @Query("year") year:Int,
-        @Query("month") month:String,
-        @Query("page") page:Int
-    ):Response<Release>
-
     @GET(TOP_FILM_URL)
     suspend fun getTop(
         @Query("type") type: String,
@@ -134,13 +113,4 @@ interface ApiKinopoisk {
     suspend fun getDistribution(
         @Path("id") id: Int
     ):Response<Distribution>
-
-    @GET(SEARCH_PERSON_URL)
-    suspend fun getSearchPerson(
-        @Query("name") name:String,
-        @Query("page") page: Int
-    ):Response<Person>
-
-    @GET(FILTER_URL)
-    suspend fun getFilter():Response<Filter>
 }

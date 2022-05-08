@@ -8,8 +8,8 @@ import com.example.core_utils.navigation.loginNavGraph.LoginScreenConstants.Rout
 import com.example.core_utils.navigation.loginNavGraph.LoginScreenRoute
 import com.example.feature_authorization.screen.AuthorizationScreen
 import com.example.feature_registration.screen.RegistrationScreen
+import com.example.feature_update_user_password.screen.UpdateUserPasswordScreen
 import com.example.kinopoisk.di.AppComponent
-import com.example.kinopoisk.screen.login.UpdateUserPasswordScreen
 
 fun NavGraphBuilder.loginNavGraph(
     navController: NavController,
@@ -33,7 +33,8 @@ fun NavGraphBuilder.loginNavGraph(
             }
             composable(LoginScreenRoute.UpdateUserPassword.route){
                 UpdateUserPasswordScreen(
-                    navController = navController
+                    navController = navController,
+                    updateUserPasswordViewModel = appComponent.updatePasswordCViewModel()
                 )
             }
         }

@@ -1,32 +1,30 @@
 package com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.feature_films.screen.FilmsScreen
 import com.example.kinopoisk.di.AppComponent
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.COUNTRIES_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.GENRE_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.GENRE_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.ORDER_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.RATING_FROM_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.RATING_TO_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.TYPE_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.YEAR_FROM_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Argument.YEAR_TO_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenConstants.Route.SORTING_FILM_ROUTE
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.constants.SortingScreenRoute
-import com.example.kinopoisk.screen.main.sortingScreen.CountriesScreen
-import com.example.kinopoisk.screen.main.sortingScreen.GenreScreen
-import com.example.kinopoisk.screen.main.sortingScreen.SortingScreen
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.COUNTRIES_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.COUNTRIES_ID_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.GENRE_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.GENRE_ID_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.ORDER_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.RATING_FROM_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.RATING_TO_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.TYPE_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.YEAR_FROM_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.YEAR_TO_ARGUMENT
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Route.SORTING_FILM_ROUTE
+import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenRoute
+import com.example.feature_countries.screen.CountriesScreen
+import com.example.feature_genre.screen.GenreScreen
+import com.example.feature_sorting.screen.SortingScreen
 import com.example.kinopoisk.utils.Converters
 
 @ExperimentalFoundationApi
 fun NavGraphBuilder.sortingFilmNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope,
     appComponent: AppComponent
 ) {
     navigation(
@@ -46,7 +44,7 @@ fun NavGraphBuilder.sortingFilmNavGraph(
             ){
                 SortingScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
+                    sortingViewModel = appComponent.sortingViewModel(),
                     genreString = it.arguments?.getString(GENRE_ARGUMENT).toString(),
                     countriesString = it.arguments?.getString(COUNTRIES_ARGUMENT).toString()
                 )
@@ -101,14 +99,14 @@ fun NavGraphBuilder.sortingFilmNavGraph(
             }
             composable(SortingScreenRoute.Genre.route){
                 GenreScreen(
-                    lifecycleScope = lifecycleScope,
-                    navController = navController
+                    navController = navController,
+                    genreViewModel = appComponent.genreViewModel()
                 )
             }
             composable(SortingScreenRoute.Countries.route){
                 CountriesScreen(
-                    lifecycleScope = lifecycleScope,
-                    navController = navController
+                    navController = navController,
+                    countriesViewModel = appComponent.countriesViewModel()
                 )
             }
         }

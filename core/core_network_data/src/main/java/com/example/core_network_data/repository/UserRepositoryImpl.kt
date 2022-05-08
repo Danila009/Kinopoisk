@@ -22,4 +22,8 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun getUserInfo(): User {
         return userApi.getUserInfo().body() ?: User()
     }
+
+    override suspend fun putUpdatePassword(email: String, password: String): String {
+        return userApi.putUpdatePassword(email, password).message()
+    }
 }

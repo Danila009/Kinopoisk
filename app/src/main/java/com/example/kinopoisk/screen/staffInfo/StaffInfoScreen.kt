@@ -26,7 +26,7 @@ import com.example.kinopoisk.api.model.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
 import com.example.core_utils.key.StaffInfoScreenKey
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
@@ -183,8 +183,7 @@ fun StaffInfoScreen(
                                     )
                                     TextButton(onClick = { navController.navigate(
                                         StaffInfoScreenRoute.MoreStaff.base(
-                                            staffIf = staffId.toString(),
-                                            filmId = filmId.toString()
+                                            staffIf = staffId.toString()
                                         )) }) {
 
                                         Text(

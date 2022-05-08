@@ -10,11 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.kinopoisk.R
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.core_utils.key.WebScreenKey
-import com.example.kinopoisk.utils.Converters
+import com.example.kinopoisk.R
 
 @Composable
 fun WebView(
@@ -28,9 +26,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = WebScreenKey.CINEMA.name,
-                                webUrl = cinema.website,
-                                cinemaId = cinema.id.toString()
+                                webUrl = cinema.website
                             )
                         )
                     }, modifier = Modifier
@@ -45,9 +41,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = WebScreenKey.CINEMA.name,
-                                webUrl = cinema.webVk,
-                                cinemaId = cinema.id.toString()
+                                webUrl = cinema.webVk
                             )
                         )
                     }, modifier = Modifier
@@ -63,9 +57,7 @@ fun WebView(
                     IconButton(onClick = {
                         navController.navigate(
                             FilmScreenRoute.WebScreen.base(
-                                keyString = WebScreenKey.CINEMA.name,
-                                webUrl = cinema.webInstagram,
-                                cinemaId = cinema.id.toString()
+                                webUrl = cinema.webInstagram
                             )
                         )
                     }, modifier = Modifier
@@ -81,9 +73,7 @@ fun WebView(
                     IconButton(onClick = {
                     navController.navigate(
                         FilmScreenRoute.WebScreen.base(
-                            keyString = WebScreenKey.CINEMA.name,
-                            webUrl = cinema.webFacebook,
-                            cinemaId = cinema.id.toString()
+                            webUrl = cinema.webFacebook
                         )
                     )
                 }, modifier = Modifier

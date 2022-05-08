@@ -4,18 +4,21 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.feature_films.screen.FilmsScreen
+import com.example.feature_home.screen.HomeScreen
+import com.example.feature_persons.screen.PersonScreen
+import com.example.feature_profile.screen.ProfileScreen
 import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.cinemaNavGraph
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.filmInfoNavGraph
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.playlistNavGraph.filmTopNavGraph
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenRoute
+import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.sortingFilmNavGraph
 import com.example.kinopoisk.navigation.navGraph.shopNavGraph.shopNavGraph
 import com.example.kinopoisk.navigation.navGraph.staffInfoNavGraph.staffInfoNavGraph
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.loginNavGraph.loginNavGraph
 import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.settingNavGraph
-import com.example.kinopoisk.screen.main.MainScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -28,12 +31,11 @@ fun NavGraphBuilder.mainNavGraph(
     appComponent: AppComponent
 ) {
     navigation(
-        startDestination = MainScreenRoute.MainRoute.Main.route,
+        startDestination = MainScreenRoute.MainRoute.Home.route,
         route = MAIN_ROUTE,
         builder = {
             sortingFilmNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope,
                 appComponent = appComponent
             )
             cinemaNavGraph(
@@ -41,7 +43,8 @@ fun NavGraphBuilder.mainNavGraph(
                 lifecycleScope = lifecycleScope
             )
             settingNavGraph(
-                navController = navController
+                navController = navController,
+                appComponent = appComponent
             )
             filmInfoNavGraph(
                 navController = navController,
@@ -63,10 +66,28 @@ fun NavGraphBuilder.mainNavGraph(
                 navController = navController,
                 lifecycleScope = lifecycleScope
             )
-            composable(MainScreenRoute.MainRoute.Main.route){
-                MainScreen(
+            composable(MainScreenRoute.MainRoute.Home.route){
+                HomeScreen(
                     navController = navController,
-                    appComponent = appComponent
+                    homeViewModel = appComponent.homeViewModel()
+                )
+            }
+            composable(MainScreenRoute.MainRoute.Films.route){
+                FilmsScreen(
+                    navController = navController,
+                    filmsViewMode = appComponent.filmsViewModel()
+                )
+            }
+            composable(MainScreenRoute.MainRoute.Person.route){
+                PersonScreen(
+                    navController = navController,
+                    personsViewModel = appComponent.personViewModel()
+                )
+            }
+            composable(MainScreenRoute.MainRoute.Profile.route){
+                ProfileScreen(
+                    navController = navController,
+                    profileViewModel = appComponent.profileViewModel()
                 )
             }
         }

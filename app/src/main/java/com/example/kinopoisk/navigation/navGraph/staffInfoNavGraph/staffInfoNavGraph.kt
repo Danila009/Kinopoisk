@@ -54,16 +54,13 @@ fun NavGraphBuilder.staffInfoNavGraph(
                 arguments = listOf(
                     navArgument(STAFF_ID_ARGUMENT){
                         type = NavType.StringType
-                    }, navArgument(FILM_ID_ARGUMENT){
-                        type = NavType.StringType
                     }
                 )
             ) {
                 MoreStaffScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
-                    staffId = it.arguments?.getString(STAFF_ID_ARGUMENT)!!.toInt(),
-                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt()
+                    staffId = it.arguments?.getString(STAFF_ID_ARGUMENT)!!.toInt()
                 )
             }
         }

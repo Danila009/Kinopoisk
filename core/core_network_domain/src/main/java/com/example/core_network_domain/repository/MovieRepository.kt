@@ -1,6 +1,7 @@
 package com.example.core_network_domain.repository
 
 import com.example.core_network_domain.model.movie.Film
+import com.example.core_network_domain.model.movie.Filter
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 
@@ -22,4 +23,6 @@ interface MovieRepository {
         keyword:String,
         page:Int
     ):Film
+
+    suspend fun getFilter():Filter
 }

@@ -8,6 +8,9 @@ import com.example.core_utils.state.StatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -17,6 +20,14 @@ fun <T> Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope, lifec
             this@launchWhenStarted.collect()
         }
     }
+}
+
+inline fun<reified T> encodeToString(base:T):String{
+    return Json.encodeToString(base)
+}
+
+inline fun<reified T> decodeFromString(string: String):T{
+    return Json.decodeFromString(string)
 }
 
 fun getDatePremiere(
@@ -51,4 +62,13 @@ private fun SimpleDateFormat.parseTime(string: String):String{
     }catch (e:Exception){
         ""
     }
+}
+
+fun replaceRange(string: String, int: Int):String{
+    if (string.length < int)
+        return string
+    return string.replaceRange(
+        int until string.length,
+        "..."
+    )
 }

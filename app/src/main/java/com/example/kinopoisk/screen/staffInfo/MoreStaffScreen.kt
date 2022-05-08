@@ -27,8 +27,7 @@ import kotlinx.coroutines.flow.onEach
 fun MoreStaffScreen(
     lifecycleScope: LifecycleCoroutineScope,
     navController: NavController,
-    staffId:Int,
-    filmId:Int
+    staffId:Int
 ) {
     val context = LocalContext.current
     val staffInfoViewModel = DaggerAppComponent.builder()
@@ -51,11 +50,7 @@ fun MoreStaffScreen(
                 title = {
                     Text(text = staff.value.nameRu.toString())
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
-                        staffId = staffId.toString(),
-                        filmId = filmId.toString(),
-                        key = StaffInfoScreenKey.FILM.name
-                    )) }) {
+                    IconButton(onClick = { navController.navigateUp() }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null

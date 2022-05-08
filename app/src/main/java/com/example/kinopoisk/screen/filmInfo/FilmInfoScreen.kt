@@ -33,10 +33,9 @@ import com.example.kinopoisk.api.model.staff.Staff
 import com.example.kinopoisk.api.model.user.history.History
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.constants.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.kinopoisk.screen.filmInfo.view.*
 import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
-import com.example.core_utils.key.WebScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
@@ -159,8 +158,6 @@ fun FilmInfoScreen(
             LaunchedEffect(key1 = Unit, block = {
                 filmInfo.value.webUrl?.let {
                     navController.navigate(FilmScreenRoute.WebScreen.base(
-                        filmId = filmId.toString(),
-                        keyString = WebScreenKey.FILM.name,
                         webUrl = it
                     ))
                 }
