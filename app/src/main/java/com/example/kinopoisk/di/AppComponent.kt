@@ -2,6 +2,7 @@ package com.example.kinopoisk.di
 
 import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
+import com.example.feature_comics.viewModel.ComicsViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
 import com.example.feature_films.viewModel.FilmsViewModel
 import com.example.feature_genre.viewModel.GenreViewModel
@@ -13,6 +14,7 @@ import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import com.example.feature_settings.viewModel.SettingViewModel
 import com.example.feature_sorting.viewModel.SortingViewModel
 import com.example.feature_update_user_password.viewModel.UpdateUserPasswordViewModel
+import com.example.kinopoisk.di.modules.api.MarvelApiModule
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
@@ -33,7 +35,8 @@ import javax.inject.Singleton
         UserApiModule::class,
         UserDatabaseModule::class,
         MyKinopoiskApiModule::class,
-        RickAndMortyApiModule::class
+        RickAndMortyApiModule::class,
+        MarvelApiModule::class
     ]
 )
 @Singleton
@@ -59,6 +62,7 @@ interface AppComponent {
     fun countriesViewModel():CountriesViewModel
     fun updatePasswordCViewModel():UpdateUserPasswordViewModel
     fun serialInfoViewModel(): SerialInfoViewModel
+    fun comicsViewModel():ComicsViewModel
 
     @Component.Builder
     interface Builder{

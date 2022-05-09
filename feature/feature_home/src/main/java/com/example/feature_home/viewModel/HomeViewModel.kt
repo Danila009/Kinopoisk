@@ -1,5 +1,6 @@
 package com.example.feature_home.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -7,12 +8,15 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.core_database_domain.useCase.user.GetUserRoleUseCase
+import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.cinema.Cinema
+import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.ReleaseItem
 import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.shop.Shop
 import com.example.core_network_domain.useCase.cinema.GetCinemaUseCase
+import com.example.core_network_domain.useCase.marvel.GetComicsMarvelUseCase
 import com.example.core_network_domain.useCase.movie.GetPremiereUseCase
 import com.example.core_network_domain.useCase.movie.GetReleaseUseCase
 import com.example.core_network_domain.useCase.playlist.GetPlaylistUseCase
@@ -30,6 +34,7 @@ class HomeViewModel @Inject constructor(
     private val getCinemaUseCase: GetCinemaUseCase,
     private val getPlaylistUseCase: GetPlaylistUseCase,
     private val getReleaseUseCase: GetReleaseUseCase,
+    private val getComicsMarvelUseCase: GetComicsMarvelUseCase,
     getUserRoleUseCase: GetUserRoleUseCase
 ):ViewModel() {
 
@@ -46,6 +51,15 @@ class HomeViewModel @Inject constructor(
 
     private val _responsePlaylist = MutableStateFlow(listOf<Playlist>())
     val responsePlaylist = _responsePlaylist.asStateFlow()
+
+    private val _responseComicsMarvel:MutableStateFlow<Response<ComicsMarvel>> =
+        MutableStateFlow(Response.Loading())
+    val responseComicsMarvel = _responseComicsMarvel.asStateFlow()
+
+    fun getComicsMarvel(search:String = "") =
+        getComicsMarvelUseCase.invoke(search).onEach {
+            _responseComicsMarvel.value = it
+        }.launchIn(viewModelScope)
 
     fun getPremiere(year:Int,month:String){
         viewModelScope.launch {

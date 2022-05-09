@@ -8,6 +8,7 @@
       <module name="Kinopoisk.core.core_ui" target="11" />
       <module name="Kinopoisk.core.core_utils" target="11" />
       <module name="Kinopoisk.feature.feature_authorization" target="11" />
+      <module name="Kinopoisk.feature.feature_comics" target="11" />
       <module name="Kinopoisk.feature.feature_countries" target="11" />
       <module name="Kinopoisk.feature.feature_films" target="11" />
       <module name="Kinopoisk.feature.feature_genre" target="11" />

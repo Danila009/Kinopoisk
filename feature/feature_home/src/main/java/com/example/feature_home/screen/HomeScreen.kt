@@ -12,6 +12,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_database_domain.common.UserRole
 import com.example.core_network_domain.model.cinema.Cinema
+import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.shop.Shop
@@ -40,6 +41,7 @@ fun HomeScreen(
     val shop = remember { mutableStateOf(Shop()) }
     val filmListAdmin = remember { mutableStateOf(listOf<Playlist>()) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
+    val comicsMarvel = remember { mutableStateOf(ComicsMarvel()) }
 
     val release = homeViewModel.getRelease(
         year = getDatePremiere(StatePremiere.YEAR).toInt(),
@@ -72,6 +74,13 @@ fun HomeScreen(
     homeViewModel.getPlaylist()
     homeViewModel.responsePlaylist.onEach {
         filmListAdmin.value = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
+    homeViewModel.getComicsMarvel()
+    homeViewModel.responseComicsMarvel.onEach {
+        it.data?.let { comics ->
+            comicsMarvel.value = comics
+        }
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Surface(
@@ -115,6 +124,11 @@ fun HomeScreen(
                     navController = navController,
                     userRole = userRole.value,
                     playlist = filmListAdmin.value
+                )
+
+                ComicsView(
+                    comicsMarvel = comicsMarvel.value,
+                    navController = navController
                 )
 
                 Spacer(modifier = Modifier

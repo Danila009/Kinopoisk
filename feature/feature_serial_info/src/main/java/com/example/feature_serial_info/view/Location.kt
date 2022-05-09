@@ -20,9 +20,6 @@ fun LocationRickAndMortyView(
 ) {
     val primaryBackground = Color(0xFF3C3E44)
 
-    val planetUrl = "" +
-            "https://avatars.mds.yandex.net/i?id=3d3091212d4beb854141956747688432_l-5316602-images-thumbs&n=13"
-
     Card(
         backgroundColor = primaryBackground,
         shape = AbsoluteRoundedCornerShape(15.dp),
@@ -34,7 +31,7 @@ fun LocationRickAndMortyView(
         Row {
             Image(
                 painter = rememberImagePainter(
-                    data = planetUrl,
+                    data = "",
                     builder = {
                         crossfade(true)
                     }
