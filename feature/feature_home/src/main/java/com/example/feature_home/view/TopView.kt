@@ -30,7 +30,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 
 @ExperimentalSerializationApi
 @Composable
-fun PlaylistView(
+internal fun PlaylistView(
     navController: NavController,
     userRole:UserRole,
     playlist:List<Playlist>

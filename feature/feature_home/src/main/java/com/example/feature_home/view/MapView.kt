@@ -16,6 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.core_network_domain.model.cinema.Cinema
+import com.example.core_ui.animation.BaseRawListShimmer
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.google.android.gms.maps.model.CameraPosition
@@ -25,7 +26,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 
 @Composable
-fun MapView(
+internal fun MapView(
     navController: NavController,
     cinema:List<Cinema>,
     checkNavMap:MutableState<Boolean>
@@ -52,68 +53,77 @@ fun MapView(
         }
     }
     LazyRow(content = {
-        itemsIndexed(cinema){ index, item ->
-            if (index < 5){
-                if (checkNavMap.value){
-                    LaunchedEffect(key1 = Unit, block ={
-                        navController.navigate(
-                            CinemaScreenRoute.CinemaInfo.base(
-                                cinemaId = item.id
+        if (cinema.isNotEmpty()){
+            itemsIndexed(cinema){ index, item ->
+                if (index < 5){
+                    if (checkNavMap.value){
+                        LaunchedEffect(key1 = Unit, block ={
+                            navController.navigate(
+                                CinemaScreenRoute.CinemaInfo.base(
+                                    cinemaId = item.id
+                                )
                             )
-                        )
-                    })
-                }
-                Column(
-                    modifier = Modifier
-                        .width(350.dp)
-                        .height(250.dp)
-                ) {
-                    GoogleMap(
+                        })
+                    }
+                    Column(
                         modifier = Modifier
-                            .padding(5.dp)
-                            .width(300.dp)
-                            .height(200.dp)
-                            .clip(
-                                AbsoluteRoundedCornerShape(15.dp)
+                            .width(350.dp)
+                            .height(250.dp)
+                    ) {
+                        GoogleMap(
+                            modifier = Modifier
+                                .padding(5.dp)
+                                .width(300.dp)
+                                .height(200.dp)
+                                .clip(
+                                    AbsoluteRoundedCornerShape(15.dp)
+                                ),
+                            cameraPositionState = CameraPositionState(
+                                CameraPosition(
+                                    LatLng(
+                                        item.latitude,
+                                        item.longitude
+                                    ), 80f,1f,1f
+                                )
                             ),
-                        cameraPositionState = CameraPositionState(
-                            CameraPosition(
-                                LatLng(
+                            content = {
+                                Marker(position = LatLng(
                                     item.latitude,
                                     item.longitude
-                                ), 80f,1f,1f
-                            )
-                        ),
-                        content = {
-                            Marker(position = LatLng(
-                                item.latitude,
-                                item.longitude
-                            ), title = "${item.title} ${item.adress}",
-                                onInfoWindowClick = {
+                                ), title = "${item.title} ${item.adress}",
+                                    onInfoWindowClick = {
+                                        checkNavMap.value = true
+                                    })
+                            }
+                        )
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable {
                                     checkNavMap.value = true
-                                })
+                                },
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                text = item.title ?: "",
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            )
+                            Text(
+                                text = item.rating.toString(),
+                                modifier = Modifier
+                                    .padding(5.dp)
+                            )
                         }
-                    )
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                checkNavMap.value = true
-                            },
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Text(
-                            text = item.title ?: "",
-                            modifier = Modifier
-                                .padding(5.dp)
-                        )
-                        Text(
-                            text = item.rating.toString(),
-                            modifier = Modifier
-                                .padding(5.dp)
-                        )
                     }
                 }
+            }
+        }else{
+            items(10){
+                BaseRawListShimmer(
+                    imageWidth = 300.dp,
+                    imageHeight = 200.dp
+                )
             }
         }
     })

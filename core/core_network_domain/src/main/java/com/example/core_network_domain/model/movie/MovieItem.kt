@@ -12,8 +12,8 @@ data class MovieItem(
     val nameRu: String?,
     val posterUrl: String?,
     val posterUrlPreview: String?,
-    val ratingImdb: Int?,
-    val ratingKinopoisk: Int?,
+    val ratingImdb: Float?,
+    val ratingKinopoisk: Float?,
     val type: String?,
     val year: Int?
 )

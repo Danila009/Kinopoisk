@@ -1,9 +1,15 @@
 package com.example.core_utils.common
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.LazyGridScope
+import androidx.compose.foundation.lazy.LazyItemScope
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.paging.compose.LazyPagingItems
 import com.example.core_utils.state.StatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -71,4 +77,18 @@ fun replaceRange(string: String, int: Int):String{
         int until string.length,
         "..."
     )
+}
+
+fun getCurrentTime():String{
+    val time = Calendar.getInstance().time
+    val formatter = SimpleDateFormat("dd-MM-yy hh:mm", Locale.getDefault())
+    return formatter.format(time)
+}
+
+fun rating(rating: Float): Color {
+    if (rating <= 4.9f)
+        return Color.Red
+    if (rating <= 6.9f || rating == 0f)
+        return Color.White
+    return Color.Green
 }

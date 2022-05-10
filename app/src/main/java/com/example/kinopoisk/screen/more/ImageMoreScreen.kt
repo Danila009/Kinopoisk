@@ -18,7 +18,7 @@ import androidx.navigation.NavController
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
+import com.example.feature_film_info.viewState.ImageViewState
 import com.example.kinopoisk.screen.more.view.ImageView
 import com.example.kinopoisk.screen.more.view.TabView
 import com.example.kinopoisk.ui.theme.primaryBackground

@@ -70,6 +70,7 @@ dependencies {
     implementation project(":feature:feature_settings")
     implementation project(":feature:feature_web")
     implementation project(":feature:feature_comics")
+    implementation project(":feature:feature_film_info")
     implementation project(":feature:feature_serial_info")
     implementation project(":feature:feature_update_user_password")
 
@@ -105,7 +106,7 @@ dependencies {
     implementation ("androidx.paging:paging-compose:1.0.0-alpha14")
 
     //Coil
-    implementation("io.coil-kt:coil-compose:1.4.0")
+    implementation("io.coil-kt:coil-compose:2.0.0-rc03")
 
     //Kotlin serialization and retrofit
     implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")

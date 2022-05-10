@@ -9,5 +9,6 @@ object FilmScreenConstants {
         const val FILM_ID_ARGUMENT = "filmId"
         const val WEB_URL_ARGUMENT = "webUrl"
         const val ADMIN_FILM_LIST_ITEM_ID = "adminFilmListItemId"
+        const val CHARACTERS = "characters"
     }
 }

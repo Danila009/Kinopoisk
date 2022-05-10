@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 @ExperimentalSerializationApi
 @Serializable
 data class HistoryMovieItem(
-    val id:Int,
+    val id:Int?,
     @Serializable(with = DateTimeSerialization::class)
     val date:String,
     val movie: MovieItem

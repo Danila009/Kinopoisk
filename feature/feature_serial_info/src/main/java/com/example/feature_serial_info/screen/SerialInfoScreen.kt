@@ -37,7 +37,8 @@ import java.util.ArrayList
 fun SerialInfoScreen(
     navController: NavController,
     filmId:Int,
-    serialInfoViewModel: SerialInfoViewModel
+    serialInfoViewModel: SerialInfoViewModel,
+    characters:Boolean
 ) {
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val lifecycle = LocalLifecycleOwner.current.lifecycle
@@ -47,7 +48,9 @@ fun SerialInfoScreen(
     val filmInfo = remember { mutableStateOf(FilmInfo()) }
 
     var baseExpandedDropdownMenu by remember { mutableStateOf(false) }
-    var dropdownMenuState by remember { mutableStateOf(DropdownMenuState.EPISODES) }
+    var dropdownMenuState by remember { mutableStateOf(
+        if (characters) DropdownMenuState.CHARACTERS else DropdownMenuState.EPISODES
+    ) }
 
     val charactersRickAndMortySource = serialInfoViewModel.getCharactersRickAndMorty(
 

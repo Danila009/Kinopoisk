@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.api.repository.ApiRepository
-import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import kotlinx.coroutines.flow.MutableStateFlow

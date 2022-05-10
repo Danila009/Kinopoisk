@@ -8,6 +8,14 @@ object ConstantsUrl {
     const val FILTER_URL = "/api/v2.2/films/filters"
     const val FILM_INFO_ID_URL = "/api/v2.2/films/{id}"
     const val SEASONS_ID_URL = "/api/v2.2/films/{id}/seasons"
+    const val BUDGET_FILM_ID_URL = "/api/v2.2/films/{id}/box_office"
+    const val FACT_FILM_ID_URL = "/api/v2.2/films/{id}/facts"
+    const val STAFF_URL = "/api/v1/staff"
+    const val SIMILAR_ID_URL = "/api/v2.2/films/{id}/similars"
+    const val SEQUEL_AND_PREQUEL_ID_URL = "/api/v2.1/films/{id}/sequels_and_prequels"
+    const val FILM_DISTRIBUTION_ID_URL = "/api/v2.2/films/{id}/distributions"
+    const val IMAGE_ID_URL = "/api/v2.2/films/{id}/images"
+    const val REVIEW_URL = "/api/v1/reviews"
 
     const val SHOP_URL = "/kinopoisk/Shop"
 
@@ -35,4 +43,8 @@ object ConstantsUrl {
 
     const val MARVEL_CHARACTERS_URL = "/v1/public/characters"
     const val MARVEL_COMICS_URL = "/v1/public/comics"
+
+    const val IMDb_FILM_WIKIPEDIA_URL = "/{lang}/API/Wikipedia/{apiKey}/{id}"
+    const val IMDb_FILM_FAQ_URL = "/{lang}/API/FAQ/{apiKey}/{id}"
+    const val IMDb_FILM_AWARDS_URL = "/{lang}/API/Awards/{apiKey}/{id}"
 }

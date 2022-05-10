@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinopoisk.api.repository.ApiRepository
-import com.example.kinopoisk.api.model.review.ReviewDetail
+import com.example.core_network_domain.model.movie.review.ReviewDetail
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch

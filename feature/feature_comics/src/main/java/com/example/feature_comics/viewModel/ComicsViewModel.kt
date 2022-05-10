@@ -2,25 +2,28 @@ package com.example.feature_comics.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.core_network_domain.common.Response
-import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.core_network_domain.model.marvel.comics.Result
+import com.example.core_network_domain.source.ComicsMarvelSource
 import com.example.core_network_domain.useCase.marvel.GetComicsMarvelUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 class ComicsViewModel @Inject constructor(
-    private val getComicsMarvelUseCase: GetComicsMarvelUseCase
+    private val getComicsMarvelUseCase: GetComicsMarvelUseCase,
 ):ViewModel() {
 
-    private val _responseComicsMarvel:MutableStateFlow<Response<ComicsMarvel>> =
-        MutableStateFlow(Response.Loading())
-    val responseComicsMarvel = _responseComicsMarvel.asStateFlow()
-
-    fun getComicsMarvel(search:String) =
-        getComicsMarvelUseCase.invoke(search).onEach {
-            _responseComicsMarvel.value = it
-    }.launchIn(viewModelScope)
+    fun getComicsMarvel(
+        search:String = ""
+    ): Flow<PagingData<Result>> {
+        return Pager(PagingConfig(pageSize = 1)){
+            ComicsMarvelSource(
+                search = search,
+                getComicsMarvelUseCase = getComicsMarvelUseCase
+            )
+        }.flow.cachedIn(viewModelScope)
+    }
 }

@@ -12,7 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.staff.FilmStaff
+import com.example.core_network_domain.model.movie.staff.FilmStaff
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
 import com.example.kinopoisk.ui.theme.primaryBackground

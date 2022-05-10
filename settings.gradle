@@ -14,7 +14,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Kinopoisk"
 include ':app'
-include ':core:core_network_domain'
 include ':core:core_network_data'
 include ':core:core_utils'
 include ':core:core_ui'
@@ -34,3 +33,5 @@ include ':feature:feature_settings'
 include ':feature:feature_web'
 include ':feature:feature_serial_info'
 include ':feature:feature_comics'
+include ':core:core_network_domain'
+include ':feature:feature_film_info'

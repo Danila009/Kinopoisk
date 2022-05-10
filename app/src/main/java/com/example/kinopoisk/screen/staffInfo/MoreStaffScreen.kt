@@ -14,12 +14,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
-import com.example.core_utils.key.StaffInfoScreenKey
 import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.utils.Converters
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 

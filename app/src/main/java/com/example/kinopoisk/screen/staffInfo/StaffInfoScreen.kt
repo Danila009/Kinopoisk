@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute

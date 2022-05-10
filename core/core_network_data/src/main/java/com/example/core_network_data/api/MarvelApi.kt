@@ -20,7 +20,6 @@ interface MarvelApi {
     @GET(MARVEL_COMICS_URL)
     suspend fun getComics(
         @Query("titleStartsWith") search: String?,
-        @Query("orderBy") orderBy:String = "title",
         @Query("apikey") apikey: String = "516b9065d41d0d5ea50150666658aeb8",
         @Query("ts") ts:String = "1",
         @Query("hash") hash:String = "4e2f0e14b20b46cc79f37132fc44d443",

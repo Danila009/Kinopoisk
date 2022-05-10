@@ -21,6 +21,7 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.core_ui.animation.FilmListShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
@@ -129,16 +130,19 @@ fun FilmsScreen(
                     }
                 }
 
-                item {
-                    if (check.value){
-                        Column(
-                            Modifier.fillMaxWidth(),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            CircularProgressIndicator(
-                                color = secondaryBackground
-                            )
-                        }
+
+                if (check.value){
+                    item {
+                        FilmListShimmer()
+                    }
+                }
+
+                filmList.apply {
+                    when{
+                        loadState.refresh is LoadState.Loading -> check.value = true
+
+                        loadState.append is LoadState.Loading -> check.value = true
+
                     }
                 }
 
@@ -148,14 +152,6 @@ fun FilmsScreen(
                             .fillMaxWidth()
                             .height(60.dp)
                     )
-                }
-
-                filmList.apply {
-                    when{
-                        loadState.refresh is LoadState.Loading -> check.value = false
-
-                        loadState.append is LoadState.Loading -> check.value = true
-                    }
                 }
             })
         }

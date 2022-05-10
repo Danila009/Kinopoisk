@@ -6,7 +6,7 @@ object Constants {
     const val FILM_INFO_ID_URL = "/api/v2.2/films/{id}"
     const val BUDGET_FILM_ID_URL = "/api/v2.2/films/{id}/box_office"
     const val FACT_FILM_ID_URL = "/api/v2.2/films/{id}/facts"
-    const val STAFf_URL = "/api/v1/staff"
+    const val STAFF_URL = "/api/v1/staff"
     const val SIMILAR_ID_URL = "/api/v2.2/films/{id}/similars"
     const val SEQUEL_AND_PREQUEL_ID_URL = "/api/v2.1/films/{id}/sequels_and_prequels"
     const val SEASONS_ID_URL = "/api/v2.2/films/{id}/seasons"
@@ -50,4 +50,5 @@ object Constants {
 
     const val RICK_AND_MORTY_BASE_URL = "https://rickandmortyapi.com"
     const val MARVEL_BASE_URL = "https://gateway.marvel.com"
+    const val IMDb_BASE_URL = "https://imdb-api.com"
 }

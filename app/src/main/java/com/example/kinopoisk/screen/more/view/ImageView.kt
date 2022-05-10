@@ -12,7 +12,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
+import com.example.feature_film_info.viewState.ImageViewState
 
 @Composable
 fun ImageView(

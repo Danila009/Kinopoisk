@@ -4,9 +4,9 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.FILM_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenConstants.Argument.REVIEW_ID_ARGUMENT
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenConstants.Route.REVIEW_ROUTE
-import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph.constants.ReviewFilmScreenRoute
+import com.example.core_utils.navigation.filmNavGraph.reviewFilmNavGraph.ReviewFilmScreenConstants.Argument.REVIEW_ID_ARGUMENT
+import com.example.core_utils.navigation.filmNavGraph.reviewFilmNavGraph.ReviewFilmScreenConstants.Route.REVIEW_ROUTE
+import com.example.core_utils.navigation.filmNavGraph.reviewFilmNavGraph.ReviewFilmScreenRoute
 import com.example.kinopoisk.screen.review.ReviewDetailScreen
 
 fun NavGraphBuilder.reviewFilmNavGraph(

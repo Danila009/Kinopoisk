@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
 import com.example.feature_comics.viewModel.ComicsViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
+import com.example.feature_film_info.viewModel.FilmInfoViewModel
 import com.example.feature_films.viewModel.FilmsViewModel
 import com.example.feature_genre.viewModel.GenreViewModel
 import com.example.feature_home.viewModel.HomeViewModel
@@ -14,12 +15,12 @@ import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import com.example.feature_settings.viewModel.SettingViewModel
 import com.example.feature_sorting.viewModel.SortingViewModel
 import com.example.feature_update_user_password.viewModel.UpdateUserPasswordViewModel
+import com.example.kinopoisk.di.modules.api.IMDbApiModule
 import com.example.kinopoisk.di.modules.api.MarvelApiModule
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
-import com.example.kinopoisk.screen.filmInfo.FilmInfoViewModel
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
@@ -36,14 +37,14 @@ import javax.inject.Singleton
         UserDatabaseModule::class,
         MyKinopoiskApiModule::class,
         RickAndMortyApiModule::class,
-        MarvelApiModule::class
+        MarvelApiModule::class,
+        IMDbApiModule::class
     ]
 )
 @Singleton
 interface AppComponent {
 
     fun cinemaViewModel():CinemaViewModel
-    fun filmInfoViewModel():FilmInfoViewModel
     fun filmTopViewModel():FilmTopViewModel
     fun reviewViewModel():ReviewViewModel
     fun shopViewModel():ShopViewModel
@@ -63,6 +64,7 @@ interface AppComponent {
     fun updatePasswordCViewModel():UpdateUserPasswordViewModel
     fun serialInfoViewModel(): SerialInfoViewModel
     fun comicsViewModel():ComicsViewModel
+    fun filmInfoViewModel(): FilmInfoViewModel
 
     @Component.Builder
     interface Builder{

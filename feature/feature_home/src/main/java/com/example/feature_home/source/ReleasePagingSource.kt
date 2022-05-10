@@ -4,8 +4,6 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.core_network_domain.model.movie.premiere.ReleaseItem
 import com.example.core_network_domain.useCase.movie.GetReleaseUseCase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import java.lang.Exception
 
 class ReleasePagingSource (

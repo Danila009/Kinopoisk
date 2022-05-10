@@ -3,13 +3,17 @@ package com.example.kinopoisk.api.repository
 import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.model.Film
 import com.example.core_network_domain.model.movie.FilmInfo
-import com.example.kinopoisk.api.model.filmInfo.*
-import com.example.kinopoisk.api.model.filmInfo.distribution.Distribution
-import com.example.kinopoisk.api.model.review.Review
-import com.example.kinopoisk.api.model.review.ReviewDetail
+import com.example.core_network_domain.model.movie.ImageMovie
+import com.example.core_network_domain.model.movie.SequelAndPrequel
+import com.example.core_network_domain.model.movie.Similar
+import com.example.core_network_domain.model.movie.budget.Budget
+import com.example.core_network_domain.model.movie.fact.Fact
+import com.example.core_network_domain.model.movie.distribution.Distribution
+import com.example.core_network_domain.model.movie.review.Review
+import com.example.core_network_domain.model.movie.review.ReviewDetail
 import com.example.core_network_domain.model.serial.Season
-import com.example.kinopoisk.api.model.staff.Staff
-import com.example.kinopoisk.api.model.staff.StaffInfo
+import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
 import retrofit2.Response
 import javax.inject.Inject
@@ -67,7 +71,7 @@ class ApiRepository @Inject constructor(
         id: Int,
         type: String,
         page: Int = 1
-    ):Response<Image> = apiKinopoisk.getImage(
+    ):Response<ImageMovie> = apiKinopoisk.getImage(
         id = id,
         type = type,
         page = page

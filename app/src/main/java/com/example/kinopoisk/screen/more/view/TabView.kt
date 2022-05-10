@@ -4,7 +4,7 @@ import androidx.compose.material.ScrollableTabRow
 import androidx.compose.material.Tab
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import com.example.kinopoisk.screen.filmInfo.viewState.ImageViewState
+import com.example.feature_film_info.viewState.ImageViewState
 
 @Composable
 fun TabView(

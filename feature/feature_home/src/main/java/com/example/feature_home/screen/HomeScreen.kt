@@ -1,5 +1,6 @@
 package com.example.feature_home.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
@@ -12,7 +13,6 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_database_domain.common.UserRole
 import com.example.core_network_domain.model.cinema.Cinema
-import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.shop.Shop
@@ -25,6 +25,7 @@ import com.example.feature_home.viewModel.HomeViewModel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @ExperimentalSerializationApi
 @Composable
 fun HomeScreen(
@@ -41,7 +42,6 @@ fun HomeScreen(
     val shop = remember { mutableStateOf(Shop()) }
     val filmListAdmin = remember { mutableStateOf(listOf<Playlist>()) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
-    val comicsMarvel = remember { mutableStateOf(ComicsMarvel()) }
 
     val release = homeViewModel.getRelease(
         year = getDatePremiere(StatePremiere.YEAR).toInt(),
@@ -76,12 +76,7 @@ fun HomeScreen(
         filmListAdmin.value = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
-    homeViewModel.getComicsMarvel()
-    homeViewModel.responseComicsMarvel.onEach {
-        it.data?.let { comics ->
-            comicsMarvel.value = comics
-        }
-    }.launchWhenStarted(lifecycleScope, lifecycle)
+    val comicsMarvel = homeViewModel.getComicsMarvel().collectAsLazyPagingItems()
 
     Surface(
         modifier = Modifier
@@ -91,34 +86,26 @@ fun HomeScreen(
         LazyColumn(content = {
             item {
 
-                if (premiere.value.items.isNotEmpty()){
-                    PremiereView(
-                        navController = navController,
-                        premiere = premiere.value
-                    )
-                }
+                PremiereView(
+                    navController = navController,
+                    premiere = premiere.value
+                )
 
-                if (release.itemSnapshotList.isNotEmpty()){
-                    ReleaseView(
-                        navController = navController,
-                        release = release
-                    )
-                }
+                ReleaseView(
+                    navController = navController,
+                    release = release
+                )
 
-                if (shop.value.catecory.isNotEmpty()){
-                    ShopView(
-                        navController = navController,
-                        shop = shop.value
-                    )
-                }
+                ShopView(
+                    navController = navController,
+                    shop = shop.value
+                )
 
-                if (cinema.value.isNotEmpty()){
-                    MapView(
-                        navController = navController,
-                        cinema = cinema.value,
-                        checkNavMap = checkNavMap
-                    )
-                }
+                MapView(
+                    navController = navController,
+                    cinema = cinema.value,
+                    checkNavMap = checkNavMap
+                )
 
                 PlaylistView(
                     navController = navController,
@@ -127,7 +114,11 @@ fun HomeScreen(
                 )
 
                 ComicsView(
-                    comicsMarvel = comicsMarvel.value,
+                    comicsMarvel = comicsMarvel,
+                    navController = navController
+                )
+
+                CharactersView(
                     navController = navController
                 )
 
