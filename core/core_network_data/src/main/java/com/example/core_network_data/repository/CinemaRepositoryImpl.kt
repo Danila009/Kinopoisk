@@ -1,7 +1,7 @@
 package com.example.core_network_data.repository
 
 import com.example.core_network_data.api.CinemaApi
-import com.example.core_network_domain.model.cinema.Cinema
+import com.example.core_network_domain.model.cinema.*
 import com.example.core_network_domain.repository.CinemaRepository
 import javax.inject.Inject
 
@@ -14,6 +14,40 @@ class CinemaRepositoryImpl @Inject constructor(
         has4D: Boolean?,
         hasImax: Boolean?,
     ): List<Cinema> {
-        return cinemaApi.getCinema(search, has3D, has4D, hasImax).body()!!
+        return cinemaApi.getCinema(search, has3D, has4D, hasImax).body() ?: emptyList()
+    }
+
+    override suspend fun getCinemaById(id: Int): Cinema? {
+        return cinemaApi.getCinemaById(id).body()
+    }
+
+    override suspend fun getCinemaPhotos(id: Int): List<Photo> {
+        return cinemaApi.getCinemaPhotos(id).body() ?: emptyList()
+    }
+
+    override suspend fun getCinemaPhone(id: Int): List<Phone> {
+        return cinemaApi.getCinemaPhone(id).body() ?: emptyList()
+    }
+
+    override suspend fun getCinemaSchedule(id: Int): List<Schedule> {
+        return cinemaApi.getCinemaSchedule(id).body() ?: emptyList()
+    }
+
+    override suspend fun getCinemaReview(
+        id: Int,
+        search: String,
+        startDate: String?,
+        endDate: String?,
+        startRating: Float?,
+        endRating: Float?,
+    ): Review? {
+        return cinemaApi.getCinemaReview(
+            id = id,
+            search = search,
+            startDate = startDate,
+            endDate = endDate,
+            startRating = startRating,
+            endRating = endRating
+        ).body()
     }
 }

@@ -6,15 +6,17 @@ import androidx.navigation.compose.composable
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Route.CINEMA_ROUTE
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
+import com.example.feature_cinema_info.screen.CinemaInfoScreen
+import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
-import com.example.kinopoisk.screen.cinema.CinemaInfoScreen
 import com.example.kinopoisk.screen.cinema.CinemaMapScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalPagerApi
 fun NavGraphBuilder.cinemaNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope
+    lifecycleScope: LifecycleCoroutineScope,
+    appComponent: AppComponent
 ) {
     navigation(
         startDestination = CinemaScreenRoute.CinemaInfo.route,
@@ -38,7 +40,7 @@ fun NavGraphBuilder.cinemaNavGraph(
             ){
                 CinemaInfoScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
+                    cinemaInfoViewModel = appComponent.cinemaInfoViewModel(),
                     cinemaId = it.arguments?.getInt(CINEMA_ID_ARGUMENT)!!.toInt()
                 )
             }

@@ -20,6 +20,10 @@ object ConstantsUrl {
     const val SHOP_URL = "/kinopoisk/Shop"
 
     const val CINEMA_URL = "/kinopoisk/Cinema"
+    const val CINEMA_PHOTO_URL = "/kinopoisk/Cinema/{id}/Photo"
+    const val CINEMA_PHONE_URL = "/kinopoisk/Cinema/{id}/Phone"
+    const val CINEMA_SCHEDULE_URL = "/kinopoisk/Cinema/{id}/Schedule"
+    const val CINEMA_REVIEW_URL = "/kinopoisk/Cinema/{cinemaId}/Review"
 
     const val PLAYLIST_URL = "/kinopoisk/Playlist"
 

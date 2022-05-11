@@ -1,4 +1,4 @@
-package com.example.kinopoisk.screen.cinema.view
+package com.example.feature_cinema_info.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -12,13 +12,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.kinopoisk.api.model.cinema.Review
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.core_network_domain.model.cinema.ReviewItem
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
 
 @Composable
 fun ReviewView(
-    review: Review
+    review: ReviewItem
 ) {
     Card(
         modifier = Modifier
@@ -30,7 +30,7 @@ fun ReviewView(
     ) {
         Column {
             Text(
-                text = review.userName,
+                text = review.user.username,
                 modifier = Modifier.padding(5.dp),
                 color = secondaryBackground,
                 fontWeight = FontWeight.Bold

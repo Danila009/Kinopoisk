@@ -27,3 +27,15 @@ fun ImageShimmer(
             .background(brush)
     )
 }
+
+@Composable
+fun ImageShimmer(
+    modifier: Modifier
+) {
+    val brush = baseAnimationShimmer()
+
+    Spacer(
+        modifier = modifier
+            .background(brush)
+    )
+}

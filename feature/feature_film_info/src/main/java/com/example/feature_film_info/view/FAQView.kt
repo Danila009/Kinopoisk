@@ -52,9 +52,6 @@ internal fun FAQView(
                     modifier = Modifier
                         .padding(5.dp)
                         .width(200.dp)
-//                        .blur(
-//                            10000.dp, BlurredEdgeTreatment.Rectangle
-//                        )
                 ) {
                     Column {
                         Text(

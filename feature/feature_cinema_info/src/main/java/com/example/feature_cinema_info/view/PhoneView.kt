@@ -1,4 +1,4 @@
-package com.example.kinopoisk.screen.cinema.view
+package com.example.feature_cinema_info.view
 
 import android.content.Context
 import android.content.Intent
@@ -9,11 +9,11 @@ import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.example.kinopoisk.api.model.cinema.PhoneItem
+import com.example.core_network_domain.model.cinema.Phone
 
 @Composable
 fun PhoneView(
-    phoneItem: PhoneItem,
+    phoneItem: Phone,
     context:Context
 ) {
     TextButton(onClick = {

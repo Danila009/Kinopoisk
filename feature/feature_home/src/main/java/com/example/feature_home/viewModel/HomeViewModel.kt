@@ -1,5 +1,6 @@
 package com.example.feature_home.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -20,6 +21,7 @@ import com.example.core_network_domain.useCase.movie.GetPremiereUseCase
 import com.example.core_network_domain.useCase.movie.GetReleaseUseCase
 import com.example.core_network_domain.useCase.playlist.GetPlaylistUseCase
 import com.example.core_network_domain.useCase.shop.GetShopUseCase
+import com.example.core_utils.common.Tag.RETROFIT_TAG
 import com.example.feature_home.source.ReleasePagingSource
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -51,7 +53,6 @@ class HomeViewModel @Inject constructor(
     private val _responsePlaylist = MutableStateFlow(listOf<Playlist>())
     val responsePlaylist = _responsePlaylist.asStateFlow()
 
-
     fun getComicsMarvel(
         search:String = ""
     ):Flow<PagingData<Result>> {
@@ -65,8 +66,12 @@ class HomeViewModel @Inject constructor(
 
     fun getPremiere(year:Int,month:String){
         viewModelScope.launch {
-            val response = getPremiereUseCase.invoke(year, month)
-            _responsePremiere.value = response
+            try {
+                val response = getPremiereUseCase.invoke(year, month)
+                _responsePremiere.value = response
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
         }
     }
 
@@ -85,8 +90,12 @@ class HomeViewModel @Inject constructor(
 
     fun getShop(){
         viewModelScope.launch {
-            val response = getShopUseCase.invoke()
-            _responseShop.value = response
+            try {
+                val response = getShopUseCase.invoke()
+                _responseShop.value = response
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
         }
     }
 
@@ -97,15 +106,23 @@ class HomeViewModel @Inject constructor(
         hasImax:Boolean? = null
     ){
         viewModelScope.launch {
-            val response = getCinemaUseCase.invoke(search, has3D, has4D, hasImax)
-            _responseCinema.value = response
+            try {
+                val response = getCinemaUseCase.invoke(search, has3D, has4D, hasImax)
+                _responseCinema.value = response
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
         }
     }
 
     fun getPlaylist(){
         viewModelScope.launch {
-            val response = getPlaylistUseCase.invoke()
-            _responsePlaylist.value = response
+            try {
+                val response = getPlaylistUseCase.invoke()
+                _responsePlaylist.value = response
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
         }
     }
 }

@@ -33,6 +33,7 @@ fun AuthorizationScreen(
     navController: NavController,
     authorizationViewModel: AuthorizationViewModel
 ) {
+
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 

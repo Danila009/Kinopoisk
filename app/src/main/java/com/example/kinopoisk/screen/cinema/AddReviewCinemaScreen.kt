@@ -18,12 +18,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
+import com.example.core_ui.view.BaseTextFieldView
 import com.example.kinopoisk.api.model.cinema.Cinema
 import com.example.kinopoisk.api.model.cinema.Review
 import com.example.kinopoisk.api.model.user.UserInfo
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
-import com.example.kinopoisk.screen.cinema.view.BaseTextField
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.Converters
@@ -107,12 +107,13 @@ fun AddReviewCinemaScreen(
                             .padding(6.dp)
                             .style(RatingBarStyle.Normal)
                     )
-                    
-                    BaseTextField(
+
+                    BaseTextFieldView(
                         label = "Title",
                         value = title
                     )
-                    BaseTextField(
+
+                    BaseTextFieldView(
                         label = "Description",
                         value = description
                     )

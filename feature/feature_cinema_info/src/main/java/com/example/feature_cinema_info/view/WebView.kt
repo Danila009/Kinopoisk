@@ -1,4 +1,4 @@
-package com.example.kinopoisk.screen.cinema.view
+package com.example.feature_cinema_info.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.padding
@@ -10,9 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.cinema.Cinema
+import com.example.core_network_domain.model.cinema.Cinema
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.kinopoisk.R
+import com.example.core_utils.R
 
 @Composable
 fun WebView(
@@ -78,12 +78,12 @@ fun WebView(
                     )
                 }, modifier = Modifier
                     .padding(5.dp)) {
-                    Image(
-                        painter = painterResource(id = R.drawable.facebook),
-                        contentDescription = null,
-                        modifier = Modifier.size(50.dp)
-                    )
-                }
+                        Image(
+                            painter = painterResource(id = R.drawable.facebook),
+                            contentDescription = null,
+                            modifier = Modifier.size(50.dp)
+                        )
+                    }
                 }
             }
         }

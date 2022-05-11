@@ -21,13 +21,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.core_ui.view.BaseTextFieldView
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.screen.cinema.view.BaseTextField
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.utils.Converters
 import java.util.ArrayList
@@ -78,7 +78,7 @@ fun FilmListAddScreen(
                             horizontalAlignment = Alignment.CenterHorizontally,
                             verticalArrangement = Arrangement.Center
                         ) {
-                            BaseTextField(
+                            BaseTextFieldView(
                                 label = "Title",
                                 value = titleFilmList
                             )

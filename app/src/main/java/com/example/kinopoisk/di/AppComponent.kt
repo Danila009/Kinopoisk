@@ -2,6 +2,7 @@ package com.example.kinopoisk.di
 
 import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
+import com.example.feature_cinema_info.viewModel.CinemaInfoViewModel
 import com.example.feature_comics.viewModel.ComicsViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
@@ -65,6 +66,7 @@ interface AppComponent {
     fun serialInfoViewModel(): SerialInfoViewModel
     fun comicsViewModel():ComicsViewModel
     fun filmInfoViewModel(): FilmInfoViewModel
+    fun cinemaInfoViewModel(): CinemaInfoViewModel
 
     @Component.Builder
     interface Builder{

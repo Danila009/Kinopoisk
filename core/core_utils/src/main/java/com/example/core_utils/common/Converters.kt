@@ -3,15 +3,11 @@ package com.example.core_utils.common
 import android.annotation.SuppressLint
 import android.os.Build
 import android.text.Html
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.lazy.LazyGridScope
-import androidx.compose.foundation.lazy.LazyItemScope
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.paging.compose.LazyPagingItems
 import com.example.core_utils.state.StatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
