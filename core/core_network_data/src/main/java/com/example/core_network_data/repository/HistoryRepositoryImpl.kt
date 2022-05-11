@@ -20,7 +20,7 @@ class HistoryRepositoryImpl @Inject constructor(
 
     @ExperimentalSerializationApi
     override suspend fun postHistoryMovie(historyMovieItem: HistoryMovieItem) {
-       historyApi.postHistoryMovie(historyMovieItem)
+      historyApi.postHistoryMovie(historyMovieItem)
     }
 
     override suspend fun deleteHistoryMovie() {

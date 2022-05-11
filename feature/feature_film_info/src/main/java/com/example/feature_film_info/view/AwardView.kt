@@ -22,7 +22,7 @@ import com.example.core_utils.R
 internal fun AwardView(
     award: Award
 ) {
-    if (award.items.isNotEmpty()){
+    award.items?.let{ awardItem ->
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
@@ -46,7 +46,7 @@ internal fun AwardView(
         }
 
         LazyRow(content = {
-            award.items.forEach { item ->
+            awardItem.forEach { item ->
                 items(item.outcomeItems){ outcomeItem ->
                     Card(
                         shape = AbsoluteRoundedCornerShape(7.dp),

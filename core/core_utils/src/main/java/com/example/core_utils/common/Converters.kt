@@ -1,6 +1,8 @@
 package com.example.core_utils.common
 
 import android.annotation.SuppressLint
+import android.os.Build
+import android.text.Html
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.lazy.LazyGridScope
 import androidx.compose.foundation.lazy.LazyItemScope
@@ -79,10 +81,47 @@ fun replaceRange(string: String, int: Int):String{
     )
 }
 
+fun String.parseHtml():String{
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+        Html.fromHtml(
+            this,
+            Html.FROM_HTML_MODE_LEGACY
+        ).toString()
+    }else{
+        Html.fromHtml(this).toString()
+    }
+}
+
 fun getCurrentTime():String{
     val time = Calendar.getInstance().time
     val formatter = SimpleDateFormat("dd-MM-yy hh:mm", Locale.getDefault())
     return formatter.format(time)
+}
+
+fun getDate():String{
+    val time = Calendar.getInstance().time
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+    return formatter.format(time)
+}
+
+fun getDate(
+    year:Int = 0,
+    month:Int = 0,
+    day:Int = 0,
+    hour:Int = 0,
+    minute:Int = 0,
+    second:Int = 0,
+    millisecond:Int = 0
+):Date{
+    val calendar = Calendar.getInstance()
+    calendar.set(Calendar.YEAR, year)
+    calendar.set(Calendar.MONTH, month)
+    calendar.set(Calendar.DAY_OF_MONTH, day)
+    calendar.set(Calendar.HOUR_OF_DAY, hour)
+    calendar.set(Calendar.MINUTE, minute)
+    calendar.set(Calendar.SECOND, second)
+    calendar.set(Calendar.MILLISECOND, millisecond)
+    return calendar.time
 }
 
 fun rating(rating: Float): Color {

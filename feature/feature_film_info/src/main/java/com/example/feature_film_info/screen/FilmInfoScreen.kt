@@ -15,20 +15,24 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
 import com.example.core_network_domain.model.movie.FilmInfo
+import com.example.core_network_domain.model.movie.MovieItem
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.fact.Fact
 import com.example.core_network_domain.model.movie.SequelAndPrequel
 import com.example.core_network_domain.model.movie.Similar
 import com.example.core_network_domain.model.movie.distribution.Distribution
+import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.model.movie.staff.Staff
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_utils.common.getDate
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
-import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
+import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.feature_film_info.view.*
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
 import com.example.feature_film_info.viewState.ImageViewState
@@ -56,6 +60,8 @@ fun FilmInfoScreen(
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
     var award by remember { mutableStateOf(Award()) }
+    var statusRegistration by remember { mutableStateOf(false) }
+    var faq by remember { mutableStateOf(FAQ()) }
 
     filmInfoViewModel.getFilmInfo(filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
@@ -97,6 +103,10 @@ fun FilmInfoScreen(
         distribution.value = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    filmInfoViewModel.responseStatusRegistration.onEach {
+        statusRegistration = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageViewState.STILL.name
@@ -106,34 +116,43 @@ fun FilmInfoScreen(
         id = filmId
     ).collectAsLazyPagingItems()
 
-    if (filmInfo.value.nameRu.isNotEmpty()){
-
-        filmInfoViewModel.getFilmAward(filmInfo.value.imdbId)
+    filmInfo.value.imdbId?.let { it ->
+        filmInfoViewModel.getFilmAward(it)
         filmInfoViewModel.responseFilmAward.onEach {
             award = it
         }.launchWhenStarted(lifecycleScope, lifecycle)
 
+        filmInfoViewModel.getFilmFAQ(it)
+        filmInfoViewModel.responseFilmFAQ.onEach {
+            faq = it
+        }.launchWhenStarted(lifecycleScope, lifecycle)
+    }
+
+    if (filmInfo.value.nameRu.isNotEmpty()){
+
         LaunchedEffect(key1 = Unit, block = {
-//            filmInfoViewModel.postHistoryMovieUseCase(
-//                historyMovieItem = HistoryMovieItem(
-//                    id = null,
-//                    date = getCurrentTime(),
-//                    movie = MovieItem(
-//                        id = null,
-//                        imdbId = filmInfo.value.imdbId,
-//                        kinopoiskId = filmInfo.value.kinopoiskId,
-//                        nameEn = filmInfo.value.nameEn,
-//                        nameOriginal = filmInfo.value.nameOriginal,
-//                        nameRu = filmInfo.value.nameRu,
-//                        posterUrl = filmInfo.value.posterUrl,
-//                        posterUrlPreview = filmInfo.value.posterUrlPreview,
-//                        ratingImdb = filmInfo.value.ratingImdb,
-//                        ratingKinopoisk = filmInfo.value.ratingKinopoisk,
-//                        type = filmInfo.value.type,
-//                        year = filmInfo.value.year,
-//                    )
-//                )
-//            )
+            if (statusRegistration){
+                filmInfoViewModel.postHistoryMovieUseCase(
+                    historyMovieItem = HistoryMovieItem(
+                        id = 0,
+                        date = getDate(),
+                        movie = MovieItem(
+                            id = 0,
+                            imdbId = filmInfo.value.imdbId,
+                            kinopoiskId = filmInfo.value.kinopoiskId,
+                            nameEn = filmInfo.value.nameEn,
+                            nameOriginal = filmInfo.value.nameOriginal,
+                            nameRu = filmInfo.value.nameRu,
+                            posterUrl = filmInfo.value.posterUrl,
+                            posterUrlPreview = filmInfo.value.posterUrlPreview,
+                            ratingImdb = filmInfo.value.ratingImdb,
+                            ratingKinopoisk = filmInfo.value.ratingKinopoisk,
+                            type = filmInfo.value.type,
+                            year = filmInfo.value.year,
+                        )
+                    )
+                )
+            }
         })
         if (checkWeb.value){
             LaunchedEffect(key1 = Unit, block = {
@@ -153,7 +172,7 @@ fun FilmInfoScreen(
                             Text(text = filmInfo.value.nameRu)
                         }, navigationIcon = {
                             IconButton(onClick = {
-                                navController.navigate(MAIN_ROUTE)
+                                navController.navigateUp()
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.KeyboardArrowLeft,
@@ -162,7 +181,13 @@ fun FilmInfoScreen(
                             }
                         }, actions = {
                             IconButton(onClick = {
-
+                                if (statusRegistration){
+                                    TODO()
+                                }else{
+                                    navController.navigate(
+                                        MainScreenRoute.MainRoute.Profile.route
+                                    )
+                                }
                             }) {
                                 Icon(
                                     imageVector = Icons.Default.Favorite,
@@ -219,6 +244,10 @@ fun FilmInfoScreen(
                                         navController = navController,
                                         image = image,
                                         filmId = filmId.toString()
+                                    )
+
+                                    FAQView(
+                                        faq = faq
                                     )
 
                                     FactView(

@@ -1,5 +1,6 @@
 package com.example.core_network_domain.serialization
 
+import android.annotation.SuppressLint
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.Serializer
@@ -11,13 +12,14 @@ import java.text.SimpleDateFormat
 @Serializer(forClass = String::class)
 internal object DateTimeSerialization : KSerializer<String> {
 
-    @Suppress("SimpleDateFormat")
-    private val df = SimpleDateFormat("dd-MM-yyyy")
-
+    @SuppressLint("SimpleDateFormat")
     override fun deserialize(decoder: Decoder): String {
-        return df.parse(decoder.decodeString()).toString()
+        val df = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val parse = df.parse(decoder.decodeString().replace(" UTC", ""))
+        val format = SimpleDateFormat("HH:mm:ss dd.MM.yyyy")
+        return format.format(parse)
     }
     override fun serialize(encoder: Encoder, value: String) {
-        encoder.encodeString(df.format(value)).toString()
+        encoder.encodeString(value)
     }
 }

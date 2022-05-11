@@ -8,30 +8,31 @@ import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.BlurredEdgeTreatment
+import androidx.compose.ui.draw.blur
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.example.core_network_domain.model.movie.fact.Fact
+import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_ui.ui.theme.secondaryBackground
-import com.example.core_utils.common.parseHtml
 import com.example.core_utils.common.replaceRange
 
 @Composable
-internal fun FactView(
-    fact:MutableState<Fact>
+internal fun FAQView(
+    faq: FAQ
 ) {
-    if (fact.value.items.isNotEmpty()){
+    faq.items?.let {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = "Знаете ли вы, что...",
+                text = "Часто задаваемые вопросы:",
                 modifier = Modifier.padding(5.dp),
                 fontWeight = FontWeight.Bold,
                 color = secondaryBackground
             )
+
 
             TextButton(
                 onClick = { /*TODO*/ },
@@ -45,22 +46,25 @@ internal fun FactView(
         }
 
         LazyRow(content = {
-            items(fact.value.items){ item ->
+            items(it){ item ->
                 Card(
                     shape = AbsoluteRoundedCornerShape(7.dp),
                     modifier = Modifier
                         .padding(5.dp)
                         .width(200.dp)
+//                        .blur(
+//                            10000.dp, BlurredEdgeTreatment.Rectangle
+//                        )
                 ) {
                     Column {
                         Text(
-                            text = if(item.type == "FACT") "Факт о фильме" else "Ощибка в фильме",
+                            text = item.question,
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(5.dp)
                         )
 
                         Text(
-                            text = replaceRange(item.text.parseHtml(), 150),
+                            text = replaceRange(item.answer, 150),
                             modifier = Modifier
                                 .padding(5.dp)
                         )

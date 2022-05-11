@@ -6,6 +6,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
+import com.example.core_database_domain.useCase.user.GetStatusRegistrationUseCase
+import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.ImageMovieItem
@@ -21,6 +23,7 @@ import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.source.ImageMoviePagingSource
 import com.example.core_network_domain.source.ReviewMoviePagingSource
 import com.example.core_network_domain.useCase.IMDb.GetFilmAwardUseCase
+import com.example.core_network_domain.useCase.IMDb.GetFilmFAQUseCase
 import com.example.core_network_domain.useCase.history.PostHistoryMovieUseCase
 import com.example.core_network_domain.useCase.movie.*
 import kotlinx.coroutines.flow.*
@@ -40,7 +43,9 @@ class FilmInfoViewModel @Inject constructor(
     private val getImageMovieUseCase: GetImageUseCase,
     private val getReviewMovieUseCase: GetReviewMovieUseCase,
     private val postHistoryMovieUseCase: PostHistoryMovieUseCase,
-    private val getFilmAwardUseCase: GetFilmAwardUseCase
+    private val getFilmAwardUseCase: GetFilmAwardUseCase,
+    private val getFilmFAQUseCase: GetFilmFAQUseCase,
+    getStatusRegistrationUseCase: GetStatusRegistrationUseCase
 ):ViewModel() {
 
     private val _responseFilmInfo: MutableStateFlow<FilmInfo> = MutableStateFlow(FilmInfo())
@@ -69,6 +74,11 @@ class FilmInfoViewModel @Inject constructor(
 
     private val _responseFilmAward:MutableStateFlow<Award?> = MutableStateFlow(null)
     val responseFilmAward = _responseFilmAward.asStateFlow().filterNotNull()
+
+    private val _responseFilmFAQ:MutableStateFlow<FAQ?> = MutableStateFlow(null)
+    val responseFilmFAQ = _responseFilmFAQ.asStateFlow().filterNotNull()
+
+    val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
 
     fun getFilmInfo(id:Int) = viewModelScope.launch {
         val response = getFilmInfoUseCase.invoke(id)
@@ -145,6 +155,14 @@ class FilmInfoViewModel @Inject constructor(
         getFilmAwardUseCase.invoke(id).onEach {
             it.data?.let { award ->
                 _responseFilmAward.value = award
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getFilmFAQ(id: String){
+        getFilmFAQUseCase.invoke(id).onEach {
+            it.data?.let { FAQ ->
+                _responseFilmFAQ.value = FAQ
             }
         }.launchIn(viewModelScope)
     }

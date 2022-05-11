@@ -23,12 +23,12 @@ interface HistoryApi{
     @POST(HISTORY_MOVIE_URL)
     suspend fun postHistoryMovie(
         @Body historyMovieItem: HistoryMovieItem
-    )
+    ):Response<Unit?>
 
     @DELETE(HISTORY_MOVIE_URL)
     suspend fun deleteHistoryMovie():Response<Unit>
 
-    @DELETE("$HISTORY_MOVIE_URL/id")
+    @DELETE("$HISTORY_MOVIE_URL/{id}")
     suspend fun deleteHistoryMovie(id:Int)
 
     @ExperimentalSerializationApi
@@ -44,6 +44,6 @@ interface HistoryApi{
     @DELETE(HISTORY_SEARCH_URL)
     suspend fun deleteHistorySearch():Response<Unit>
 
-    @DELETE("$HISTORY_SEARCH_URL/id")
+    @DELETE("$HISTORY_SEARCH_URL/{id}")
     suspend fun deleteHistorySearch(id:Int)
 }

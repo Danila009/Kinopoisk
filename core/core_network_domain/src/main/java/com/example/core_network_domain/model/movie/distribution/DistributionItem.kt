@@ -7,6 +7,6 @@ data class DistributionItem(
     val subType:String,
     val date:String,
     val reRelease:Boolean,
-    val country: Countrie,
+    val country: Countrie? = null,
     val companies:List<Companie>
 )

@@ -6,7 +6,7 @@ data class Award(
     val errorMessage: Any? = "",
     val fullTitle: String? = "",
     val imDbId: String? = "",
-    val items: List<Item> = listOf(),
+    val items: List<Item>? = listOf(),
     val title: String? = "",
     val type: String? = "",
     val year: String? = ""

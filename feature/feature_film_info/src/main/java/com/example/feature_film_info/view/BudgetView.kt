@@ -70,12 +70,14 @@ internal fun BudgetView(
                     modifier = Modifier.padding(5.dp)
                 ) {
                     Column {
-                        if (item.country.country.isNotEmpty()){
-                            Text(
-                                text = item.country.country,
-                                modifier = Modifier.padding(5.dp),
-                                color = secondaryBackground
-                            )
+                        item.country?.let {
+                            if (it.country.isNotEmpty()){
+                                Text(
+                                    text = it.country,
+                                    modifier = Modifier.padding(5.dp),
+                                    color = secondaryBackground
+                                )
+                            }
                         }
 
                         if (item.date.isNotEmpty()){

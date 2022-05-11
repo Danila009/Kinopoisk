@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class FilmInfo(
     val kinopoiskId:Int = 0,
-    val imdbId:String = "",
+    val imdbId:String? = "",
     val nameRu:String = "",
     val nameEn:String = "",
     val nameOriginal:String = "",
