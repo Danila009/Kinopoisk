@@ -21,6 +21,7 @@ import com.example.kinopoisk.di.modules.api.MarvelApiModule
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
+import com.example.kinopoisk.di.modules.firebase.AuthFirebase
 import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
@@ -39,7 +40,8 @@ import javax.inject.Singleton
         MyKinopoiskApiModule::class,
         RickAndMortyApiModule::class,
         MarvelApiModule::class,
-        IMDbApiModule::class
+        IMDbApiModule::class,
+        AuthFirebase::class
     ]
 )
 @Singleton

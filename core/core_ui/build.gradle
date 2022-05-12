@@ -51,4 +51,9 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.4.0'
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+
+    //Firebase
+    implementation platform('com.google.firebase:firebase-bom:30.0.0')
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
 }

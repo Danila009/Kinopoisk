@@ -1,5 +1,6 @@
 package com.example.kinopoisk.navigation.navGraph.cinemaNavGraph
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
@@ -12,6 +13,7 @@ import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
 import com.example.kinopoisk.screen.cinema.CinemaMapScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalMaterialApi
 @ExperimentalPagerApi
 fun NavGraphBuilder.cinemaNavGraph(
     navController: NavController,

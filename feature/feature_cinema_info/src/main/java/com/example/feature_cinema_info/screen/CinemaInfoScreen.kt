@@ -40,6 +40,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.onEach
 
+@ExperimentalMaterialApi
 @SuppressLint("FlowOperatorInvokedInComposition")
 @ExperimentalPagerApi
 @Composable

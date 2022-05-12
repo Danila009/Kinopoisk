@@ -20,6 +20,7 @@ import com.example.core_ui.R
 @Composable
 fun GoogleButton(
     modifier: Modifier = Modifier,
+    clickedClickable:MutableState<Boolean>,
     text: String = "Sign Up with Google",
     loadingText: String = "Creating Account...",
     icon: Int = R.drawable.google_logo,
@@ -30,12 +31,10 @@ fun GoogleButton(
     onClicked: () -> Unit
 ) {
 
-    var clicked by remember { mutableStateOf(false) }
-
     Surface(
         modifier = modifier
             .clickable {
-                clicked = !clicked
+                clickedClickable.value = !clickedClickable.value
             },
         shape = shape,
         border = BorderStroke(width = 1.dp, color = borderColor),
@@ -64,8 +63,8 @@ fun GoogleButton(
                 tint = Color.Unspecified
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text(text = if (clicked) loadingText else text)
-            if (clicked) {
+            Text(text = if (clickedClickable.value) loadingText else text)
+            if (clickedClickable.value) {
                 Spacer(modifier = Modifier.width(16.dp))
                 CircularProgressIndicator(
                     modifier = Modifier

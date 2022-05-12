@@ -19,6 +19,7 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalMaterialApi
 @ExperimentalSerializationApi
 @ExperimentalPagerApi
 @ExperimentalFoundationApi

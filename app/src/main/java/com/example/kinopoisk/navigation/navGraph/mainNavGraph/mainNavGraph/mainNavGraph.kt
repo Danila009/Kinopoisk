@@ -1,6 +1,7 @@
 package com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
@@ -23,6 +24,7 @@ import com.example.kinopoisk.navigation.navGraph.userNavGraph.settingNavGraph.se
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalMaterialApi
 @ExperimentalSerializationApi
 @ExperimentalPagerApi
 @ExperimentalFoundationApi

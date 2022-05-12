@@ -12,6 +12,8 @@ import com.example.core_network_domain.model.user.Authorization
 import com.example.core_network_domain.model.user.Registration
 import com.example.core_network_domain.useCase.user.AuthorizationUseCase
 import com.example.core_network_domain.useCase.user.RegistrationUseCase
+import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
@@ -24,15 +26,20 @@ class RegistrationViewModel @Inject constructor(
     private val savaUserRoleUseCase: SavaUserRoleUseCase,
     private val saveStatusRegistrationUseCase: SaveStatusRegistrationUseCase,
     private val registrationUseCase: RegistrationUseCase,
+    private val firebaseAuth:FirebaseAuth
 ):ViewModel() {
 
     private val _responseRegistrationError = MutableStateFlow("")
     val responseRegistrationError = _responseRegistrationError.asStateFlow()
 
-    fun registration(registration: Registration, navController: NavController){
+    fun registration(
+        registration: Registration,
+        navController: NavController
+    ){
         registrationUseCase.invoke(registration).onEach {
             Log.e("GoogleSingIn:", registration.toString())
             if (it is Response.Error){
+                firebaseAuth.signOut()
                 _responseRegistrationError.value = it.message.toString()
             } else if (it is Response.Success){
                 authorization(
@@ -53,7 +60,7 @@ class RegistrationViewModel @Inject constructor(
                     saveTokenUseCase.invoke(response.access_token)
                     saveStatusRegistrationUseCase(userRegistration = true)
                     savaUserRoleUseCase(userRole = response.role)
-//                    navController.navigate("MAIN_ROUTE")
+                    navController.navigate(MainScreenRoute.MainRoute.Profile.route)
                 }
             }else{
                 _responseRegistrationError.value = it.message.toString()
