@@ -1,5 +1,6 @@
 package com.example.feature_profile.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -9,7 +10,10 @@ import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_profile.view.StatusRegistrationTrueView
 import com.example.feature_profile.view.StatusRegistrationFalseView
 import kotlinx.coroutines.flow.onEach
+import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalSerializationApi
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun ProfileScreen(
     navController: NavController,

@@ -40,6 +40,7 @@ object ConstantsUrl {
     const val REGISTRATION_URL = "/kinopoisk/Registration"
     const val USER_INFO_URL = "/kinopoisk/User/Info"
     const val UPDATE_PASSWORD_URL = "/kinopoisk/User/Update/Password"
+    const val UPDATE_PHOTO_URL = "/kinopoisk/User_Photo.jpg"
 
     const val RIAK_AND_MORTY_CHARACTER_URL = "/api/character"
     const val RIAK_AND_MORTY_LOCATION_URL = "/api/location"

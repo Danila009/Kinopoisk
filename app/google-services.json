@@ -7,6 +7,80 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:1065051917747:android:da10b7ff29365888840fc6",
+        "android_client_info": {
+          "package_name": "com.example.core_network_domain"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065051917747-k6m2sic92pv6j2pvfdoq3q41drsadk3r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.core_network_domain",
+            "certificate_hash": "84d0d54171a968c5386d7f889d79cd809fba3f25"
+          }
+        },
+        {
+          "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0_CatABXrdp_KK_Oal3EMDRGIpTE5I50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065051917747:android:fa7836c4fe137bf1840fc6",
+        "android_client_info": {
+          "package_name": "com.example.feature_registration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065051917747-2u0n485p9pl3ji6m6tttlska3m0lmee4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.feature_registration",
+            "certificate_hash": "84d0d54171a968c5386d7f889d79cd809fba3f25"
+          }
+        },
+        {
+          "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0_CatABXrdp_KK_Oal3EMDRGIpTE5I50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1065051917747-m94a9tl16lm2h5net8hj764vcltf33u3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:1065051917747:android:e6d23d7fc595f36f840fc6",
         "android_client_info": {
           "package_name": "com.example.kinopoisk"

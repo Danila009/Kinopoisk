@@ -21,9 +21,10 @@ import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
+import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
 internal fun MapView(
@@ -78,13 +79,26 @@ internal fun MapView(
                                 .clip(
                                     AbsoluteRoundedCornerShape(15.dp)
                                 ),
-                            cameraPositionState = CameraPositionState(
-                                CameraPosition(
+                            cameraPositionState = rememberCameraPositionState{
+                                position = CameraPosition.fromLatLngZoom(
                                     LatLng(
                                         item.latitude,
                                         item.longitude
-                                    ), 80f,1f,1f
+                                    ),
+                                    13f
                                 )
+                            },
+                            uiSettings = MapUiSettings(
+                                compassEnabled = false,
+                                indoorLevelPickerEnabled = false,
+                                mapToolbarEnabled = false,
+                                myLocationButtonEnabled = false,
+                                rotationGesturesEnabled = false,
+                                scrollGesturesEnabled = false,
+                                scrollGesturesEnabledDuringRotateOrZoom = false,
+                                tiltGesturesEnabled = false,
+                                zoomControlsEnabled = false,
+                                zoomGesturesEnabled = false
                             ),
                             content = {
                                 Marker(position = LatLng(
@@ -105,7 +119,7 @@ internal fun MapView(
                             horizontalArrangement = Arrangement.Center
                         ) {
                             Text(
-                                text = item.title ?: "",
+                                text = item.title,
                                 modifier = Modifier
                                     .padding(5.dp)
                             )

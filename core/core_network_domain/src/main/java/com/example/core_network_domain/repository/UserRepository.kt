@@ -17,8 +17,12 @@ interface UserRepository {
 
     suspend fun getUserInfo():User
 
-    suspend fun putUpdatePassword(
+    suspend fun patchUpdatePassword(
         email:String,
         password:String
     ):String
+
+    suspend fun patchUpdatePhotoUser(
+        byteArray:ByteArray
+    )
 }

@@ -103,7 +103,7 @@ fun UpdateUserPasswordScreen(
                             password = password.value,
                             message = message
                         )){
-                            updateUserPasswordViewModel.putUpdatePassword(
+                            updateUserPasswordViewModel.patchUpdatePassword(
                                 email = email.value,
                                 password = password.value,
                             )

@@ -1,5 +1,6 @@
 package com.example.feature_registration.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -22,7 +23,7 @@ class RegistrationViewModel @Inject constructor(
     private val saveTokenUseCase: SaveTokenUseCase,
     private val savaUserRoleUseCase: SavaUserRoleUseCase,
     private val saveStatusRegistrationUseCase: SaveStatusRegistrationUseCase,
-    private val registrationUseCase: RegistrationUseCase
+    private val registrationUseCase: RegistrationUseCase,
 ):ViewModel() {
 
     private val _responseRegistrationError = MutableStateFlow("")
@@ -30,6 +31,7 @@ class RegistrationViewModel @Inject constructor(
 
     fun registration(registration: Registration, navController: NavController){
         registrationUseCase.invoke(registration).onEach {
+            Log.e("GoogleSingIn:", registration.toString())
             if (it is Response.Error){
                 _responseRegistrationError.value = it.message.toString()
             } else if (it is Response.Success){

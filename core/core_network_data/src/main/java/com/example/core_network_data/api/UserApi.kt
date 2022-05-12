@@ -3,6 +3,7 @@ package com.example.core_network_data.api
 import com.example.core_network_data.common.ConstantsUrl.AUTHORIZATION_URL
 import com.example.core_network_data.common.ConstantsUrl.REGISTRATION_URL
 import com.example.core_network_data.common.ConstantsUrl.UPDATE_PASSWORD_URL
+import com.example.core_network_data.common.ConstantsUrl.UPDATE_PHOTO_URL
 import com.example.core_network_data.common.ConstantsUrl.USER_INFO_URL
 import com.example.core_network_domain.model.user.Authorization
 import com.example.core_network_domain.model.user.AuthorizationHeader
@@ -27,8 +28,13 @@ interface UserApi {
     suspend fun getUserInfo():Response<User>
 
     @PUT(UPDATE_PASSWORD_URL)
-    suspend fun putUpdatePassword(
+    suspend fun patchUpdatePassword(
         @Query("email") email:String,
         @Query("password") password:String
     ):Response<Void?>
+
+    @PATCH(UPDATE_PHOTO_URL)
+    suspend fun patchUpdatePhotoUser(
+        @Body byteArray:ByteArray
+    )
 }
