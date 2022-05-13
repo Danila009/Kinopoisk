@@ -50,4 +50,8 @@ class CinemaRepositoryImpl @Inject constructor(
             endRating = endRating
         ).body()
     }
+
+    override suspend fun postCinemaReview(cinemaId: Int, review: CinemaAddReview) {
+        cinemaApi.postCinemaReview(cinemaId, review)
+    }
 }

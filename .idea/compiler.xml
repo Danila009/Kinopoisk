@@ -9,7 +9,9 @@
       <module name="Kinopoisk.core.core_ui" target="11" />
       <module name="Kinopoisk.core.core_utils" target="11" />
       <module name="Kinopoisk.feature.feature_authorization" target="11" />
+      <module name="Kinopoisk.feature.feature_cinema_add_review" target="11" />
       <module name="Kinopoisk.feature.feature_cinema_info" target="11" />
+      <module name="Kinopoisk.feature.feature_cinema_map" target="11" />
       <module name="Kinopoisk.feature.feature_comics" target="11" />
       <module name="Kinopoisk.feature.feature_countries" target="11" />
       <module name="Kinopoisk.feature.feature_film_info" target="11" />

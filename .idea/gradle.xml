@@ -20,7 +20,9 @@
             <option value="$PROJECT_DIR$/core/core_utils" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/feature_authorization" />
+            <option value="$PROJECT_DIR$/feature/feature_cinema_add_review" />
             <option value="$PROJECT_DIR$/feature/feature_cinema_info" />
+            <option value="$PROJECT_DIR$/feature/feature_cinema_map" />
             <option value="$PROJECT_DIR$/feature/feature_comics" />
             <option value="$PROJECT_DIR$/feature/feature_countries" />
             <option value="$PROJECT_DIR$/feature/feature_film_info" />

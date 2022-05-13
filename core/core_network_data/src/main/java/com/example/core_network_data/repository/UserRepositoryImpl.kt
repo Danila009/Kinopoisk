@@ -6,6 +6,9 @@ import com.example.core_network_domain.model.user.AuthorizationHeader
 import com.example.core_network_domain.model.user.Registration
 import com.example.core_network_domain.model.user.User
 import com.example.core_network_domain.repository.UserRepository
+import okhttp3.MediaType
+import okhttp3.RequestBody
+import okhttp3.MultipartBody
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -28,6 +31,8 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun patchUpdatePhotoUser(byteArray: ByteArray) {
-        userApi.patchUpdatePhotoUser(byteArray)
+        val requestFile = RequestBody.create(MediaType.parse("application/octet-stream"), byteArray)
+        val body = MultipartBody.Part.createFormData("file","user_photo",requestFile)
+        userApi.patchUpdatePhotoUser(body)
     }
 }

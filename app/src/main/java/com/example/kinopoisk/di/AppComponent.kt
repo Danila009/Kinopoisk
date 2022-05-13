@@ -2,7 +2,9 @@ package com.example.kinopoisk.di
 
 import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
+import com.example.feature_cinema_add_review.viewModel.CinemaAddReviewViewModel
 import com.example.feature_cinema_info.viewModel.CinemaInfoViewModel
+import com.example.feature_cinema_map.viewModel.CinemaMapViewModel
 import com.example.feature_comics.viewModel.ComicsViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
@@ -22,7 +24,6 @@ import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
 import com.example.kinopoisk.di.modules.firebase.AuthFirebase
-import com.example.kinopoisk.screen.cinema.viewModel.CinemaViewModel
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
@@ -47,7 +48,6 @@ import javax.inject.Singleton
 @Singleton
 interface AppComponent {
 
-    fun cinemaViewModel():CinemaViewModel
     fun filmTopViewModel():FilmTopViewModel
     fun reviewViewModel():ReviewViewModel
     fun shopViewModel():ShopViewModel
@@ -69,6 +69,8 @@ interface AppComponent {
     fun comicsViewModel():ComicsViewModel
     fun filmInfoViewModel(): FilmInfoViewModel
     fun cinemaInfoViewModel(): CinemaInfoViewModel
+    fun cinemaMapViewModel():CinemaMapViewModel
+    fun cinemaAddReviewVideModel():CinemaAddReviewViewModel
 
     @Component.Builder
     interface Builder{

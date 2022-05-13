@@ -35,4 +35,9 @@ interface CinemaRepository {
         startRating:Float?,
         endRating:Float?
     ):Review?
+
+    suspend fun postCinemaReview(
+        cinemaId:Int,
+        review:CinemaAddReview
+    )
 }

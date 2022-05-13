@@ -1,6 +1,7 @@
 package com.example.feature_registration.viewModel
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
@@ -34,12 +35,14 @@ class RegistrationViewModel @Inject constructor(
 
     fun registration(
         registration: Registration,
-        navController: NavController
+        navController: NavController,
+        clickedClickable:MutableState<Boolean>
     ){
         registrationUseCase.invoke(registration).onEach {
             Log.e("GoogleSingIn:", registration.toString())
             if (it is Response.Error){
-                firebaseAuth.signOut()
+                firebaseAuth.currentUser?.delete()
+                clickedClickable.value = false
                 _responseRegistrationError.value = it.message.toString()
             } else if (it is Response.Success){
                 authorization(

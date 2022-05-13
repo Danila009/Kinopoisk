@@ -1,16 +1,14 @@
 package com.example.feature_registration.screen
 
 import android.util.Log
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -38,12 +36,9 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.app
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.tasks.await
 
 @Composable
 fun RegistrationScreen(
@@ -65,31 +60,31 @@ fun RegistrationScreen(
     val password = remember { mutableStateOf("") }
     val username = remember { mutableStateOf("") }
 
+    val scope = rememberCoroutineScope()
+
     val authResultLauncher = activityResultAuthGoogle(
         contract = AuthResult(),
         account = { account ->
-            CoroutineScope(Dispatchers.IO).launch {
+            if (account == null){
+                Log.e("GoogleSingIn:", "account null")
+            }else{
+                scope.launch {
+                    val credentials =
+                        GoogleAuthProvider.getCredential(account.idToken, null)
 
-                val credentials =
-                    GoogleAuthProvider.getCredential(account?.idToken, null)
+                    auth.signInWithCredential(credentials).await()
 
-                auth.signInWithCredential(credentials).await()
-
-                withContext(Dispatchers.Main){
-                    if (account == null){
-                        Log.e("GoogleSingIn:", "account null")
-                    }else{
-                        registrationViewModel.registration(
-                            registration = Registration(
-                                username = account.displayName!!,
-                                email = account.email!!,
-                                password = auth.currentUser?.uid!!,
-                                photo = account.photoUrl.toString()
-                            ), navController = navController
-                        )
-                    }
+                    registrationViewModel.registration(
+                        registration = Registration(
+                            username = account.displayName!!,
+                            email = account.email!!,
+                            password = auth.currentUser?.uid!!,
+                            photo = account.photoUrl.toString()
+                        ), navController = navController,
+                        clickedClickable = clickedClickable
+                    )
                 }
-            }
+                }
         }, error = {
             clickedClickable.value = false
             registrationError.value = "Error Google sing in"
@@ -166,7 +161,8 @@ fun RegistrationScreen(
                                         password = password.value,
                                         photo = null
                                     ),
-                                    navController = navController
+                                    navController = navController,
+                                    clickedClickable = clickedClickable
                                 )
                             }
                         },
@@ -177,6 +173,12 @@ fun RegistrationScreen(
                     ) {
                         Text(text = "Registration")
                     }
+
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(80.dp)
+                    )
 
                     GoogleButton(
                         modifier = Modifier.padding(5.dp),

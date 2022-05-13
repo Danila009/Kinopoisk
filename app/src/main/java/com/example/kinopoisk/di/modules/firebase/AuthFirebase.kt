@@ -8,12 +8,11 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.app
 import dagger.Module
 import dagger.Provides
-import javax.inject.Singleton
 
 @Module
 class AuthFirebase {
 
-    @[Provides Singleton]
+    @[Provides]
     fun providerSecondary(): FirebaseApp = Firebase.app(PROJECT_ID)
 
     @[Provides]

@@ -1,23 +1,21 @@
 package com.example.kinopoisk.navigation.navGraph.cinemaNavGraph
 
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Argument.CINEMA_ID_ARGUMENT
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenConstants.Route.CINEMA_ROUTE
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
+import com.example.feature_cinema_add_review.screen.AddReviewCinemaScreen
 import com.example.feature_cinema_info.screen.CinemaInfoScreen
+import com.example.feature_cinema_map.screen.CinemaMapScreen
 import com.example.kinopoisk.di.AppComponent
-import com.example.kinopoisk.screen.cinema.AddReviewCinemaScreen
-import com.example.kinopoisk.screen.cinema.CinemaMapScreen
 import com.google.accompanist.pager.ExperimentalPagerApi
 
 @ExperimentalMaterialApi
 @ExperimentalPagerApi
 fun NavGraphBuilder.cinemaNavGraph(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope,
     appComponent: AppComponent
 ) {
     navigation(
@@ -27,7 +25,7 @@ fun NavGraphBuilder.cinemaNavGraph(
             composable(CinemaScreenRoute.CinemaMap.route){
                 CinemaMapScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope
+                    cinemaViewModel = appComponent.cinemaMapViewModel()
                 )
             }
             composable(
@@ -58,7 +56,7 @@ fun NavGraphBuilder.cinemaNavGraph(
             ){
                 AddReviewCinemaScreen(
                     navController = navController,
-                    lifecycleScope = lifecycleScope,
+                    cinemaAddReviewViewModel = appComponent.cinemaAddReviewVideModel(),
                     cinemaId = it.arguments?.getInt(CINEMA_ID_ARGUMENT)!!.toInt()
                 )
             }

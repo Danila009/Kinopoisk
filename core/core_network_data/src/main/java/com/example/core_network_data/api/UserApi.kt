@@ -9,6 +9,8 @@ import com.example.core_network_domain.model.user.Authorization
 import com.example.core_network_domain.model.user.AuthorizationHeader
 import com.example.core_network_domain.model.user.Registration
 import com.example.core_network_domain.model.user.User
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -33,8 +35,9 @@ interface UserApi {
         @Query("password") password:String
     ):Response<Void?>
 
+    @Multipart
     @PATCH(UPDATE_PHOTO_URL)
     suspend fun patchUpdatePhotoUser(
-        @Body byteArray:ByteArray
-    )
+        @Part file: MultipartBody.Part
+    ):Response<Void?>
 }

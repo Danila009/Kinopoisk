@@ -28,6 +28,7 @@ import com.example.core_ui.animation.TextShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.launchWhenStarted
+import com.example.core_utils.common.rating
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
 import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.feature_cinema_info.view.WebView
@@ -217,7 +218,7 @@ fun CinemaInfoScreen(
                                                     text = data.rating.toString(),
                                                     modifier = Modifier
                                                         .padding(5.dp),
-                                                    color = secondaryBackground
+                                                    color = rating(data.rating)
                                                 )
                                             }
                                         })

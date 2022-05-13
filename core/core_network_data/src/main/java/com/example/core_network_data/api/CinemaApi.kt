@@ -1,5 +1,6 @@
 package com.example.core_network_data.api
 
+import com.example.core_network_data.common.ConstantsUrl.CINEMA_ADD_REVIEW_URL
 import com.example.core_network_data.common.ConstantsUrl.CINEMA_PHONE_URL
 import com.example.core_network_data.common.ConstantsUrl.CINEMA_PHOTO_URL
 import com.example.core_network_data.common.ConstantsUrl.CINEMA_REVIEW_URL
@@ -7,9 +8,7 @@ import com.example.core_network_data.common.ConstantsUrl.CINEMA_SCHEDULE_URL
 import com.example.core_network_data.common.ConstantsUrl.CINEMA_URL
 import com.example.core_network_domain.model.cinema.*
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Path
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface CinemaApi {
 
@@ -50,5 +49,11 @@ interface CinemaApi {
         @Query("startReting") startRating:Float?,
         @Query("endRating") endRating:Float?
     ):Response<Review>
+
+    @POST(CINEMA_ADD_REVIEW_URL)
+    suspend fun postCinemaReview(
+        @Path("cinemaId") cinemaId:Int,
+        @Body review:CinemaAddReview
+    )
 
 }

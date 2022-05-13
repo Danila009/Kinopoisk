@@ -9,6 +9,7 @@ import androidx.paging.cachedIn
 import com.example.core_database_domain.useCase.user.GetStatusRegistrationUseCase
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
+import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.ImageMovieItem
 import com.example.core_network_domain.model.movie.SequelAndPrequel
@@ -19,13 +20,16 @@ import com.example.core_network_domain.model.movie.fact.Fact
 import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.movie.review.ReviewItem
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.source.ImageMoviePagingSource
 import com.example.core_network_domain.source.ReviewMoviePagingSource
 import com.example.core_network_domain.useCase.IMDb.GetFilmAwardUseCase
 import com.example.core_network_domain.useCase.IMDb.GetFilmFAQUseCase
+import com.example.core_network_domain.useCase.IMDb.GetFilmWikipediaInfoUseCase
 import com.example.core_network_domain.useCase.history.PostHistoryMovieUseCase
 import com.example.core_network_domain.useCase.movie.*
+import com.example.core_network_domain.useCase.movieVideo.GetMovieVideoUseCase
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -45,6 +49,8 @@ class FilmInfoViewModel @Inject constructor(
     private val postHistoryMovieUseCase: PostHistoryMovieUseCase,
     private val getFilmAwardUseCase: GetFilmAwardUseCase,
     private val getFilmFAQUseCase: GetFilmFAQUseCase,
+    private val getFilmWikipediaInfoUseCase: GetFilmWikipediaInfoUseCase,
+    private val getMovieVideoUseCase: GetMovieVideoUseCase,
     getStatusRegistrationUseCase: GetStatusRegistrationUseCase
 ):ViewModel() {
 
@@ -77,6 +83,12 @@ class FilmInfoViewModel @Inject constructor(
 
     private val _responseFilmFAQ:MutableStateFlow<FAQ?> = MutableStateFlow(null)
     val responseFilmFAQ = _responseFilmFAQ.asStateFlow().filterNotNull()
+
+    private val _responseFilmWikipedia:MutableStateFlow<Wikipedia?> = MutableStateFlow(null)
+    val responseFilmWikipedia = _responseFilmWikipedia.asStateFlow().filterNotNull()
+
+    private val _responseMovieVideo:MutableStateFlow<Video?> = MutableStateFlow(null)
+    val responseMovieVideo = _responseMovieVideo.asStateFlow().filterNotNull()
 
     val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
 
@@ -145,7 +157,7 @@ class FilmInfoViewModel @Inject constructor(
     }
 
     @ExperimentalSerializationApi
-    fun postHistoryMovieUseCase(
+    fun postHistoryMovie(
         historyMovieItem: HistoryMovieItem
     ) = viewModelScope.launch {
         postHistoryMovieUseCase.invoke(historyMovieItem)
@@ -165,5 +177,18 @@ class FilmInfoViewModel @Inject constructor(
                 _responseFilmFAQ.value = FAQ
             }
         }.launchIn(viewModelScope)
+    }
+
+    fun getFilmWikipedia(id: String){
+        getFilmWikipediaInfoUseCase.invoke(id).onEach {
+            it.data?.let { wikipedia ->
+                _responseFilmWikipedia.value = wikipedia
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    fun getMovieVideo(id: Int) = viewModelScope.launch {
+        val response = getMovieVideoUseCase.invoke(id)
+        _responseMovieVideo.value = response
     }
 }

@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
+import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.MovieItem
 import com.example.core_network_domain.model.movie.budget.Budget
@@ -27,6 +28,7 @@ import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.getDate
@@ -62,6 +64,8 @@ fun FilmInfoScreen(
     var award by remember { mutableStateOf(Award()) }
     var statusRegistration by remember { mutableStateOf(false) }
     var faq by remember { mutableStateOf(FAQ()) }
+    var wikipediaFilmInfo by remember { mutableStateOf(Wikipedia()) }
+    var movieVide by remember { mutableStateOf(Video()) }
 
     filmInfoViewModel.getFilmInfo(filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
@@ -107,6 +111,11 @@ fun FilmInfoScreen(
         statusRegistration = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    filmInfoViewModel.getMovieVideo(filmId)
+    filmInfoViewModel.responseMovieVideo.onEach {
+        movieVide = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageViewState.STILL.name
@@ -116,15 +125,20 @@ fun FilmInfoScreen(
         id = filmId
     ).collectAsLazyPagingItems()
 
-    filmInfo.value.imdbId?.let { it ->
-        filmInfoViewModel.getFilmAward(it)
+    filmInfo.value.imdbId?.let { imdbId ->
+        filmInfoViewModel.getFilmAward(imdbId)
         filmInfoViewModel.responseFilmAward.onEach {
             award = it
         }.launchWhenStarted(lifecycleScope, lifecycle)
 
-        filmInfoViewModel.getFilmFAQ(it)
+        filmInfoViewModel.getFilmFAQ(imdbId)
         filmInfoViewModel.responseFilmFAQ.onEach {
             faq = it
+        }.launchWhenStarted(lifecycleScope, lifecycle)
+
+        filmInfoViewModel.getFilmWikipedia(imdbId)
+        filmInfoViewModel.responseFilmWikipedia.onEach {
+            wikipediaFilmInfo = it
         }.launchWhenStarted(lifecycleScope, lifecycle)
     }
 
@@ -132,7 +146,7 @@ fun FilmInfoScreen(
 
         LaunchedEffect(key1 = Unit, block = {
             if (statusRegistration){
-                filmInfoViewModel.postHistoryMovieUseCase(
+                filmInfoViewModel.postHistoryMovie(
                     historyMovieItem = HistoryMovieItem(
                         id = 0,
                         date = getDate(),
@@ -220,6 +234,11 @@ fun FilmInfoScreen(
 //                                        )
 //                                    }
 
+
+                                    MovieVideoView(
+                                        video = movieVide
+                                    )
+
                                     RatingView(
                                         filmInfo = filmInfo
                                     )
@@ -267,6 +286,10 @@ fun FilmInfoScreen(
                                     SimilarView(
                                         navController = navController,
                                         similar = similar
+                                    )
+
+                                    WikipediaFilmInfoView(
+                                        wikipedia = wikipediaFilmInfo
                                     )
 
                                     filmInfo.value.webUrl?.let {

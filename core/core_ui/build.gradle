@@ -56,4 +56,9 @@ dependencies {
     implementation platform('com.google.firebase:firebase-bom:30.0.0')
     implementation 'com.google.firebase:firebase-auth-ktx'
 
+    //Exoplayer
+    implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
+
+    //Paging
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha14")
 }

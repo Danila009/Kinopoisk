@@ -24,6 +24,7 @@ object ConstantsUrl {
     const val CINEMA_PHONE_URL = "/kinopoisk/Cinema/{id}/Phone"
     const val CINEMA_SCHEDULE_URL = "/kinopoisk/Cinema/{id}/Schedule"
     const val CINEMA_REVIEW_URL = "/kinopoisk/Cinema/{cinemaId}/Review"
+    const val CINEMA_ADD_REVIEW_URL = "/kinopoisk/User/Content/Cinema/{cinemaId}/Review"
 
     const val PLAYLIST_URL = "/kinopoisk/Playlist"
 
@@ -52,4 +53,6 @@ object ConstantsUrl {
     const val IMDb_FILM_WIKIPEDIA_URL = "/{lang}/API/Wikipedia/{apiKey}/{id}"
     const val IMDb_FILM_FAQ_URL = "/{lang}/API/FAQ/{apiKey}/{id}"
     const val IMDb_FILM_AWARDS_URL = "/{lang}/API/Awards/{apiKey}/{id}"
+
+    const val MOVIE_VIDEO_URL = "/kinopoisk/Shop/Movie/{kimoPoiskId}/Video"
 }

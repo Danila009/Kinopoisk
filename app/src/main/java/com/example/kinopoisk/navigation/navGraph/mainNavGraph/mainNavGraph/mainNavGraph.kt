@@ -43,7 +43,6 @@ fun NavGraphBuilder.mainNavGraph(
             )
             cinemaNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope,
                 appComponent = appComponent
             )
             settingNavGraph(

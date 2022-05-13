@@ -1,41 +1,40 @@
-package com.example.kinopoisk.screen.cinema
+package com.example.feature_cinema_map.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
-import androidx.lifecycle.LifecycleCoroutineScope
+import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import com.example.kinopoisk.api.model.cinema.Cinema
-import com.example.kinopoisk.di.DaggerAppComponent
+import com.example.core_network_domain.model.cinema.Cinema
+import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.cinemaNavGraph.CinemaScreenRoute
-import com.example.kinopoisk.utils.launchWhenStarted
+import com.example.feature_cinema_map.viewModel.CinemaMapViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun CinemaMapScreen(
     navController: NavController,
-    lifecycleScope: LifecycleCoroutineScope
+    cinemaViewModel:CinemaMapViewModel
 ) {
-    val context = LocalContext.current
-    val cinemaViewModel = DaggerAppComponent.builder()
-        .context(context = context)
-        .build()
-        .cinemaViewModel()
+    val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
 
     val checkNavMap = remember { mutableStateOf(false) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
 
-    cinemaViewModel.getCinemas()
-    cinemaViewModel.responseCinemas.onEach {
+    cinemaViewModel.getCinema()
+    cinemaViewModel.responseCinema.onEach {
         cinema.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     GoogleMap(
         modifier = Modifier
@@ -55,8 +54,8 @@ fun CinemaMapScreen(
 
                 Marker(
                     position = LatLng(
-                    cinema.value[it].mapOne,
-                    cinema.value[it].mapTwo
+                    cinema.value[it].latitude,
+                    cinema.value[it].longitude
                 ), title = "${cinema.value[it].title} ${cinema.value[it].adress}",
                     onInfoWindowClick = {
                         checkNavMap.value = true
