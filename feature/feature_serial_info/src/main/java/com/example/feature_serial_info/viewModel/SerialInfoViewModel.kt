@@ -14,8 +14,8 @@ import com.example.core_network_domain.useCase.movie.GetFilmInfoUseCase
 import com.example.core_network_domain.useCase.movie.GetSeasonUseCase
 import com.example.core_network_domain.useCase.rickAndMorty.GetCharactersUseCase
 import com.example.core_network_domain.useCase.rickAndMorty.GetLocationsUseCase
-import com.example.feature_serial_info.source.CharactersRickAndMortySource
-import com.example.feature_serial_info.source.LocationsRickAndMortySource
+import com.example.core_network_domain.source.CharactersRickAndMortySource
+import com.example.core_network_domain.source.LocationsRickAndMortySource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

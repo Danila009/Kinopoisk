@@ -23,6 +23,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import com.example.core_network_domain.common.Response
+import com.example.core_network_domain.model.cinema.ReviewItem
 import com.example.core_network_domain.model.movie.Movie
 import com.example.core_network_domain.model.movie.history.HistoryMovie
 import com.example.core_network_domain.model.staff.Staff
@@ -52,13 +54,19 @@ fun StatusRegistrationTrueView(
     var favoriteStaff by remember { mutableStateOf(Staff()) }
     val checkImageDialog = remember { mutableStateOf(false) }
     var historyMovie by remember { mutableStateOf(HistoryMovie()) }
+    var cinemaReview:Response<List<ReviewItem>> by
+        remember { mutableStateOf(Response.Loading()) }
 
-    profileViewModel.getHistoryMovie()
+    LaunchedEffect(key1 = Unit, block = {
+        profileViewModel.getUserInfo()
+    })
+
     profileViewModel.responseHistoryMovie.onEach {
-        historyMovie = it
+        it.data?.let { data ->
+            historyMovie = data
+        }
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
-    profileViewModel.getUserInfo()
     profileViewModel.responseUserInfo.onEach {
         userInfo.value = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
@@ -69,6 +77,10 @@ fun StatusRegistrationTrueView(
 
     profileViewModel.responseUserFavoriteStaff.onEach {
         favoriteStaff = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
+    profileViewModel.responseCinemaReview.onEach {
+        cinemaReview = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Surface(
@@ -94,7 +106,8 @@ fun StatusRegistrationTrueView(
                             ) {
                                 IconButton(onClick = { checkImageDialog.value = true }) {
                                     SubcomposeAsyncImage(
-                                        model = if (userInfo.value.photo != null) userInfo.value.photo else "" +
+                                        model = if (userInfo.value.photo != null)
+                                            userInfo.value.photo else "" +
                                                 IMAGE_NO_PHOTO_URL,
                                         contentDescription = null,
                                         modifier = Modifier
@@ -162,6 +175,10 @@ fun StatusRegistrationTrueView(
                     FavoriteStaffView(
                         navController = navController,
                         staff = favoriteStaff
+                    )
+
+                    CinemaReviewView(
+                        reviewItem = cinemaReview
                     )
 
                     HistoryMovieView(

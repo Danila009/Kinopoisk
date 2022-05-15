@@ -6,6 +6,8 @@ import com.example.core_network_domain.model.cinema.Cinema
 import com.example.core_network_domain.useCase.cinema.GetCinemaUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,8 +23,13 @@ class CinemaMapViewModel @Inject constructor(
         has3D:Boolean? = null,
         has4D:Boolean? = null,
         hasImax:Boolean? = null
-    ) = viewModelScope.launch {
-        val response = getCinemaUseCase.invoke(search, has3D, has4D, hasImax)
-        _responseCinema.value = response
+    ) {
+        getCinemaUseCase.invoke(
+            search, has3D, has4D, hasImax
+        ).onEach {
+            it.data?.let { response ->
+                _responseCinema.value = response
+            }
+        }.launchIn(viewModelScope)
     }
 }

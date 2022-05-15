@@ -19,12 +19,12 @@ interface UserApi {
     @POST(AUTHORIZATION_URL)
     suspend fun authorization(
         @Body authorization: Authorization
-    ): AuthorizationHeader
+    ): Response<AuthorizationHeader>
 
     @POST(REGISTRATION_URL)
     suspend fun registration(
         @Body registration: Registration
-    ):Void
+    ):Response<Void?>
 
     @GET(USER_INFO_URL)
     suspend fun getUserInfo():Response<User>

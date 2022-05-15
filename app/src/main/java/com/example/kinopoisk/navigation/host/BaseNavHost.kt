@@ -50,9 +50,11 @@ fun BaseNavHost(
                                 BottomBar.Films -> navHostController.navigate(
                                     route = MainScreenRoute.MainRoute.Films.route
                                 )
-                                BottomBar.Persons -> navHostController.navigate(
-                                    route = MainScreenRoute.MainRoute.Person.route
-                                )
+                                BottomBar.Search -> {
+                                    navHostController.navigate(
+                                        route = MainScreenRoute.MainRoute.Search.route
+                                    )
+                                }
                                 BottomBar.Profile -> navHostController.navigate(
                                     route = MainScreenRoute.MainRoute.Profile.route
                                 )

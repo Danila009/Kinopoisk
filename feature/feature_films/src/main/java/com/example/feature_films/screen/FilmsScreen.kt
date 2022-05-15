@@ -1,7 +1,6 @@
 package com.example.feature_films.screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -20,8 +19,11 @@ import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.example.core_ui.animation.FilmListShimmer
+import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
@@ -109,19 +111,28 @@ fun FilmsScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start
                         ) {
-                            Image(
-                                painter = rememberImagePainter(
-                                    data = item?.posterUrl,
-                                    builder = {
-                                        crossfade(true)
-                                    }
-                                ),
+                            SubcomposeAsyncImage(
+                                model = item?.posterUrl,
                                 contentDescription = null,
                                 modifier = Modifier
                                     .padding(5.dp)
-                                    .width(100.dp)
                                     .clip(AbsoluteRoundedCornerShape(10.dp))
-                            )
+                                    .width(100.dp)
+                            ) {
+                                val state = painter.state
+                                if (
+                                    state is AsyncImagePainter.State.Loading ||
+                                    state is AsyncImagePainter.State.Error
+                                ) {
+                                    ImageShimmer(
+                                        imageHeight = 170.dp,
+                                        imageWidth = 100.dp
+                                    )
+                                } else {
+                                    SubcomposeAsyncImageContent()
+                                }
+                            }
+
                             Text(
                                 text = item?.nameRu.toString(),
                                 modifier = Modifier.padding(5.dp)

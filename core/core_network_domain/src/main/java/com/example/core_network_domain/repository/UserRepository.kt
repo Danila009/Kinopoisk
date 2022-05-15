@@ -13,7 +13,7 @@ interface UserRepository {
 
     suspend fun registration(
         registration: Registration
-    ):Void
+    ):Void?
 
     suspend fun getUserInfo():User
 

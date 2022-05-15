@@ -1,7 +1,6 @@
 package com.example.feature_cinema_info.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -19,11 +18,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.cinema.*
 import com.example.core_ui.animation.CinemaInfoScreenShimmer
 import com.example.core_ui.animation.FilmListShimmer
+import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.animation.TextShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
@@ -38,6 +40,7 @@ import com.example.feature_cinema_info.view.ReviewView
 import com.example.feature_cinema_info.view.ScheduleView
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.onEach
 
@@ -167,20 +170,39 @@ fun CinemaInfoScreen(
                                     ) {
                                         repeat(cinemaPhotos.size){ index ->
                                             if (index == it){
-                                                Image(
-                                                    painter = rememberImagePainter(
-                                                        data = cinemaPhotos[index].photo,
-                                                        builder = {
-                                                            crossfade(true)
-                                                        }
-                                                    ), contentDescription = null,
+                                                SubcomposeAsyncImage(
+                                                    model = cinemaPhotos[index].photo,
+                                                    contentDescription = null,
                                                     modifier = Modifier
                                                         .fillMaxWidth()
                                                         .height(300.dp)
-                                                )
+                                                ) {
+                                                    val state = painter.state
+                                                    if (
+                                                        state is AsyncImagePainter.State.Loading ||
+                                                        state is AsyncImagePainter.State.Error
+                                                    ) {
+                                                        ImageShimmer(
+                                                            modifier = Modifier
+                                                                .fillMaxWidth()
+                                                                .height(300.dp)
+                                                        )
+                                                    } else {
+                                                        SubcomposeAsyncImageContent()
+                                                    }
+                                                }
                                             }
                                         }
                                     }
+
+//                                    Row(
+//                                        modifier = Modifier.fillMaxWidth(),
+//                                        horizontalArrangement = Arrangement.Center
+//                                    ) {
+//                                        HorizontalPagerIndicator(
+//                                            pagerState = pagerStateImage
+//                                        )
+//                                    }
                                 }
 
                                 item{

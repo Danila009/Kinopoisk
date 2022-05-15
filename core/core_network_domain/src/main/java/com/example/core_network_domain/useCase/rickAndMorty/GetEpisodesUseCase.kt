@@ -9,7 +9,7 @@ class GetEpisodesUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         name:String,
-        episode:Int,
+        episode:Int?,
         page:Int
     ):Episode = rickAndMortyRepository.getEpisodes(
         name, episode, page

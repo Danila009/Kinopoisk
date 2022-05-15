@@ -69,6 +69,7 @@ dependencies {
 
     //Pager
     implementation("com.google.accompanist:accompanist-pager:0.14.0")
+    implementation("com.google.accompanist:accompanist-pager-indicators:0.14.0")
 
     //Dagger
     implementation("com.google.dagger:dagger:2.40.5")

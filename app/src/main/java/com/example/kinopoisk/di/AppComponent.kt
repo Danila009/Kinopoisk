@@ -7,11 +7,12 @@ import com.example.feature_cinema_info.viewModel.CinemaInfoViewModel
 import com.example.feature_cinema_map.viewModel.CinemaMapViewModel
 import com.example.feature_comics.viewModel.ComicsViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
+import com.example.feature_film_images.viewModel.FilmImagesViewModel
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
 import com.example.feature_films.viewModel.FilmsViewModel
 import com.example.feature_genre.viewModel.GenreViewModel
 import com.example.feature_home.viewModel.HomeViewModel
-import com.example.feature_persons.viewModel.PersonsViewModel
+import com.example.feature_persons.viewModel.SearchViewModel
 import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_registration.viewModel.RegistrationViewModel
 import com.example.feature_serial_info.viewModel.SerialInfoViewModel
@@ -58,7 +59,7 @@ interface AppComponent {
     @ExperimentalSerializationApi
     fun homeViewModel():HomeViewModel
     fun filmsViewModel(): FilmsViewModel
-    fun personViewModel():PersonsViewModel
+    fun searchViewModel():SearchViewModel
     fun profileViewModel():ProfileViewModel
     fun settingViewModel():SettingViewModel
     fun sortingViewModel():SortingViewModel
@@ -71,6 +72,7 @@ interface AppComponent {
     fun cinemaInfoViewModel(): CinemaInfoViewModel
     fun cinemaMapViewModel():CinemaMapViewModel
     fun cinemaAddReviewVideModel():CinemaAddReviewViewModel
+    fun filmImagesViewModel():FilmImagesViewModel
 
     @Component.Builder
     interface Builder{

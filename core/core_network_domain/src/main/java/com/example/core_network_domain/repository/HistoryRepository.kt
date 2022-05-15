@@ -5,11 +5,12 @@ import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.movie.history.HistorySearch
 import com.example.core_network_domain.model.movie.history.HistorySearchItem
 import kotlinx.serialization.ExperimentalSerializationApi
+import retrofit2.Response
 
 interface HistoryRepository {
 
     @ExperimentalSerializationApi
-    suspend fun getHistoryMovie(): HistoryMovie
+    suspend fun getHistoryMovie(): Response<HistoryMovie>
 
     @ExperimentalSerializationApi
     suspend fun postHistoryMovie(historyMovieItem: HistoryMovieItem)
@@ -19,7 +20,7 @@ interface HistoryRepository {
     suspend fun deleteHistoryMovie(id:Int)
 
     @ExperimentalSerializationApi
-    suspend fun getHistorySearch(): HistorySearch
+    suspend fun getHistorySearch(): Response<HistorySearch>
 
     @ExperimentalSerializationApi
     suspend fun postHistorySearch(

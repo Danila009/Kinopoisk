@@ -42,7 +42,7 @@ interface MovieApi {
         @Query("yearTo") yearTo:Int, //максимальный год
         @Query("keyword") keyword:String, // Search
         @Query("page") page:Int //номер страницы
-    ):Response<Film>
+    ): Film
 
     @GET(PREMIERE_URL)
     suspend fun getPremiere(

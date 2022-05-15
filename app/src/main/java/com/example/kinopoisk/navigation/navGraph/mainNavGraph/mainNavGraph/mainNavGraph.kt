@@ -7,7 +7,7 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.feature_films.screen.FilmsScreen
 import com.example.feature_home.screen.HomeScreen
-import com.example.feature_persons.screen.PersonScreen
+import com.example.feature_persons.screen.SearchScreen
 import com.example.feature_profile.screen.ProfileScreen
 import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.cinemaNavGraph.cinemaNavGraph
@@ -86,10 +86,10 @@ fun NavGraphBuilder.mainNavGraph(
                     filmsViewMode = appComponent.filmsViewModel()
                 )
             }
-            composable(MainScreenRoute.MainRoute.Person.route){
-                PersonScreen(
+            composable(MainScreenRoute.MainRoute.Search.route){
+                SearchScreen(
                     navController = navController,
-                    personsViewModel = appComponent.personViewModel()
+                    searchViewModel = appComponent.searchViewModel()
                 )
             }
             composable(MainScreenRoute.MainRoute.Profile.route){

@@ -101,7 +101,7 @@ fun HomeScreen(
                     shop = shop.value
                 )
 
-                MapView(
+                CinemaView(
                     navController = navController,
                     cinema = cinema.value,
                     checkNavMap = checkNavMap

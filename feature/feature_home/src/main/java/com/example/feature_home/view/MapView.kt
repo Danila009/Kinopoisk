@@ -27,7 +27,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.rememberCameraPositionState
 
 @Composable
-internal fun MapView(
+internal fun CinemaView(
     navController: NavController,
     cinema:List<Cinema>,
     checkNavMap:MutableState<Boolean>

@@ -23,7 +23,7 @@ interface RickAndMortyRepository {
 
     suspend fun getEpisodes(
         name:String,
-        episode:Int,
+        episode:Int?,
         page:Int
     ):Episode
 }

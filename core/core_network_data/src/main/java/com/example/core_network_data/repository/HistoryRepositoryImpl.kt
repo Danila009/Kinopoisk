@@ -7,6 +7,7 @@ import com.example.core_network_domain.model.movie.history.HistorySearch
 import com.example.core_network_domain.model.movie.history.HistorySearchItem
 import com.example.core_network_domain.repository.HistoryRepository
 import kotlinx.serialization.ExperimentalSerializationApi
+import retrofit2.Response
 import javax.inject.Inject
 
 class HistoryRepositoryImpl @Inject constructor(
@@ -14,8 +15,8 @@ class HistoryRepositoryImpl @Inject constructor(
 ): HistoryRepository {
 
     @ExperimentalSerializationApi
-    override suspend fun getHistoryMovie(): HistoryMovie {
-        return historyApi.getHistoryMovie().body() ?: HistoryMovie()
+    override suspend fun getHistoryMovie(): Response<HistoryMovie> {
+        return historyApi.getHistoryMovie()
     }
 
     @ExperimentalSerializationApi
@@ -32,8 +33,8 @@ class HistoryRepositoryImpl @Inject constructor(
     }
 
     @ExperimentalSerializationApi
-    override suspend fun getHistorySearch(): HistorySearch {
-        return historyApi.getHistorySearch().body() ?: HistorySearch()
+    override suspend fun getHistorySearch(): Response<HistorySearch> {
+        return historyApi.getHistorySearch()
     }
 
     @ExperimentalSerializationApi

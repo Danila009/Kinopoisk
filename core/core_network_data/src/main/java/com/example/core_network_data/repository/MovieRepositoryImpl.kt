@@ -38,7 +38,7 @@ class MovieRepositoryImpl @Inject constructor(
     ): Film {
         return movieApi.getFilm(
             genres, countries, order, type, ratingFrom, ratingTo, yearFrom, yearTo, keyword, page
-        ).body() ?: Film()
+        )
     }
 
     override suspend fun getFilter(): Filter {

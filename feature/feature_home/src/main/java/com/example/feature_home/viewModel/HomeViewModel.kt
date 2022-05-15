@@ -105,14 +105,13 @@ class HomeViewModel @Inject constructor(
         has4D:Boolean? = null,
         hasImax:Boolean? = null
     ){
-        viewModelScope.launch {
-            try {
-                val response = getCinemaUseCase.invoke(search, has3D, has4D, hasImax)
+        getCinemaUseCase.invoke(
+            search, has3D, has4D, hasImax
+        ).onEach {
+            it.data?.let { response ->
                 _responseCinema.value = response
-            }catch (e:Exception){
-                Log.e(RETROFIT_TAG, e.message.toString())
             }
-        }
+        }.launchIn(viewModelScope)
     }
 
     fun getPlaylist(){

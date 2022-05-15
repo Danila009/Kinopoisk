@@ -36,6 +36,7 @@ object ConstantsUrl {
     const val USER_FAVORITE_MOVIE_URL = "/kinopoisk/User/Content/Favorite/Movie"
     const val USER_WATCH_LATER_URL = "/kinopoisk/User/Content/WatchLater/Movie"
     const val USER_FAVORITE_STAFF_URL = "/kinopoisk/User/Content/Favorite/Staff"
+    const val USER_CINEMA_REVIEW_URL = "/kinopoisk/User/Content/Review/Cinema"
 
     const val AUTHORIZATION_URL = "/kinopoisk/Authorization"
     const val REGISTRATION_URL = "/kinopoisk/Registration"

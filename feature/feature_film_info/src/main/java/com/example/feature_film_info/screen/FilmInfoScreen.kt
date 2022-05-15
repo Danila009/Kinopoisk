@@ -37,7 +37,7 @@ import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScree
 import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.feature_film_info.view.*
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
-import com.example.feature_film_info.viewState.ImageViewState
+import com.example.core_utils.state.ImageState
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -118,7 +118,7 @@ fun FilmInfoScreen(
 
     val image = filmInfoViewModel.getImage(
         id = filmId,
-        type = ImageViewState.STILL.name
+        type = ImageState.STILL.name
     ).collectAsLazyPagingItems()
 
     val review = filmInfoViewModel.getReview(

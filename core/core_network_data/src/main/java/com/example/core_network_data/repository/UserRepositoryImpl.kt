@@ -15,11 +15,11 @@ class UserRepositoryImpl @Inject constructor(
     private val userApi: UserApi
 ): UserRepository {
     override suspend fun authorization(authorization: Authorization): AuthorizationHeader {
-        return userApi.authorization(authorization)
+        return userApi.authorization(authorization).body() ?: AuthorizationHeader()
     }
 
-    override suspend fun registration(registration: Registration):Void {
-        return userApi.registration(registration)
+    override suspend fun registration(registration: Registration):Void? {
+        return userApi.registration(registration).body()
     }
 
     override suspend fun getUserInfo(): User {

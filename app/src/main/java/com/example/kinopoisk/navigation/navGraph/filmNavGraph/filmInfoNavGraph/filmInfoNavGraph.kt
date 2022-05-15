@@ -1,5 +1,6 @@
 package com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
@@ -17,6 +18,7 @@ import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalFoundationApi
 @ExperimentalSerializationApi
 @ExperimentalPagerApi
 fun NavGraphBuilder.filmInfoNavGraph(
@@ -34,7 +36,8 @@ fun NavGraphBuilder.filmInfoNavGraph(
             )
             filmMoreNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope
+                lifecycleScope = lifecycleScope,
+                appComponent = appComponent
             )
             composable(
                 FilmScreenRoute.FilmInfo.route,

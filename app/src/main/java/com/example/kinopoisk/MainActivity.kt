@@ -17,7 +17,6 @@ import com.google.firebase.FirebaseOptions
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.ktx.initialize
 import kotlinx.serialization.ExperimentalSerializationApi
-import javax.inject.Inject
 
 @ExperimentalMaterialApi
 @ExperimentalSerializationApi

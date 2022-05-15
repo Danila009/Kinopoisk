@@ -1,6 +1,5 @@
 package com.example.feature_registration.screen
 
-import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -54,7 +53,7 @@ fun RegistrationScreen(
 
     val registrationError = remember { mutableStateOf("") }
 
-    val clickedClickable = remember { mutableStateOf(false) }
+    val clickedClickableGoogleButton = remember { mutableStateOf(false) }
 
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
@@ -66,7 +65,7 @@ fun RegistrationScreen(
         contract = AuthResult(),
         account = { account ->
             if (account == null){
-                Log.e("GoogleSingIn:", "account null")
+                registrationError.value = "account null"
             }else{
                 scope.launch {
                     val credentials =
@@ -76,17 +75,18 @@ fun RegistrationScreen(
 
                     registrationViewModel.registration(
                         registration = Registration(
+                            id = null,
                             username = account.displayName!!,
                             email = account.email!!,
                             password = auth.currentUser?.uid!!,
                             photo = account.photoUrl.toString()
                         ), navController = navController,
-                        clickedClickable = clickedClickable
+                        clickedClickableGoogleButton = clickedClickableGoogleButton
                     )
                 }
                 }
         }, error = {
-            clickedClickable.value = false
+            clickedClickableGoogleButton.value = false
             registrationError.value = "Error Google sing in"
         }
     )
@@ -156,13 +156,14 @@ fun RegistrationScreen(
                                 ) ){
                                 registrationViewModel.registration(
                                     registration = Registration(
+                                        id = null,
                                         username = username.value,
                                         email = email.value,
                                         password = password.value,
                                         photo = null
                                     ),
                                     navController = navController,
-                                    clickedClickable = clickedClickable
+                                    clickedClickableGoogleButton = clickedClickableGoogleButton
                                 )
                             }
                         },
@@ -182,7 +183,7 @@ fun RegistrationScreen(
 
                     GoogleButton(
                         modifier = Modifier.padding(5.dp),
-                        clickedClickable = clickedClickable
+                        clickedClickable = clickedClickableGoogleButton
                     ) {
                         authResultLauncher.launch(REQUEST_CODE_SIGN_IN)
                     }

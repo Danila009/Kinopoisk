@@ -32,7 +32,7 @@ interface RickAndMortyApi {
     @GET(RIAK_AND_MORTY_EPISODES_URL)
     suspend fun getEpisodes(
         @Query("name") name:String,
-        @Query("episode") episode:Int,
+        @Query("episode") episode:Int?,
         @Query("page") page:Int
     ):Response<Episode>
 }

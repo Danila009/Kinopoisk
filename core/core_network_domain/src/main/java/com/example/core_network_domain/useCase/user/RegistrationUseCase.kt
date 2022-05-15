@@ -10,12 +10,12 @@ import javax.inject.Inject
 class RegistrationUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-    operator fun invoke(registration: Registration):Flow<Response<Void>> = flow {
+    operator fun invoke(registration: Registration):Flow<Response<Void?>> = flow {
         try {
             val response = userRepository.registration(registration)
             emit(Response.Success(data = response))
         }catch (e:Exception){
-            emit(Response.Error<Void>(message = e.message.toString()))
+            emit(Response.Error<Void?>(message = e.message.toString()))
         }
     }
 }

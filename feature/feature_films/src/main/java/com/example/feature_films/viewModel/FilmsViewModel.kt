@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.core_network_domain.model.movie.FilmItem
 import com.example.core_network_domain.useCase.movie.GetFilmUseCase
-import com.example.feature_films.source.FilmPagingSource
+import com.example.core_network_domain.source.FilmPagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

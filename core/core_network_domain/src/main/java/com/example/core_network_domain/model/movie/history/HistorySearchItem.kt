@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @ExperimentalSerializationApi
 @Serializable
 data class HistorySearchItem(
-    val id:Int,
+    val id:Int?,
     val title:String,
     @Serializable(with = DateTimeSerialization::class)
     val date:String

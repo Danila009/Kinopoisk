@@ -1,6 +1,7 @@
 package com.example.core_network_domain.repository
 
 import com.example.core_network_domain.model.cinema.*
+import retrofit2.Response
 
 interface CinemaRepository {
 
@@ -9,7 +10,7 @@ interface CinemaRepository {
         has3D:Boolean?,
         has4D:Boolean?,
         hasImax:Boolean?
-    ):List<Cinema>
+    ):Response<List<Cinema>>
 
     suspend fun getCinemaById(
         id:Int

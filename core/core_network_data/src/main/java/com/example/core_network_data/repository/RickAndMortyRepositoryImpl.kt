@@ -29,7 +29,7 @@ class RickAndMortyRepositoryImpl @Inject constructor(
         ).body() ?: Location()
     }
 
-    override suspend fun getEpisodes(name: String, episode: Int, page: Int): Episode {
+    override suspend fun getEpisodes(name: String, episode: Int?, page: Int): Episode {
         return rickAndMortyApi.getEpisodes(
             name, episode, page
         ).body() ?: Episode()
