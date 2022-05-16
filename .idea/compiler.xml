@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="Kinopoisk.app" target="11" />
+      <module name="Kinopoisk.benchmark" target="11" />
       <module name="Kinopoisk.core.core_database_data" target="11" />
       <module name="Kinopoisk.core.core_network_data" target="11" />
       <module name="Kinopoisk.core.core_network_domain" target="11" />

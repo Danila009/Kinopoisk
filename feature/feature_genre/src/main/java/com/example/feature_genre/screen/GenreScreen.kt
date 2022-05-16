@@ -12,6 +12,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
@@ -21,6 +22,7 @@ import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.encodeToString
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenRoute
+import com.example.feature_genre.screen.common.TestTag.MAIN_TOP_APP_BAR
 import com.example.feature_genre.viewModel.GenreViewModel
 import kotlinx.coroutines.flow.onEach
 import java.util.ArrayList
@@ -41,9 +43,11 @@ fun GenreScreen(
         genre.value = it.genres
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+
     Scaffold(
         topBar = {
             TopAppBar(
+                modifier = Modifier.testTag(MAIN_TOP_APP_BAR),
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = { Text(text = "Genre") },
