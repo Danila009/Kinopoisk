@@ -20,6 +20,7 @@ import coil.compose.rememberImagePainter
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
+import com.example.core_utils.common.replaceRange
 import com.example.feature_comics.viewModel.ComicsViewModel
 
 @ExperimentalFoundationApi
@@ -39,7 +40,9 @@ fun MarvelComicsView(
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = {
-                    SearchView(search = search)
+                    SearchView(search = {
+                        search.value = it
+                    })
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.navigateUp() }) {
@@ -82,7 +85,7 @@ fun MarvelComicsView(
                                 )
 
                                 Text(
-                                    text = item?.title.toString(),
+                                    text = replaceRange(item?.title.toString(), 30),
                                     modifier = Modifier.padding(5.dp),
                                     fontWeight = FontWeight.Bold
                                 )

@@ -1,6 +1,9 @@
 package com.example.feature_persons.viewModel
 
 import android.util.Log
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -28,6 +31,8 @@ import com.example.core_network_domain.useCase.rickAndMorty.GetCharactersUseCase
 import com.example.core_network_domain.useCase.rickAndMorty.GetEpisodesUseCase
 import com.example.core_network_domain.useCase.rickAndMorty.GetLocationsUseCase
 import com.example.core_utils.common.Tag.RETROFIT_TAG
+import com.example.core_utils.state.FilmSortingOrder
+import com.example.core_utils.state.RiakAndMortyCharactersStatus
 import com.example.feature_persons.source.PersonPagingSource
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -60,12 +65,90 @@ class SearchViewModel @Inject constructor(
         viewModelScope, SharingStarted.Eagerly, Response.Loading()
     )
 
+    private val _responseSearch:MutableState<String> = mutableStateOf("")
+    val responseSearch:State<String> = _responseSearch
+
     private val _responseMovieTotal = MutableStateFlow(0)
     val responseMovieTotal = _responseMovieTotal.asStateFlow()
+
+    private val _responsePersonTotal = MutableStateFlow(0)
+    val responsePersonTotal = _responsePersonTotal.asStateFlow()
+
+    private val _responseComicsTotal = MutableStateFlow(0)
+    val responseComicsTotal = _responseComicsTotal.asStateFlow()
+
+    private val _responseCharactersRiakAndMortyTotal = MutableStateFlow(0)
+    val responseCharactersRiakAndMortyTotal = _responseCharactersRiakAndMortyTotal.asStateFlow()
+
+    private val _responseOrderFilm:MutableState<FilmSortingOrder> =
+        mutableStateOf(FilmSortingOrder.RATING)
+    val responseOrderFilm:State<FilmSortingOrder> = _responseOrderFilm
+
+    private val _responseRatingToFilm:MutableState<Int> = mutableStateOf(0)
+    val responseRatingToFilm:State<Int> = _responseRatingToFilm
+
+    private val _responseRatingFromFilm:MutableState<Int> = mutableStateOf(10)
+    val responseRatingFromFilm:State<Int> = _responseRatingFromFilm
+
+    private val _responseCinemaHas3D:MutableState<String> = mutableStateOf("--")
+    val responseCinemaHas3D:State<String> = _responseCinemaHas3D
+
+    private val _responseCinemaHas4D:MutableState<String> = mutableStateOf("--")
+    val responseCinemaHas4D:State<String> = _responseCinemaHas4D
+
+    private val _responseCinemaHasImax:MutableState<String> = mutableStateOf("--")
+    val responseCinemaHasImax:State<String> = _responseCinemaHasImax
+
+    private val _responseRiakAndMortyStatusCharacters:MutableState<RiakAndMortyCharactersStatus?> = mutableStateOf(null)
+    val responseRiakAndMortyStatusCharacters:State<RiakAndMortyCharactersStatus?> =_responseRiakAndMortyStatusCharacters
+
+    fun updateRiakAndMortyCharactersStatus(riakAndMortyCharactersStatus:RiakAndMortyCharactersStatus){
+        _responseRiakAndMortyStatusCharacters.value = riakAndMortyCharactersStatus
+    }
+
+    fun updateCinemaHas3D(has3D: String){
+        _responseCinemaHas3D.value = has3D
+    }
+
+    fun updateCinemaHas4D(has4D: String){
+        _responseCinemaHas4D.value = has4D
+    }
+
+    fun updateCinemaHasImax(imax: String){
+        _responseCinemaHasImax.value = imax
+    }
+
+    fun updateSearch(search: String){
+        _responseSearch.value = search
+    }
+
+    fun updateRatingToFilm(ratingTo: Int){
+        _responseRatingToFilm.value = ratingTo
+    }
+
+    fun updateRatingFromFilm(ratingFrom: Int){
+        _responseRatingFromFilm.value = ratingFrom
+    }
+
+    fun updateOrderFilm(filmSortingOrder: FilmSortingOrder){
+        _responseOrderFilm.value = filmSortingOrder
+    }
 
     fun getSearchPerson(
         name:String
     ): Flow<PagingData<PersonItem>> {
+
+        viewModelScope.launch {
+            try {
+                val response = getSearchPersonUseCase.invoke(
+                    name, page = 1
+                )
+                _responsePersonTotal.value = response.total
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
+        }
+
         return Pager(PagingConfig(pageSize = 1)){
             PersonPagingSource(
                 getSearchPersonUseCase = getSearchPersonUseCase,
@@ -100,19 +183,23 @@ class SearchViewModel @Inject constructor(
     ): Flow<PagingData<FilmItem>> {
 
         viewModelScope.launch {
-            val total = getFilmUseCase.invoke(
-                genres = genres,
-                countries = countries,
-                order = order,
-                type = type,
-                ratingFrom = ratingFrom,
-                ratingTo =ratingTo,
-                yearFrom = yearFrom,
-                yearTo = yearTo,
-                keyword = keyword,
-                page = 1
-            ).total
-            _responseMovieTotal.value = total
+            try {
+                val total = getFilmUseCase.invoke(
+                    genres = genres,
+                    countries = countries,
+                    order = order,
+                    type = type,
+                    ratingFrom = ratingFrom,
+                    ratingTo =ratingTo,
+                    yearFrom = yearFrom,
+                    yearTo = yearTo,
+                    keyword = keyword,
+                    page = 1
+                ).total
+                _responseMovieTotal.value = total
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
         }
 
         return  Pager(PagingConfig(pageSize = 1)){
@@ -134,6 +221,21 @@ class SearchViewModel @Inject constructor(
     fun getComicsMarvel(
         search:String = ""
     ): Flow<PagingData<Result>> {
+
+        viewModelScope.launch {
+            try {
+                viewModelScope.launch {
+                    val response = getComicsMarvelUseCase.invoke(
+                        search = search
+                    )?.data?.total
+
+                    _responseComicsTotal.value = response ?: 0
+                }
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
+        }
+
         return Pager(PagingConfig(pageSize = 1)){
             ComicsMarvelSource(
                 search = search,
@@ -149,9 +251,22 @@ class SearchViewModel @Inject constructor(
         type: String = "",
         gender: String = "",
     ):Flow<PagingData<CharacterItem>>{
+
+        viewModelScope.launch {
+            try {
+                val response = getCharactersUseCase.invoke(
+                    search, if (status == "--") "" else status, species, type, gender, 1
+                ).info?.count ?: 0
+
+                _responseCharactersRiakAndMortyTotal.value = response
+            }catch (e:Exception){
+                Log.e(RETROFIT_TAG, e.message.toString())
+            }
+        }
+
         return Pager(PagingConfig(pageSize = 1)){
             CharactersRickAndMortySource(
-                search, status, species, type, gender, getCharactersUseCase
+                search, if (status == "--") "" else status, species, type, gender, getCharactersUseCase
             )
         }.flow.cachedIn(viewModelScope)
     }

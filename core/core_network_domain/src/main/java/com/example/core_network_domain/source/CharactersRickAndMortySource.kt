@@ -1,6 +1,5 @@
 package com.example.core_network_domain.source
 
-import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.core_network_domain.model.rickAndMorty.CharacterItem

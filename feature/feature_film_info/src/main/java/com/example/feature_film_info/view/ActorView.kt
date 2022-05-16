@@ -57,9 +57,7 @@ internal fun StaffView(
                         modifier = Modifier.padding(5.dp)
                             .clickable {
                                 navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
-                                    staffId = item.staffId.toString(),
-                                    filmId = filmId,
-                                    key = StaffInfoScreenKey.FILM.name
+                                    staffId = item.staffId
                                 ))
                             }
                     ) {
@@ -133,9 +131,7 @@ internal fun StaffView(
                             .padding(5.dp)
                             .clickable {
                                 navController.navigate(StaffInfoScreenRoute.StaffInfo.base(
-                                    staffId = item.staffId.toString(),
-                                    filmId = filmId,
-                                    key = StaffInfoScreenKey.FILM.name
+                                    staffId = item.staffId
                                 ))
                             }
                     ) {

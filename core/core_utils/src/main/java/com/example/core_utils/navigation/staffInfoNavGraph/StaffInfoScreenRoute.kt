@@ -1,12 +1,10 @@
 package com.example.core_utils.navigation.staffInfoNavGraph
 
 sealed class StaffInfoScreenRoute(val route:String) {
-    object StaffInfo:StaffInfoScreenRoute("staff_info?staffId={staffId}&filmId={filmId}&keyStaffScreen={keyStaffScreen}"){
+    object StaffInfo:StaffInfoScreenRoute("staff_info?staffId={staffId}"){
         fun base(
-            staffId:String,
-            filmId:String? = null,
-            key:String
-        ):String = "staff_info?staffId=$staffId&filmId=$filmId&keyStaffScreen=$key"
+            staffId:Int
+        ):String = "staff_info?staffId=$staffId"
     }
     object MoreStaff:StaffInfoScreenRoute("more_staff?staffId={staffId}"){
         fun base(

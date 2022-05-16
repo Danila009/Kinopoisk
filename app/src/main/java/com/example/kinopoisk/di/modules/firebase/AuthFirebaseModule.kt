@@ -11,7 +11,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class AuthFirebase {
+class AuthFirebaseModule {
 
     @[Provides Singleton]
     fun providerSecondary(): FirebaseApp = Firebase.app(PROJECT_ID)

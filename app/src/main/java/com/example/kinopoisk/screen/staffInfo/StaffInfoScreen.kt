@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.staffInfo
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -41,14 +42,13 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @ExperimentalPagerApi
 @Composable
 fun StaffInfoScreen(
     navController: NavController,
     lifecycleScope: LifecycleCoroutineScope,
-    staffId:Int,
-    filmId:String?,
-    keyStaffInfoScreenString: String
+    staffId:Int
 ) {
     val context = LocalContext.current
     val staffInfoViewModel = DaggerAppComponent.builder()
@@ -59,7 +59,6 @@ fun StaffInfoScreen(
     val favoriteCheckStaff = remember { mutableStateOf(false) }
     val statePager = rememberPagerState(pageCount = 4)
     val staffInfo = remember { mutableStateOf(StaffInfo()) }
-    val keyStaffInfoScreen = enumValueOf<StaffInfoScreenKey>(keyStaffInfoScreenString)
     val token = context
         .getSharedPreferences(TOKEN_SHARED, Context.MODE_PRIVATE)
         .getString(TOKEN_SHARED, "")
@@ -83,16 +82,7 @@ fun StaffInfoScreen(
                     Text(text = staffInfo.value.nameRu.toString())
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        when(keyStaffInfoScreen){
-                            StaffInfoScreenKey.FILM -> {
-                                filmId?.let {
-                                    navController.navigate(FilmScreenRoute.FilmInfo.base(it))
-                                }
-                            }
-                            StaffInfoScreenKey.PERSON -> {
-                                navController.navigate(MAIN_ROUTE)
-                            }
-                        }
+                        navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,

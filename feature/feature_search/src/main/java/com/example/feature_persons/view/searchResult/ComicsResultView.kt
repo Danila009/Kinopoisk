@@ -9,33 +9,31 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.example.core_network_domain.model.movie.FilmItem
+import com.example.core_network_domain.model.marvel.comics.Result
 import com.example.core_ui.animation.FilmListShimmer
 import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
-import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.common.replaceRange
 
 @ExperimentalMaterialApi
-internal fun LazyListScope.movieResultView(
-    movie:LazyPagingItems<FilmItem>,
-    expandedStateFilm:MutableState<Boolean>,
-    rotationStateFilm:Float,
-    movieTotal:Int,
-    navController: NavController
+internal fun LazyListScope.comicsResultView(
+    comics: LazyPagingItems<Result>,
+    expandedState: MutableState<Boolean>,
+    rotationState:Float,
+    comicsTotal:Int
 ) {
     item {
         Card(
@@ -49,7 +47,7 @@ internal fun LazyListScope.movieResultView(
                 ),
             backgroundColor = primaryBackground,
             onClick = {
-                expandedStateFilm.value = !expandedStateFilm.value
+                expandedState.value = !expandedState.value
             }
         ) {
             Row(
@@ -57,7 +55,7 @@ internal fun LazyListScope.movieResultView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
-                    text = "Films $movieTotal",
+                    text = "Comics $comicsTotal",
                     modifier = Modifier.padding(5.dp),
                     color = secondaryBackground
                 )
@@ -66,9 +64,9 @@ internal fun LazyListScope.movieResultView(
                     modifier = Modifier
                         .weight(1f)
                         .alpha(ContentAlpha.medium)
-                        .rotate(rotationStateFilm),
+                        .rotate(rotationState),
                     onClick = {
-                        expandedStateFilm.value = !expandedStateFilm.value
+                        expandedState.value = !expandedState.value
                     }) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -79,23 +77,20 @@ internal fun LazyListScope.movieResultView(
         }
     }
 
-    if(expandedStateFilm.value){
-        items(movie){ item ->
+    if(expandedState.value){
+        items(comics){ item ->
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.clickable {
-                    navController.navigate(
-                        FilmScreenRoute.FilmInfo.base(
-                            filmId = item?.kinopoiskId.toString()
-                        )
-                    )
+
                 }
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SubcomposeAsyncImage(
-                        model = item?.posterUrlPreview,
+                        model = "${item?.thumbnail?.path}." +
+                                "${item?.thumbnail?.extension}",
                         contentDescription = null,
                         modifier = Modifier
                             .padding(5.dp)
@@ -117,7 +112,7 @@ internal fun LazyListScope.movieResultView(
                     }
 
                     Text(
-                        text = item?.nameRu ?: "",
+                        text = replaceRange(item?.title.toString(), 30),
                         modifier = Modifier.padding(5.dp)
                     )
                 }
@@ -125,8 +120,8 @@ internal fun LazyListScope.movieResultView(
             }
         }
         if (
-            movie.loadState.refresh is LoadState.Loading
-            || movie.loadState.append is LoadState.Loading
+            comics.loadState.refresh is LoadState.Loading
+            || comics.loadState.append is LoadState.Loading
         ){
             item {
                 FilmListShimmer()

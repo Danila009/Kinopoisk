@@ -6,9 +6,8 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
+import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.ui.theme.primaryBackground
@@ -16,19 +15,23 @@ import com.example.core_ui.ui.theme.secondaryBackground
 
 @Composable
 fun SearchView(
-    search:MutableState<String>,
-    close:MutableState<Boolean> = mutableStateOf(false)
+    search:(String) -> Unit,
+    close:MutableState<Boolean> = mutableStateOf(false),
 ) {
+    var searchStateOf by remember { mutableStateOf("") }
+
     TextField(
-        value = search.value,
+        value = searchStateOf,
         onValueChange = {
-            search.value = it
+            searchStateOf = it
+            search(it)
         }, placeholder = {
             Text(text = "Search")
         }, leadingIcon = {
             if (close.value){
                 IconButton(onClick = {
-                    search.value = ""
+                    searchStateOf = ""
+                    search("")
                     close.value = false
                 }) {
                     Icon(
@@ -55,8 +58,11 @@ fun SearchView(
             focusedIndicatorColor = secondaryBackground,
             backgroundColor = primaryBackground
         ), trailingIcon = {
-            if (search.value.isNotEmpty()){
-                IconButton(onClick = { search.value = "" }) {
+            if (searchStateOf.isNotEmpty()){
+                IconButton(onClick = {
+                    search("")
+                    searchStateOf = ""
+                }) {
                     Icon(
                         imageVector = Icons.Default.Close,
                         contentDescription = null,

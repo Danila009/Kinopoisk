@@ -27,26 +27,15 @@ fun NavGraphBuilder.staffInfoNavGraph(
                     navArgument(
                         name = STAFF_ID_ARGUMENT,
                         builder = {
-                            type = NavType.StringType
+                            type = NavType.IntType
                         }
-                    ), navArgument(
-                        name = FILM_ID_ARGUMENT,
-                        builder = {
-                            nullable = true
-                            type = NavType.StringType
-                        }
-                    ), navArgument(KEY_STAFF_SCREEN_ARGUMENT){
-                        type = NavType.StringType
-                        nullable = true
-                    }
+                    )
                 )
             ){
                 StaffInfoScreen(
                     navController = navController,
                     lifecycleScope = lifecycleScope,
-                    staffId = it.arguments?.getString(STAFF_ID_ARGUMENT)!!.toInt(),
-                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toString(),
-                    keyStaffInfoScreenString = it.arguments?.getString(KEY_STAFF_SCREEN_ARGUMENT).toString()
+                    staffId = it.arguments?.getInt(STAFF_ID_ARGUMENT) ?: 0
                 )
             }
             composable(

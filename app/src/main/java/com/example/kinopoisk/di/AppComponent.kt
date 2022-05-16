@@ -24,11 +24,12 @@ import com.example.kinopoisk.di.modules.api.MarvelApiModule
 import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
 import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
-import com.example.kinopoisk.di.modules.firebase.AuthFirebase
+import com.example.kinopoisk.di.modules.firebase.AuthFirebaseModule
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.screen.staffInfo.StaffInfoViewModel
+import com.google.firebase.FirebaseOptions
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -43,7 +44,7 @@ import javax.inject.Singleton
         RickAndMortyApiModule::class,
         MarvelApiModule::class,
         IMDbApiModule::class,
-        AuthFirebase::class
+        AuthFirebaseModule::class
     ]
 )
 @Singleton
@@ -59,6 +60,7 @@ interface AppComponent {
     @ExperimentalSerializationApi
     fun homeViewModel():HomeViewModel
     fun filmsViewModel(): FilmsViewModel
+    @ExperimentalSerializationApi
     fun searchViewModel():SearchViewModel
     fun profileViewModel():ProfileViewModel
     fun settingViewModel():SettingViewModel

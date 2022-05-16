@@ -1,35 +1,23 @@
 package com.example.feature_persons.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
-import coil.compose.AsyncImagePainter
-import coil.compose.SubcomposeAsyncImage
-import coil.compose.SubcomposeAsyncImageContent
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.cinema.Cinema
 import com.example.core_network_domain.model.movie.history.HistoryMovie
 import com.example.core_network_domain.model.movie.history.HistorySearch
 import com.example.core_network_domain.model.movie.history.HistorySearchItem
-import com.example.core_ui.animation.FilmListShimmer
-import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
@@ -42,7 +30,11 @@ import com.example.feature_persons.view.CinemaView
 import com.example.feature_persons.view.HistoryMovieView
 import com.example.feature_persons.view.HistorySearchView
 import com.example.feature_persons.view.MovieView
+import com.example.feature_persons.view.searchResult.*
+import com.example.feature_persons.view.searchResult.cinemaResultView
+import com.example.feature_persons.view.searchResult.comicsResultView
 import com.example.feature_persons.view.searchResult.movieResultView
+import com.example.feature_persons.view.searchResult.personsResultView
 import com.example.feature_persons.viewModel.SearchViewModel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -58,15 +50,7 @@ fun SearchScreen(
     val lifecycleScope = LocalLifecycleOwner.current.lifecycleScope
     val lifecycle = LocalLifecycleOwner.current.lifecycle
 
-    val search = remember { mutableStateOf("") }
-
-    val movie = searchViewModel.getFilm(
-        keyword = search.value
-    ).collectAsLazyPagingItems()
-
-    val comicsMarvel = searchViewModel.getComicsMarvel(
-        search = search.value
-    ).collectAsLazyPagingItems()
+    val search by searchViewModel.responseSearch
 
     var historySearch:Response<HistorySearch> by remember { mutableStateOf(Response.Loading()) }
     var historyMovie:Response<HistoryMovie> by remember { mutableStateOf(Response.Loading()) }
@@ -79,12 +63,68 @@ fun SearchScreen(
         targetValue = if (expandedStateFilm.value) 180f else 0f
     )
 
-    var expandedStateCinema by remember { mutableStateOf(false) }
+    val expandedStateCinema = remember { mutableStateOf(false) }
     val rotationStateCinema by animateFloatAsState(
-        targetValue = if (expandedStateCinema) 180f else 0f
+        targetValue = if (expandedStateCinema.value) 180f else 0f
+    )
+
+    val expandedStatePerson = remember { mutableStateOf(false) }
+    val rotationStatePerson by animateFloatAsState(
+        targetValue = if (expandedStatePerson.value) 180f else 0f
+    )
+
+    val expandedStateComics = remember { mutableStateOf(false) }
+    val rotationStateComics by animateFloatAsState(
+        targetValue = if (expandedStateComics.value) 180f else 0f
+    )
+
+    val expandedStateCharactersRickAndMorty = remember { mutableStateOf(false) }
+    val rotationStateCharactersRickAndMorty by animateFloatAsState(
+        targetValue = if (expandedStateComics.value) 180f else 0f
     )
 
     var movieTotal by remember { mutableStateOf(0) }
+    var personTotal by remember { mutableStateOf(0) }
+    var comicsTotal by remember { mutableStateOf(0) }
+    var charactersRickAndMortyTotal by remember { mutableStateOf(0) }
+
+    val sortingOrderFilm by searchViewModel.responseOrderFilm
+    val sortingRatingToFilm by searchViewModel.responseRatingToFilm
+    val sortingRatingFromFilm by searchViewModel.responseRatingFromFilm
+
+    val has3DCinema by searchViewModel.responseCinemaHas3D
+    val has4DCinema by searchViewModel.responseCinemaHas4D
+    val hasImaxCinema by searchViewModel.responseCinemaHasImax
+
+    val rickAndMortyCharacterStatus by searchViewModel.responseRiakAndMortyStatusCharacters
+
+    val charactersRickAndMortySource = searchViewModel.getCharactersRickAndMorty(
+        search = search,
+        status = rickAndMortyCharacterStatus?.title ?: ""
+    ).collectAsLazyPagingItems()
+
+    val movie = searchViewModel.getFilm(
+        keyword = search,
+        order = sortingOrderFilm.name,
+        ratingFrom = sortingRatingFromFilm,
+        ratingTo = sortingRatingToFilm
+    ).collectAsLazyPagingItems()
+
+    val comicsMarvel = searchViewModel.getComicsMarvel(
+        search = search
+    ).collectAsLazyPagingItems()
+
+    val persons = searchViewModel.getSearchPerson(
+        name = search
+    ).collectAsLazyPagingItems()
+
+    val comics = searchViewModel.getComicsMarvel(
+        search = search
+    ).collectAsLazyPagingItems()
+
+    searchViewModel.responseCharactersRiakAndMortyTotal.onEach {
+        charactersRickAndMortyTotal = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     searchViewModel.responseHistorySearch.onEach {
         historySearch = it
@@ -102,17 +142,50 @@ fun SearchScreen(
         movieTotal = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
-    LaunchedEffect(key1 = search.value, block = {
+    searchViewModel.responsePersonTotal.onEach {
+        personTotal = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    searchViewModel.responseComicsTotal.onEach {
+        comicsTotal = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
+    LaunchedEffect(
+        key1 = has3DCinema,
+        key2 = has4DCinema,
+        key3 = hasImaxCinema,
+        block = {
+            searchViewModel.getCinema(
+                search = search,
+                has3D = when(has3DCinema){
+                    "true" -> true
+                    "false" -> false
+                    else -> null
+                },
+                has4D = when(has4DCinema){
+                    "true" -> true
+                    "false" -> false
+                    else -> null
+                },
+                hasImax = when(hasImaxCinema){
+                    "true" -> true
+                    "false" -> false
+                    else -> null
+                }
+            )
+        }
+    )
+
+    LaunchedEffect(key1 = search, block = {
         searchViewModel.getCinema(
-            search = search.value
+            search = search
         )
 
-        if (search.value.isNotEmpty()){
+        if (search.isNotEmpty()){
             searchViewModel.postHistorySearch(
                 historySearchItem = HistorySearchItem(
                     id = 0,
-                    title = search.value,
+                    title = search,
                     date = getDate()
                 )
             )
@@ -127,7 +200,9 @@ fun SearchScreen(
                     elevation = 8.dp,
                     title = {
                         SearchView(
-                            search = search
+                            search = {
+                                searchViewModel.updateSearch(it)
+                            }
                         )
                     }
                 )
@@ -163,12 +238,12 @@ fun SearchScreen(
                 LazyColumn(content = {
                     when(sortingSelectedTabIndex){
                         0 -> {
-                            if (search.value.isEmpty()){
+                            if (search.isEmpty()){
                                 item {
                                     HistorySearchView(
                                         historySearch = historySearch,
                                         search = {
-                                            search.value = it
+                                            searchViewModel.updateSearch(it)
                                         }
                                     )
 
@@ -199,95 +274,45 @@ fun SearchScreen(
                                     movie = movie,
                                     expandedStateFilm = expandedStateFilm,
                                     rotationStateFilm = rotationStateFilm,
-                                    movieTotal = movieTotal
+                                    movieTotal = movieTotal,
+                                    navController = navController
                                 )
 
-                                item {
-                                    Card(
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .animateContentSize(
-                                                animationSpec = tween(
-                                                    durationMillis = 300,
-                                                    easing = LinearOutSlowInEasing
-                                                )
-                                            ),
-                                        backgroundColor = primaryBackground,
-                                        onClick = {
-                                            expandedStateCinema = !expandedStateCinema
-                                        }
-                                    ) {
-                                        Row(
-                                            modifier = Modifier.fillMaxWidth(),
-                                            horizontalArrangement = Arrangement.SpaceBetween
-                                        ){
-                                            Text(
-                                                text = "Cinema ${cinema.data?.size}",
-                                                modifier = Modifier.padding(5.dp),
-                                                color = secondaryBackground
-                                            )
+                                personsResultView(
+                                    person = persons,
+                                    navController = navController,
+                                    expandedState = expandedStatePerson,
+                                    rotationState = rotationStatePerson,
+                                    personTotal = personTotal
+                                )
 
-                                            IconButton(
-                                                modifier = Modifier
-                                                    .weight(1f)
-                                                    .alpha(ContentAlpha.medium)
-                                                    .rotate(rotationStateCinema),
-                                                onClick = {
-                                                    expandedStateCinema = !expandedStateCinema
-                                                }) {
-                                                Icon(
-                                                    imageVector = Icons.Default.ArrowDropDown,
-                                                    contentDescription = null
-                                                )
-                                            }
+                                cinemaResultView(
+                                    cinema = cinema,
+                                    expandedStateCinema = expandedStateCinema,
+                                    rotationStateCinema = rotationStateCinema,
+                                    navController = navController
+                                )
 
-                                            if (expandedStateCinema){
-                                                cinema.data?.let { items ->
-                                                    if(items.isNotEmpty()){
-                                                        items.forEach { item ->
-                                                            Column {
-                                                                Row {
-                                                                    SubcomposeAsyncImage(
-                                                                        model = item.icon,
-                                                                        contentDescription = null,
-                                                                        modifier = Modifier
-                                                                            .padding(5.dp)
-                                                                            .height(100.dp)
-                                                                            .width(150.dp)
-                                                                    ) {
-                                                                        val state = painter.state
-                                                                        if (
-                                                                            state is AsyncImagePainter.State.Loading ||
-                                                                            state is AsyncImagePainter.State.Error
-                                                                        ) {
-                                                                            ImageShimmer(
-                                                                                imageHeight = 100.dp,
-                                                                                imageWidth = 150.dp
-                                                                            )
-                                                                        } else {
-                                                                            SubcomposeAsyncImageContent()
-                                                                        }
-                                                                    }
+                                comicsResultView(
+                                    comics = comics,
+                                    expandedState = expandedStateComics,
+                                    rotationState = rotationStateComics,
+                                    comicsTotal = comicsTotal
+                                )
 
-                                                                    Text(
-                                                                        text = item.title,
-                                                                        modifier = Modifier.padding(5.dp)
-                                                                    )
-                                                                }
-                                                                Divider()
-                                                            }
-                                                        }
-                                                    }else {
-                                                        FilmListShimmer()
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
+                                rickAndMortyCharacterResultView(
+                                    characters = charactersRickAndMortySource,
+                                    expandedState = expandedStateCharactersRickAndMorty,
+                                    rotationState = rotationStateCharactersRickAndMorty,
+                                    charactersTotal = charactersRickAndMortyTotal
+                                )
                             }
                         }
-                        1 -> item { SortingView() }
+                        1 -> item {
+                            SortingView(
+                                searchViewModel = searchViewModel
+                            )
+                        }
                     }
 
                     item {

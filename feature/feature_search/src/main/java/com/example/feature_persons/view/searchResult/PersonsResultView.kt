@@ -9,7 +9,7 @@ import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
-import androidx.compose.runtime.*
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -22,20 +22,20 @@ import androidx.paging.compose.items
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
-import com.example.core_network_domain.model.movie.FilmItem
+import com.example.core_network_domain.model.person.PersonItem
 import com.example.core_ui.animation.FilmListShimmer
 import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
-import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
+import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
 
 @ExperimentalMaterialApi
-internal fun LazyListScope.movieResultView(
-    movie:LazyPagingItems<FilmItem>,
-    expandedStateFilm:MutableState<Boolean>,
-    rotationStateFilm:Float,
-    movieTotal:Int,
-    navController: NavController
+internal fun LazyListScope.personsResultView(
+    navController: NavController,
+    person:LazyPagingItems<PersonItem>,
+    expandedState:MutableState<Boolean>,
+    rotationState:Float,
+    personTotal:Int
 ) {
     item {
         Card(
@@ -49,7 +49,7 @@ internal fun LazyListScope.movieResultView(
                 ),
             backgroundColor = primaryBackground,
             onClick = {
-                expandedStateFilm.value = !expandedStateFilm.value
+                expandedState.value = !expandedState.value
             }
         ) {
             Row(
@@ -57,7 +57,7 @@ internal fun LazyListScope.movieResultView(
                 horizontalArrangement = Arrangement.SpaceBetween
             ){
                 Text(
-                    text = "Films $movieTotal",
+                    text = "Person $personTotal",
                     modifier = Modifier.padding(5.dp),
                     color = secondaryBackground
                 )
@@ -66,9 +66,9 @@ internal fun LazyListScope.movieResultView(
                     modifier = Modifier
                         .weight(1f)
                         .alpha(ContentAlpha.medium)
-                        .rotate(rotationStateFilm),
+                        .rotate(rotationState),
                     onClick = {
-                        expandedStateFilm.value = !expandedStateFilm.value
+                        expandedState.value = !expandedState.value
                     }) {
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
@@ -79,14 +79,14 @@ internal fun LazyListScope.movieResultView(
         }
     }
 
-    if(expandedStateFilm.value){
-        items(movie){ item ->
+    if(expandedState.value){
+        items(person){ item ->
             Column(
                 verticalArrangement = Arrangement.Center,
                 modifier = Modifier.clickable {
                     navController.navigate(
-                        FilmScreenRoute.FilmInfo.base(
-                            filmId = item?.kinopoiskId.toString()
+                        StaffInfoScreenRoute.StaffInfo.base(
+                            staffId = item!!.kinopoiskId
                         )
                     )
                 }
@@ -95,7 +95,7 @@ internal fun LazyListScope.movieResultView(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     SubcomposeAsyncImage(
-                        model = item?.posterUrlPreview,
+                        model = item?.posterUrl,
                         contentDescription = null,
                         modifier = Modifier
                             .padding(5.dp)
@@ -125,8 +125,8 @@ internal fun LazyListScope.movieResultView(
             }
         }
         if (
-            movie.loadState.refresh is LoadState.Loading
-            || movie.loadState.append is LoadState.Loading
+            person.loadState.refresh is LoadState.Loading
+            || person.loadState.append is LoadState.Loading
         ){
             item {
                 FilmListShimmer()

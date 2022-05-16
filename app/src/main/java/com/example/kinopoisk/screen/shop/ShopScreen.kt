@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.shop
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -34,6 +35,7 @@ import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun ShopScreen(
     lifecycleScope: LifecycleCoroutineScope,
@@ -63,7 +65,9 @@ fun ShopScreen(
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = {
-                    SearchView(search = search)
+                    SearchView(search = {
+                        search.value = it
+                    })
                 }, navigationIcon = {
                     IconButton(onClick = {
                         navController.navigate(MAIN_ROUTE)

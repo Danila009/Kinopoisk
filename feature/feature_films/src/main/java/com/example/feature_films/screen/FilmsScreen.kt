@@ -69,7 +69,9 @@ fun FilmsScreen(
                 elevation = 8.dp,
                 title = {
                     SearchView(
-                        search = search
+                        search = {
+                            search.value = it
+                        }
                     )
                 },
                 actions = {
