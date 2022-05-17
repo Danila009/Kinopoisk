@@ -34,7 +34,7 @@ import com.example.core_network_domain.model.user.User
 import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
-import com.example.core_utils.common.Constants.IMAGE_NO_PHOTO_URL
+import com.example.core_utils.common.BaseConstants.IMAGE_NO_PHOTO_URL
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.settingNavGraph.SettingScreenConstants.Route.SETTING_ROUTE
 import com.example.feature_profile.view.admin.PlaylistAdmin

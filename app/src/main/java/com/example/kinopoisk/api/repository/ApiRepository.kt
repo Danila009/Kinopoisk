@@ -2,17 +2,7 @@ package com.example.kinopoisk.api.repository
 
 import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.model.Film
-import com.example.core_network_domain.model.movie.FilmInfo
-import com.example.core_network_domain.model.movie.ImageMovie
-import com.example.core_network_domain.model.movie.SequelAndPrequel
-import com.example.core_network_domain.model.movie.Similar
-import com.example.core_network_domain.model.movie.budget.Budget
-import com.example.core_network_domain.model.movie.fact.Fact
-import com.example.core_network_domain.model.movie.distribution.Distribution
-import com.example.core_network_domain.model.movie.review.Review
 import com.example.core_network_domain.model.movie.review.ReviewDetail
-import com.example.core_network_domain.model.serial.Season
-import com.example.core_network_domain.model.movie.staff.Staff
 import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
 import retrofit2.Response
@@ -45,43 +35,11 @@ class ApiRepository @Inject constructor(
         page = page
     )
 
-    suspend fun getFilmInfo(id:Int):Response<FilmInfo> = apiKinopoisk.getFilmInfo(id)
-
-    suspend fun getBudget(id: Int):Response<Budget> = apiKinopoisk.getBudget(id)
-
-    suspend fun getFact(id: Int):Response<Fact> = apiKinopoisk.getFact(id)
-
-    suspend fun getStaff(id: Int):Response<List<Staff>> = apiKinopoisk.getStaff(id)
-
-    suspend fun getSimilar(id: Int):Response<Similar> = apiKinopoisk.getSimilar(id)
-
-    suspend fun getSequelAndPrequel(id: Int):Response<List<SequelAndPrequel>> = apiKinopoisk.getSequelAndPrequel(id)
-
-    suspend fun getSeason(id: Int):Response<Season> = apiKinopoisk.getSeason(id)
-
     suspend fun getTop(
         type: String,
         page: Int = 1
     ):Response<Top> = apiKinopoisk.getTop(
         type = type,
-        page = page
-    )
-
-    suspend fun getImage(
-        id: Int,
-        type: String,
-        page: Int = 1
-    ):Response<ImageMovie> = apiKinopoisk.getImage(
-        id = id,
-        type = type,
-        page = page
-    )
-
-    suspend fun getReview(
-        id: Int,
-        page: Int = 1
-    ):Response<Review> = apiKinopoisk.getReview(
-        id = id,
         page = page
     )
 
@@ -94,12 +52,6 @@ class ApiRepository @Inject constructor(
     suspend fun getReviewDetail(
         id: Int
     ):Response<ReviewDetail> = apiKinopoisk.getReviewDetail(
-        id = id
-    )
-
-    suspend fun getDistribution(
-        id: Int
-    ):Response<Distribution> = apiKinopoisk.getDistribution(
         id = id
     )
 }

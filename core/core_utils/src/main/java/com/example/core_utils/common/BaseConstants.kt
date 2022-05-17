@@ -1,6 +1,6 @@
 package com.example.core_utils.common
 
-object Constants {
+object BaseConstants {
 
     const val REQUEST_CODE_SIGN_IN = 1
 

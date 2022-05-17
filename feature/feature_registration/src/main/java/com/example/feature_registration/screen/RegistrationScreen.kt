@@ -25,8 +25,8 @@ import com.example.core_ui.view.BaseTextFieldView
 import com.example.core_ui.view.EmailTextFieldView
 import com.example.core_ui.view.GoogleButton
 import com.example.core_ui.view.PasswordTextFieldView
-import com.example.core_utils.common.Constants.PROJECT_ID
-import com.example.core_utils.common.Constants.REQUEST_CODE_SIGN_IN
+import com.example.core_utils.common.BaseConstants.PROJECT_ID
+import com.example.core_utils.common.BaseConstants.REQUEST_CODE_SIGN_IN
 import com.example.core_utils.common.launchWhenStarted
 import com.example.feature_registration.common.validateRegistration
 import com.example.feature_registration.viewModel.RegistrationViewModel

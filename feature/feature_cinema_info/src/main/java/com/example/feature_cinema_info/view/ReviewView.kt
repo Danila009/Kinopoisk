@@ -25,7 +25,7 @@ import com.example.core_network_domain.model.cinema.ReviewItem
 import com.example.core_ui.animation.ImageShimmer
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
-import com.example.core_utils.common.Constants.IMAGE_NO_PHOTO_URL
+import com.example.core_utils.common.BaseConstants.IMAGE_NO_PHOTO_URL
 import com.example.core_utils.common.rating
 
 @ExperimentalMaterialApi

@@ -22,7 +22,7 @@ import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.EmailTextFieldView
 import com.example.core_ui.view.GoogleButton
 import com.example.core_ui.view.PasswordTextFieldView
-import com.example.core_utils.common.Constants
+import com.example.core_utils.common.BaseConstants
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.loginNavGraph.LoginScreenRoute
 import com.example.feature_authorization.common.validateAuthorization
@@ -48,7 +48,7 @@ fun AuthorizationScreen(
     val email = remember { mutableStateOf("") }
     val password = remember { mutableStateOf("") }
 
-    val secondary = Firebase.app(Constants.PROJECT_ID)
+    val secondary = Firebase.app(BaseConstants.PROJECT_ID)
 
     val auth: FirebaseAuth = Firebase.auth(secondary)
 
@@ -179,7 +179,7 @@ fun AuthorizationScreen(
                         modifier = Modifier.padding(5.dp),
                         clickedClickable = clickedClickableGoogleButton
                     ) {
-                        authResultLauncher.launch(Constants.REQUEST_CODE_SIGN_IN)
+                        authResultLauncher.launch(BaseConstants.REQUEST_CODE_SIGN_IN)
                     }
                 }
             }

@@ -22,7 +22,6 @@ class UserPreferenceRepository @Inject constructor (
 
     companion object {
         private val Context.userDataStore by preferencesDataStore(name = "user_data_store")
-        val USER_STATUS_REGISTRATION = booleanPreferencesKey("user_status_registration_key")
         val USER_ROLE = stringPreferencesKey("user_role_key")
     }
 }

@@ -1,6 +1,6 @@
 package com.example.kinopoisk.di.modules.firebase
 
-import com.example.core_utils.common.Constants.PROJECT_ID
+import com.example.core_utils.common.BaseConstants.PROJECT_ID
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

@@ -1,32 +1,12 @@
 package com.example.kinopoisk.api
 
 import com.example.kinopoisk.api.model.Film
-import com.example.core_network_domain.model.movie.FilmInfo
-import com.example.core_network_domain.model.movie.ImageMovie
-import com.example.core_network_domain.model.movie.SequelAndPrequel
-import com.example.core_network_domain.model.movie.Similar
-import com.example.core_network_domain.model.movie.budget.Budget
-import com.example.core_network_domain.model.movie.fact.Fact
-import com.example.core_network_domain.model.movie.distribution.Distribution
-import com.example.core_network_domain.model.movie.review.Review
 import com.example.core_network_domain.model.movie.review.ReviewDetail
-import com.example.core_network_domain.model.serial.Season
-import com.example.core_network_domain.model.movie.staff.Staff
 import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
-import com.example.kinopoisk.utils.Constants.BUDGET_FILM_ID_URL
-import com.example.kinopoisk.utils.Constants.FACT_FILM_ID_URL
-import com.example.kinopoisk.utils.Constants.FILM_DISTRIBUTION_ID_URL
-import com.example.kinopoisk.utils.Constants.FILM_INFO_ID_URL
 import com.example.kinopoisk.utils.Constants.FILM_URL
-import com.example.kinopoisk.utils.Constants.IMAGE_ID_URL
 import com.example.kinopoisk.utils.Constants.REVIEW_ID_URL
-import com.example.kinopoisk.utils.Constants.REVIEW_URL
-import com.example.kinopoisk.utils.Constants.SEASONS_ID_URL
-import com.example.kinopoisk.utils.Constants.SEQUEL_AND_PREQUEL_ID_URL
-import com.example.kinopoisk.utils.Constants.SIMILAR_ID_URL
 import com.example.kinopoisk.utils.Constants.STAFF_INF0_ID_URL
-import com.example.kinopoisk.utils.Constants.STAFF_URL
 import com.example.kinopoisk.utils.Constants.TOP_FILM_URL
 import retrofit2.Response
 import retrofit2.http.GET
@@ -49,59 +29,11 @@ interface ApiKinopoisk {
         @Query("page") page:Int //номер страницы
     ):Response<Film>
 
-    @GET(FILM_INFO_ID_URL)
-    suspend fun getFilmInfo(
-        @Path("id") id:Int
-    ):Response<FilmInfo>
-
-    @GET(BUDGET_FILM_ID_URL)
-    suspend fun getBudget(
-        @Path("id") id: Int
-    ):Response<Budget>
-
-    @GET(FACT_FILM_ID_URL)
-    suspend fun getFact(
-        @Path("id") id: Int
-    ):Response<Fact>
-
-    @GET(STAFF_URL)
-    suspend fun getStaff(
-        @Query("filmId") id: Int
-    ):Response<List<Staff>>
-
-    @GET(SIMILAR_ID_URL)
-    suspend fun getSimilar(
-        @Path("id") id: Int
-    ):Response<Similar>
-
-    @GET(SEQUEL_AND_PREQUEL_ID_URL)
-    suspend fun getSequelAndPrequel(
-        @Path("id") id: Int
-    ):Response<List<SequelAndPrequel>>
-
-    @GET(SEASONS_ID_URL)
-    suspend fun getSeason(
-        @Path("id") id: Int
-    ):Response<Season>
-
     @GET(TOP_FILM_URL)
     suspend fun getTop(
         @Query("type") type: String,
         @Query("page") page:Int
     ):Response<Top>
-
-    @GET(IMAGE_ID_URL)
-    suspend fun getImage(
-        @Path("id") id: Int,
-        @Query("type") type:String,
-        @Query("page") page:Int
-    ):Response<ImageMovie>
-
-    @GET(REVIEW_URL)
-    suspend fun getReview(
-        @Query("filmId") id:Int,
-        @Query("page") page:Int
-    ):Response<Review>
 
     @GET(STAFF_INF0_ID_URL)
     suspend fun getStaffInfo(
@@ -113,8 +45,4 @@ interface ApiKinopoisk {
         @Query("reviewId") id: Int
     ):Response<ReviewDetail>
 
-    @GET(FILM_DISTRIBUTION_ID_URL)
-    suspend fun getDistribution(
-        @Path("id") id: Int
-    ):Response<Distribution>
 }
