@@ -6,6 +6,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -16,6 +17,29 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.core_ui.ui.theme.Shapes
 import com.example.core_ui.R
+import com.example.core_ui.ui.theme.secondaryBackground
+
+@Composable
+fun BaseButtonView(
+    modifier: Modifier = Modifier,
+    text: String,
+    shape: Shape = AbsoluteRoundedCornerShape(10.dp),
+    elevation:ButtonElevation = ButtonDefaults.elevation(),
+    onClick: () -> Unit
+) {
+    Button(
+        modifier = modifier
+            .padding(5.dp),
+        onClick = onClick,
+        shape = shape,
+        elevation = elevation,
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = secondaryBackground
+        )
+    ) {
+        Text(text = text)
+    }
+}
 
 @Composable
 fun GoogleButton(

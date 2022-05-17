@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.feature_home.R
 import com.example.core_database_domain.common.UserRole
-import com.example.core_network_domain.model.playlist.Playlist
+import com.example.core_network_domain.model.playlist.PlaylistItem
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.core_utils.state.NameTopState
@@ -33,14 +33,14 @@ import kotlinx.serialization.ExperimentalSerializationApi
 internal fun PlaylistView(
     navController: NavController,
     userRole:UserRole,
-    playlist:List<Playlist>
+    playlist:List<PlaylistItem>
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         Text(
-            text = "Топы:",
+            text = "Playlist:",
             modifier = Modifier.padding(5.dp),
             color = secondaryBackground,
             fontWeight = FontWeight.Bold

@@ -4,13 +4,16 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core_database_domain.useCase.user.GetStatusRegistrationUseCase
+import com.example.core_database_domain.useCase.user.GetUserRoleUseCase
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.cinema.ReviewItem
 import com.example.core_network_domain.model.movie.Movie
 import com.example.core_network_domain.model.movie.history.HistoryMovie
 import com.example.core_network_domain.model.movie.history.HistorySearch
+import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.staff.Staff
 import com.example.core_network_domain.model.user.User
+import com.example.core_network_domain.useCase.admin.GetAdminPlaylistUseCase
 import com.example.core_network_domain.useCase.history.GetHistoryMovieUseCase
 import com.example.core_network_domain.useCase.history.GetHistorySearchUseCase
 import com.example.core_network_domain.useCase.user.GetUserInfoUseCase
@@ -33,7 +36,9 @@ class ProfileViewModel @Inject constructor(
     private val getUserFavoriteStaffUseCase: GetUserFavoriteStaffUseCase,
     private val getUserWatchLaterUseCase: GetUserWatchLaterUseCase,
     private val patchUpdatePhotoUserUseCase: PatchUpdatePhotoUserUseCase,
-    private val getUserCinemaReviewUseCase: GetUserCinemaReviewUseCase,
+    private val getAdminPlaylistUseCase: GetAdminPlaylistUseCase,
+    getUserRoleUseCase: GetUserRoleUseCase,
+    getUserCinemaReviewUseCase: GetUserCinemaReviewUseCase,
     getStatusRegistrationUseCase: GetStatusRegistrationUseCase
 ):ViewModel() {
 
@@ -54,6 +59,11 @@ class ProfileViewModel @Inject constructor(
     val responseUserWatchLater = _responseUserWatchLater.asStateFlow().filterNotNull()
 
     @ExperimentalSerializationApi
+    private val _responseAdminPlaylist:MutableStateFlow<Response<Playlist>> = MutableStateFlow(Response.Loading())
+    @ExperimentalSerializationApi
+    val responseAdminPlaylist = _responseAdminPlaylist.asStateFlow()
+
+    @ExperimentalSerializationApi
     val responseHistoryMovie = getHistoryMovieUseCase.invoke().stateIn(
         viewModelScope, SharingStarted.Eagerly, Response.Loading()
     )
@@ -70,6 +80,8 @@ class ProfileViewModel @Inject constructor(
 
     val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
 
+    val responseUserRole = getUserRoleUseCase.invoke()
+
     fun getUserInfo() = viewModelScope.launch {
         try {
             val response = getUserInfoUseCase.invoke()
@@ -79,6 +91,15 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
+    @ExperimentalSerializationApi
+    fun getAdminPlaylist() = viewModelScope.launch {
+        try {
+            val response = getAdminPlaylistUseCase.invoke()
+            _responseAdminPlaylist.value = response
+        } catch (e:Exception){
+            Log.e(RETROFIT_TAG, e.message.toString())
+        }
+    }
 
     fun getUserFavoriteMovie() = viewModelScope.launch {
         try {

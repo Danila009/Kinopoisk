@@ -31,6 +31,7 @@
             <option value="$PROJECT_DIR$/feature/feature_films" />
             <option value="$PROJECT_DIR$/feature/feature_genre" />
             <option value="$PROJECT_DIR$/feature/feature_home" />
+            <option value="$PROJECT_DIR$/feature/feature_palylist_add" />
             <option value="$PROJECT_DIR$/feature/feature_profile" />
             <option value="$PROJECT_DIR$/feature/feature_registration" />
             <option value="$PROJECT_DIR$/feature/feature_search" />

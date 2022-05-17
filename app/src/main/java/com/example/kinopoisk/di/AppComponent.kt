@@ -12,6 +12,7 @@ import com.example.feature_film_info.viewModel.FilmInfoViewModel
 import com.example.feature_films.viewModel.FilmsViewModel
 import com.example.feature_genre.viewModel.GenreViewModel
 import com.example.feature_home.viewModel.HomeViewModel
+import com.example.feature_palylist_add.viewModel.PlaylistAddViewModel
 import com.example.feature_persons.viewModel.SearchViewModel
 import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_registration.viewModel.RegistrationViewModel
@@ -75,6 +76,8 @@ interface AppComponent {
     fun cinemaMapViewModel():CinemaMapViewModel
     fun cinemaAddReviewVideModel():CinemaAddReviewViewModel
     fun filmImagesViewModel():FilmImagesViewModel
+    @ExperimentalSerializationApi
+    fun playlistAddViewModel():PlaylistAddViewModel
 
     @Component.Builder
     interface Builder{

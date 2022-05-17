@@ -14,7 +14,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_database_domain.common.UserRole
 import com.example.core_network_domain.model.cinema.Cinema
 import com.example.core_network_domain.model.movie.premiere.Premiere
-import com.example.core_network_domain.model.playlist.Playlist
+import com.example.core_network_domain.model.playlist.PlaylistItem
 import com.example.core_network_domain.model.shop.Shop
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_utils.common.getDatePremiere
@@ -40,7 +40,7 @@ fun HomeScreen(
     val checkNavMap = remember { mutableStateOf(false) }
     val premiere = remember { mutableStateOf(Premiere()) }
     val shop = remember { mutableStateOf(Shop()) }
-    val filmListAdmin = remember { mutableStateOf(listOf<Playlist>()) }
+    val filmListAdmin = remember { mutableStateOf(listOf<PlaylistItem>()) }
     val cinema = remember { mutableStateOf(listOf<Cinema>()) }
 
     val release = homeViewModel.getRelease(

@@ -70,6 +70,7 @@ dependencies {
     implementation project(':feature:feature_search')
     implementation project(":feature:feature_profile")
     implementation project(":feature:feature_sorting")
+    implementation project(":feature:feature_palylist_add")
     implementation project(":feature:feature_genre")
     implementation project(":feature:feature_countries")
     implementation project(":feature:feature_settings")

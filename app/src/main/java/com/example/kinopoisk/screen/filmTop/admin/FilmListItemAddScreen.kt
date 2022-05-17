@@ -7,8 +7,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -17,17 +19,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.core_ui.animation.FilmListShimmer
+import com.example.core_utils.common.encodeToString
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.kinopoisk.ui.theme.primaryBackground
 import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
-import java.util.ArrayList
 
 @Composable
 fun FilmListItemAddScreen(
@@ -39,7 +42,7 @@ fun FilmListItemAddScreen(
         .build()
         .filmTopViewModel()
 
-    val filmAddList = remember { mutableStateOf(ArrayList<FilmItem>()) }
+    val filmAddList = remember { mutableListOf<FilmItem>() }
     val films = filmTopViewModel.getFilm().collectAsLazyPagingItems()
 
     Scaffold(
@@ -51,32 +54,27 @@ fun FilmListItemAddScreen(
                     Text(text = "film list add item")
                 }, navigationIcon = {
                     IconButton(onClick = {
-                        navController.navigate(PlaylistScreenRoute.FilmListAdd.base())
+                            navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null
                         )
                     }
+                }, actions = {
+                    IconButton(onClick = {
+                        navController.navigate(
+                            PlaylistScreenRoute.FilmListAdd.base(
+                                filmList = encodeToString(filmAddList)
+                            ))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null
+                        )
+                    }
                 }
             )
-        },
-        bottomBar = {
-            OutlinedButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 15.dp,
-                        vertical = 5.dp
-                    ), shape = AbsoluteRoundedCornerShape(15.dp),
-                onClick = { navController.navigate(
-                    PlaylistScreenRoute.FilmListAdd.base(
-                        filmList = Converters().encodeToString(filmAddList.value)
-                    )
-                ) }
-            ) {
-                Text(text = "Add top list")
-            }
         }, content = {
             Surface(
                 modifier = Modifier.fillMaxSize(),
@@ -84,12 +82,17 @@ fun FilmListItemAddScreen(
             ) {
                 LazyColumn(content = {
                     items(films){ item ->
+
                         val checkFilm = remember { mutableStateOf(false) }
-                        if (checkFilm.value){
-                            filmAddList.value.add(item!!)
-                        }else{
-                            filmAddList.value.remove(item)
-                        }
+
+                        LaunchedEffect(key1 = checkFilm.value, block = {
+                            if (checkFilm.value){
+                                filmAddList.add(item!!)
+                            }else{
+                                filmAddList.remove(item)
+                            }
+                        })
+
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -139,6 +142,19 @@ fun FilmListItemAddScreen(
                                 }
                             }
                         }
+                    }
+
+                    item {
+                        if (
+                            films.loadState.refresh is LoadState.Loading
+                            || films.loadState.append is LoadState.Loading
+                        ){
+                            FilmListShimmer()
+                        }
+                    }
+
+                    item {
+                        Spacer(modifier = Modifier.height(60.dp))
                     }
                 })
             }

@@ -23,10 +23,12 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
+import com.example.core_database_domain.common.UserRole
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.cinema.ReviewItem
 import com.example.core_network_domain.model.movie.Movie
 import com.example.core_network_domain.model.movie.history.HistoryMovie
+import com.example.core_network_domain.model.playlist.Playlist
 import com.example.core_network_domain.model.staff.Staff
 import com.example.core_network_domain.model.user.User
 import com.example.core_ui.animation.ImageShimmer
@@ -35,6 +37,7 @@ import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.Constants.IMAGE_NO_PHOTO_URL
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.settingNavGraph.SettingScreenConstants.Route.SETTING_ROUTE
+import com.example.feature_profile.view.admin.PlaylistAdmin
 import com.example.feature_profile.viewModel.ProfileViewModel
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -52,8 +55,10 @@ fun StatusRegistrationTrueView(
     val userInfo = remember { mutableStateOf(User()) }
     var favoriteMovie by remember { mutableStateOf(Movie()) }
     var favoriteStaff by remember { mutableStateOf(Staff()) }
+    var userRole by remember { mutableStateOf(UserRole.BaseUser) }
     val checkImageDialog = remember { mutableStateOf(false) }
     var historyMovie by remember { mutableStateOf(HistoryMovie()) }
+    var playlistAdmin:Response<Playlist> by remember { mutableStateOf(Response.Loading()) }
     var cinemaReview:Response<List<ReviewItem>> by
         remember { mutableStateOf(Response.Loading()) }
 
@@ -65,6 +70,10 @@ fun StatusRegistrationTrueView(
         it.data?.let { data ->
             historyMovie = data
         }
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
+    profileViewModel.responseUserRole.onEach {
+        userRole = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
     profileViewModel.responseUserInfo.onEach {
@@ -82,6 +91,13 @@ fun StatusRegistrationTrueView(
     profileViewModel.responseCinemaReview.onEach {
         cinemaReview = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
+
+    if (userRole  == UserRole.Admin){
+        profileViewModel.getAdminPlaylist()
+        profileViewModel.responseAdminPlaylist.onEach {
+            playlistAdmin = it
+        }.launchWhenStarted(lifecycleScope, lifecycle)
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -180,6 +196,13 @@ fun StatusRegistrationTrueView(
                     CinemaReviewView(
                         reviewItem = cinemaReview
                     )
+
+                    if (userRole  == UserRole.Admin){
+                        PlaylistAdmin(
+                            navController = navController,
+                            playlistAdmin = playlistAdmin
+                        )
+                    }
 
                     HistoryMovieView(
                         navController = navController,

@@ -8,7 +8,7 @@ sealed class PlaylistScreenRoute(val route:String){
     }
     object FilmListAdd:PlaylistScreenRoute("film_list_add_screen?filmAdminList={filmAdminList}"){
         fun base(
-            filmList:String = ""
+            filmList:String? = null
         ):String = "film_list_add_screen?filmAdminList=$filmList"
     }
     object FilmListItemAdd:PlaylistScreenRoute("film_list_item_add_screen")

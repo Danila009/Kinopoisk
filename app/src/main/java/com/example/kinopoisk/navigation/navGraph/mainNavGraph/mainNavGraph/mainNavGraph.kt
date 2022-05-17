@@ -56,7 +56,8 @@ fun NavGraphBuilder.mainNavGraph(
             )
             filmTopNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope
+                lifecycleScope = lifecycleScope,
+                appComponent = appComponent
             )
             staffInfoNavGraph(
                 navController = navController,

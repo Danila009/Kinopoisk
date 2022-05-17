@@ -3,7 +3,6 @@ package com.example.core_utils.common
 import android.annotation.SuppressLint
 import android.os.Build
 import android.text.Html
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
@@ -26,12 +25,24 @@ fun <T> Flow<T>.launchWhenStarted(lifecycleScope: LifecycleCoroutineScope, lifec
     }
 }
 
-inline fun<reified T> encodeToString(base:T):String{
-    return Json.encodeToString(base)
+inline fun<reified T> encodeToString(
+    base:T
+):String{
+    val json = Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+    return json.encodeToString(base)
 }
 
-inline fun<reified T> decodeFromString(string: String):T{
-    return Json.decodeFromString(string)
+inline fun<reified T> decodeFromString(
+    string: String
+):T{
+    val json = Json {
+        ignoreUnknownKeys = true
+        explicitNulls = false
+    }
+    return json.decodeFromString(string)
 }
 
 fun getDatePremiere(

@@ -17,10 +17,23 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
 class MyKinopoiskApiModule {
+
+    @[Provides Singleton]
+    fun providerAdminRepository(
+        adminApi: AdminApi
+    ):AdminRepository = AdminRepositoryImpl(
+        adminApi = adminApi
+    )
+
+    @[Provides Singleton]
+    fun providerAdminApi(
+        @MyKinopoiskApi retrofit: Retrofit
+    ):AdminApi = retrofit.create(AdminApi::class.java)
 
     @[Provides Singleton]
     fun providerMovieVideoRepository(

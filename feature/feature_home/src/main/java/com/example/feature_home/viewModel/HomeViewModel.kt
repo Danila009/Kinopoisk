@@ -12,7 +12,7 @@ import com.example.core_network_domain.model.cinema.Cinema
 import com.example.core_network_domain.model.marvel.comics.Result
 import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.ReleaseItem
-import com.example.core_network_domain.model.playlist.Playlist
+import com.example.core_network_domain.model.playlist.PlaylistItem
 import com.example.core_network_domain.model.shop.Shop
 import com.example.core_network_domain.source.ComicsMarvelSource
 import com.example.core_network_domain.useCase.cinema.GetCinemaUseCase
@@ -50,7 +50,7 @@ class HomeViewModel @Inject constructor(
 
     val getUserRole = getUserRoleUseCase.invoke()
 
-    private val _responsePlaylist = MutableStateFlow(listOf<Playlist>())
+    private val _responsePlaylist = MutableStateFlow(listOf<PlaylistItem>())
     val responsePlaylist = _responsePlaylist.asStateFlow()
 
     fun getComicsMarvel(

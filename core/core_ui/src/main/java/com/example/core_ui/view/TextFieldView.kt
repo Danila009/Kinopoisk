@@ -64,6 +64,7 @@ fun EmailTextFieldView(
 
 @Composable
 fun BaseTextFieldView(
+    modifier: Modifier = Modifier,
     label:String,
     value:MutableState<String>
 ) {
@@ -80,6 +81,6 @@ fun BaseTextFieldView(
             focusedLabelColor = secondaryBackground
         ), keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Go
-        ), modifier = Modifier.padding(5.dp)
+        ), modifier = modifier.padding(5.dp)
     )
 }
