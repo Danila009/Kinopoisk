@@ -57,4 +57,6 @@ object ConstantsUrl {
     const val IMDb_FILM_AWARDS_URL = "/{lang}/API/Awards/{apiKey}/{id}"
 
     const val MOVIE_VIDEO_URL = "/kinopoisk/Shop/Movie/{kimoPoiskId}/Video"
+
+    const val ROUTE_URL = "/v2/directions/{profile}"
 }

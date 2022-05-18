@@ -21,4 +21,5 @@ object Constants {
     const val RICK_AND_MORTY_BASE_URL = "https://rickandmortyapi.com"
     const val MARVEL_BASE_URL = "https://gateway.marvel.com"
     const val IMDb_BASE_URL = "https://imdb-api.com"
+    const val ROUTE_BASE_URL = "https://api.openrouteservice.org"
 }

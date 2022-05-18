@@ -20,10 +20,7 @@ import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import com.example.feature_settings.viewModel.SettingViewModel
 import com.example.feature_sorting.viewModel.SortingViewModel
 import com.example.feature_update_user_password.viewModel.UpdateUserPasswordViewModel
-import com.example.kinopoisk.di.modules.api.IMDbApiModule
-import com.example.kinopoisk.di.modules.api.MarvelApiModule
-import com.example.kinopoisk.di.modules.api.MyKinopoiskApiModule
-import com.example.kinopoisk.di.modules.api.RickAndMortyApiModule
+import com.example.kinopoisk.di.modules.api.*
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
 import com.example.kinopoisk.di.modules.firebase.AuthFirebaseModule
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
@@ -45,7 +42,8 @@ import javax.inject.Singleton
         RickAndMortyApiModule::class,
         MarvelApiModule::class,
         IMDbApiModule::class,
-        AuthFirebaseModule::class
+        AuthFirebaseModule::class,
+        RouteModule::class
     ]
 )
 @Singleton

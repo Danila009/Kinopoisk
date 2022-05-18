@@ -19,7 +19,6 @@ import coil.compose.rememberImagePainter
 import com.example.core_network_domain.model.movie.staff.Staff
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
-import com.example.core_utils.key.StaffInfoScreenKey
 
 @Composable
 internal fun StaffView(
