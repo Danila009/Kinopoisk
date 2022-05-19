@@ -7,10 +7,10 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.rememberNavController
+import com.example.core_ui.ui.theme.KinopoiskTheme
 import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.kinopoisk.navigation.host.BaseNavHost
-import com.example.kinopoisk.ui.theme.KinopoiskTheme
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 

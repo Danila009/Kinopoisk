@@ -178,6 +178,7 @@ fun PlaylistAddScreen(
                                             }
                                         }
                                     }
+
                                     Text(
                                         text = item.nameRu ?: "",
                                         modifier = Modifier.padding(5.dp),

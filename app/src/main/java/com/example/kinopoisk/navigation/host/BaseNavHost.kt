@@ -10,12 +10,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.kinopoisk.di.AppComponent
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.mainNavGraph.mainNavGraph
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 

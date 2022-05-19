@@ -134,6 +134,7 @@ fun SearchScreen(
         historyMovie = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    searchViewModel.getCinema()
     searchViewModel.responseCinema.onEach {
         cinema = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
@@ -177,11 +178,11 @@ fun SearchScreen(
     )
 
     LaunchedEffect(key1 = search, block = {
-        searchViewModel.getCinema(
-            search = search
-        )
-
         if (search.isNotEmpty()){
+            searchViewModel.getCinema(
+                search = search
+            )
+
             searchViewModel.postHistorySearch(
                 historySearchItem = HistorySearchItem(
                     id = 0,

@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.staffInfo
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.*
@@ -11,15 +12,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.core_network_domain.model.movie.staff.StaffInfo
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_utils.common.launchWhenStarted
 import com.example.kinopoisk.di.DaggerAppComponent
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun MoreStaffScreen(
     lifecycleScope: LifecycleCoroutineScope,
@@ -27,6 +30,9 @@ fun MoreStaffScreen(
     staffId:Int
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val staffInfoViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -37,7 +43,7 @@ fun MoreStaffScreen(
     staffInfoViewModel.getStaffInfo(staffId)
     staffInfoViewModel.responseStaffInfo.onEach {
         staff.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Scaffold(
         topBar = {

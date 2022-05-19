@@ -4,10 +4,10 @@ import com.example.kinopoisk.api.model.Film
 import com.example.core_network_domain.model.movie.review.ReviewDetail
 import com.example.core_network_domain.model.movie.staff.StaffInfo
 import com.example.kinopoisk.api.model.topFilm.Top
-import com.example.kinopoisk.utils.Constants.FILM_URL
-import com.example.kinopoisk.utils.Constants.REVIEW_ID_URL
-import com.example.kinopoisk.utils.Constants.STAFF_INF0_ID_URL
-import com.example.kinopoisk.utils.Constants.TOP_FILM_URL
+import com.example.kinopoisk.common.Constants.FILM_URL
+import com.example.kinopoisk.common.Constants.REVIEW_ID_URL
+import com.example.kinopoisk.common.Constants.STAFF_INF0_ID_URL
+import com.example.kinopoisk.common.Constants.TOP_FILM_URL
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

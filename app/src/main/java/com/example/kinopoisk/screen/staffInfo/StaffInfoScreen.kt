@@ -18,22 +18,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.core_network_domain.model.movie.staff.StaffInfo
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_utils.common.getTime
+import com.example.core_utils.common.launchWhenStarted
+import com.example.core_utils.common.replaceRange
 import com.example.kinopoisk.api.model.user.StaffFavorite
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.staffInfoNavGraph.StaffInfoScreenRoute
 import com.example.kinopoisk.screen.staffInfo.view.ProfessionViewState
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Constants.TOKEN_SHARED
-import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.launchWhenStarted
+import com.example.kinopoisk.common.Constants.TOKEN_SHARED
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -48,6 +50,9 @@ fun StaffInfoScreen(
     staffId:Int
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val staffInfoViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -63,12 +68,12 @@ fun StaffInfoScreen(
     staffInfoViewModel.getStaffInfo(staffId)
     staffInfoViewModel.responseStaffInfo.onEach {
         staffInfo.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     staffInfoViewModel.getStaffFavoriteCheck(staffId = staffId)
     staffInfoViewModel.responseStaffFavoriteCheck.onEach {
         favoriteCheckStaff.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Scaffold(
         topBar = {
@@ -159,7 +164,7 @@ fun StaffInfoScreen(
                                         color = Color.White
                                     )
                                     Text(
-                                        text = Converters().getTime(staffInfo.value.birthday.toString()),
+                                        text = getTime(staffInfo.value.birthday.toString()),
                                         modifier = Modifier.padding(5.dp),
                                         color = Color.White
                                     )
@@ -200,7 +205,7 @@ fun StaffInfoScreen(
                                         .width(250.dp)
                                 ) {
                                     Text(
-                                        text = Converters().replaceRange(item, 150),
+                                        text = replaceRange(item, 150),
                                         modifier = Modifier
                                             .padding(5.dp)
                                     )

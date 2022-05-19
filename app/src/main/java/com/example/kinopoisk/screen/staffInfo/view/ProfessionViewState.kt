@@ -13,10 +13,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.core_network_domain.model.movie.staff.FilmStaff
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_utils.common.rating
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.kinopoisk.screen.staffInfo.viewState.ProfessionKeyViewState
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun ProfessionViewState(
@@ -50,7 +50,7 @@ fun ProfessionViewState(
                     Text(
                         text = it,
                         modifier = Modifier.padding(start = 5.dp),
-                        color = Converters().rating(it.toFloat())
+                        color = rating(it.toFloat())
                     )
                 }
                 Text(

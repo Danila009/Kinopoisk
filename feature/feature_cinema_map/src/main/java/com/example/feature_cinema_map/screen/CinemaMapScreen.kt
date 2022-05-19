@@ -100,7 +100,7 @@ fun CinemaMapScreen(
         endRoutePosition?.let {
             cinemaViewModel.getRoute(
                 start = "${getGPSUser.longitude},${getGPSUser.latitude}",
-                end = "${it.longitude},${getGPSUser.latitude}"
+                end = "${it.longitude},${it.latitude}"
             )
         }
     })
@@ -169,6 +169,7 @@ fun CinemaMapScreen(
                                         }
                                     }
                                 }
+                                null -> Unit
                             }
                         }
                     }

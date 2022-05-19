@@ -1,10 +1,9 @@
 package com.example.core_network_data.repository
 
 import com.example.core_network_data.api.RickAndMortyApi
-import com.example.core_network_domain.model.rickAndMorty.Character
-import com.example.core_network_domain.model.rickAndMorty.Episode
-import com.example.core_network_domain.model.rickAndMorty.Location
+import com.example.core_network_domain.model.rickAndMorty.*
 import com.example.core_network_domain.repository.RickAndMortyRepository
+import retrofit2.Response
 import javax.inject.Inject
 
 class RickAndMortyRepositoryImpl @Inject constructor(
@@ -33,5 +32,13 @@ class RickAndMortyRepositoryImpl @Inject constructor(
         return rickAndMortyApi.getEpisodes(
             name, episode, page
         ).body() ?: Episode()
+    }
+
+    override suspend fun getCharacterById(id: Int): Response<CharacterItem> {
+        return rickAndMortyApi.getCharacterById(id = id)
+    }
+
+    override suspend fun getEpisodeById(id: Int): Response<EpisodeItem> {
+        return rickAndMortyApi.getEpisodeById(id)
     }
 }

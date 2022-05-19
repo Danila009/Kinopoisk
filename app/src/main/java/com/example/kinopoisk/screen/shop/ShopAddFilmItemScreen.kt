@@ -21,12 +21,12 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.core_ui.ui.theme.primaryBackground
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.shopNavGraph.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.view.DialogPriceFilmShopView
-import com.example.kinopoisk.ui.theme.primaryBackground
 
 @Composable
 fun ShopAddFilmItemScreen(

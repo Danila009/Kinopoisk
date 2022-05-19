@@ -3,7 +3,7 @@ package com.example.kinopoisk.di.modules.api
 import com.example.core_network_data.api.RouteApi
 import com.example.core_network_data.repository.RouteRepositoryImpl
 import com.example.core_network_domain.repository.RouteRepository
-import com.example.kinopoisk.utils.Constants.ROUTE_BASE_URL
+import com.example.kinopoisk.common.Constants.ROUTE_BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

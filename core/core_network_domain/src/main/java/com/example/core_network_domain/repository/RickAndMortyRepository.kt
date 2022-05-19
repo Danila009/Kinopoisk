@@ -1,8 +1,7 @@
 package com.example.core_network_domain.repository
 
-import com.example.core_network_domain.model.rickAndMorty.Character
-import com.example.core_network_domain.model.rickAndMorty.Episode
-import com.example.core_network_domain.model.rickAndMorty.Location
+import com.example.core_network_domain.model.rickAndMorty.*
+import retrofit2.Response
 
 interface RickAndMortyRepository {
 
@@ -26,4 +25,12 @@ interface RickAndMortyRepository {
         episode:Int?,
         page:Int
     ):Episode
+
+    suspend fun getCharacterById(
+        id:Int
+    ):Response<CharacterItem>
+
+    suspend fun getEpisodeById(
+        id: Int
+    ):Response<EpisodeItem>
 }

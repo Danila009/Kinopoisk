@@ -1,4 +1,4 @@
-package com.example.kinopoisk.utils
+package com.example.kinopoisk.common
 
 object Constants {
     const val BASE_URL = "https://kinopoiskapiunofficial.tech"

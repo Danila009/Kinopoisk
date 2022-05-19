@@ -69,8 +69,8 @@ internal fun CinemaView(
                             contentDescription = null,
                             modifier = Modifier
                                 .padding(5.dp)
-                                .height(180.dp)
-                                .width(140.dp)
+                                .height(250.dp)
+                                .width(200.dp)
                         ) {
                             val state = painter.state
                             if (
@@ -78,8 +78,8 @@ internal fun CinemaView(
                                 state is AsyncImagePainter.State.Error
                             ) {
                                 ImageShimmer(
-                                    imageHeight = 180.dp,
-                                    imageWidth = 140.dp
+                                    imageHeight = 250.dp,
+                                    imageWidth = 200.dp
                                 )
                             } else {
                                 SubcomposeAsyncImageContent()

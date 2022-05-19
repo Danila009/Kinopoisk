@@ -32,6 +32,7 @@ import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import kotlinx.coroutines.flow.onEach
 import java.util.ArrayList
 
+@ExperimentalMaterialApi
 @SuppressLint("FlowOperatorInvokedInComposition", "MutableCollectionMutableState")
 @Composable
 fun SerialInfoScreen(
@@ -142,7 +143,8 @@ fun SerialInfoScreen(
                             DropdownMenuState.CHARACTERS -> {
                                 items(charactersRickAndMortySource){ item ->
                                     CharacterRickAndMortyView(
-                                        characterItem = item!!
+                                        characterItem = item!!,
+                                        navController = navController
                                     )
                                 }
                             }

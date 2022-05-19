@@ -10,8 +10,8 @@ import com.example.kinopoisk.api.ApiKinopoisk
 import com.example.kinopoisk.api.repository.ApiRepository
 import com.example.kinopoisk.di.annotationName.KinopoiskApi
 import com.example.kinopoisk.di.annotationName.KinopoiskOkHttpClient
-import com.example.kinopoisk.utils.Constants
-import com.example.kinopoisk.utils.Constants.BASE_URL
+import com.example.kinopoisk.common.Constants
+import com.example.kinopoisk.common.Constants.BASE_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

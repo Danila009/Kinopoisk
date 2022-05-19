@@ -3,7 +3,7 @@ package com.example.kinopoisk.di
 import com.example.kinopoisk.api.repository.ApiUserRepository
 import com.example.kinopoisk.api.ApiUser
 import com.example.kinopoisk.di.annotationName.UserOkHttpClient
-import com.example.kinopoisk.utils.Constants.BASE_USER_URL
+import com.example.kinopoisk.common.Constants.BASE_USER_URL
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

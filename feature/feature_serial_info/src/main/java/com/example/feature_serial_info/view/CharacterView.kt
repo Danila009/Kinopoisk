@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,13 +14,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.core_network_domain.enum.StatusCharacterRickAndMorty
 import com.example.core_network_domain.model.rickAndMorty.CharacterItem
+import com.example.core_utils.navigation.characterNavGraph.CharacterScreenRoute
+import com.example.core_utils.state.CharacterInfoState
 
+@ExperimentalMaterialApi
 @Composable
 fun CharacterRickAndMortyView(
-    characterItem: CharacterItem
+    characterItem: CharacterItem,
+    navController: NavController
 ) {
     val primaryBackground = Color(0xFF3C3E44)
 
@@ -29,7 +35,13 @@ fun CharacterRickAndMortyView(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
-        elevation = 5.dp
+        elevation = 5.dp,
+        onClick = {
+            navController.navigate(CharacterScreenRoute.CharacterInfoScreen.argument(
+                characterId = characterItem.id,
+                characterState = CharacterInfoState.RIAK_AND_MORTY.name
+            ))
+        }
     ) {
         Row {
             Image(

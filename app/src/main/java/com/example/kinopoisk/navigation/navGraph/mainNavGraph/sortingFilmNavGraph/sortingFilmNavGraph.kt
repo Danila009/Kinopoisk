@@ -3,6 +3,7 @@ package com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGra
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.example.core_utils.common.decodeFromString
 import com.example.feature_films.screen.FilmsScreen
 import com.example.kinopoisk.di.AppComponent
 import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenConstants.Argument.COUNTRIES_ARGUMENT
@@ -20,7 +21,6 @@ import com.example.core_utils.navigation.sortingScreenNavGraph.SortingScreenRout
 import com.example.feature_countries.screen.CountriesScreen
 import com.example.feature_genre.screen.GenreScreen
 import com.example.feature_sorting.screen.SortingScreen
-import com.example.kinopoisk.utils.Converters
 
 @ExperimentalFoundationApi
 fun NavGraphBuilder.sortingFilmNavGraph(
@@ -87,10 +87,10 @@ fun NavGraphBuilder.sortingFilmNavGraph(
                     yearTo = it.arguments?.getString(YEAR_TO_ARGUMENT)!!.toInt(),
                     type = it.arguments?.getString(TYPE_ARGUMENT).toString(),
                     order = it.arguments?.getString(ORDER_ARGUMENT).toString(),
-                    genres =  Converters().decodeFromString(
+                    genres =  decodeFromString(
                         it.arguments?.getString(GENRE_ID_ARGUMENT).toString()
                     ),
-                    countries = Converters().decodeFromString(
+                    countries = decodeFromString(
                         it.arguments?.getString(COUNTRIES_ID_ARGUMENT).toString()
                     ),
                     navController = navController,

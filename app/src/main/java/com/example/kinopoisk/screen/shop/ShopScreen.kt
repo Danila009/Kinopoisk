@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
@@ -25,14 +26,14 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
 import com.example.core_database_domain.common.UserRole
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
+import com.example.core_utils.common.launchWhenStarted
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.core_utils.navigation.shopNavGraph.ShopScreenRoute
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
 @SuppressLint("FlowOperatorInvokedInComposition")
@@ -42,6 +43,9 @@ fun ShopScreen(
     navController: NavController
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val shopViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -57,7 +61,7 @@ fun ShopScreen(
     shopViewModel.readUserRole()
     shopViewModel.responseUserRole.onEach {
         userRole.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Scaffold(
         topBar = {

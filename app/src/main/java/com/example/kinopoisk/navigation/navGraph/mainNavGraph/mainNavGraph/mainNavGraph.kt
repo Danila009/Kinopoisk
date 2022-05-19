@@ -15,6 +15,7 @@ import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph.f
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.playlistNavGraph.filmTopNavGraph
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
+import com.example.feature_character_info.navigation.characterInfoNavGraph
 import com.example.kinopoisk.navigation.navGraph.comicsNavGrah.comicsNavGraph
 import com.example.kinopoisk.navigation.navGraph.mainNavGraph.sortingFilmNavGraph.sortingFilmNavGraph
 import com.example.kinopoisk.navigation.navGraph.shopNavGraph.shopNavGraph
@@ -37,6 +38,12 @@ fun NavGraphBuilder.mainNavGraph(
         startDestination = MainScreenRoute.MainRoute.Home.route,
         route = MAIN_ROUTE,
         builder = {
+
+            characterInfoNavGraph(
+                navController = navController,
+                characterInfoViewModel = appComponent.characterInfoViewModel()
+            )
+
             sortingFilmNavGraph(
                 navController = navController,
                 appComponent = appComponent

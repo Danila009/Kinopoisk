@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.review
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
@@ -12,6 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,14 +21,15 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import com.example.core_network_domain.model.movie.review.ReviewDetail
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_utils.common.getTime
+import com.example.core_utils.common.launchWhenStarted
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmMoreNavGraph.FilmMoreScreenRoute
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun ReviewDetailScreen(
     navController: NavController,
@@ -35,6 +38,9 @@ fun ReviewDetailScreen(
     filmId:Int
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val reviewViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -45,7 +51,7 @@ fun ReviewDetailScreen(
     reviewViewModel.getReviewDetail(id = reviewId)
     reviewViewModel.responseReviewDetail.onEach {
         reviewDetail.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Scaffold(
         topBar = {
@@ -106,7 +112,7 @@ fun ReviewDetailScreen(
                                     .padding(5.dp)
                             )
                             Text(
-                                text = Converters().getTime(
+                                text = getTime(
                                     reviewDetail.value.reviewData
                                 ),
                                 modifier = Modifier

@@ -10,9 +10,9 @@ import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.FilmTopSc
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.FilmTopScreenConstants.Route.FILM_TOP_ROUTE
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
 import com.example.feature_palylist_add.screen.PlaylistAddScreen
+import com.example.feature_playlist_add_films.screen.PlaylistAddFilmsScreen
 import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.screen.filmTop.FilmTopScreen
-import com.example.kinopoisk.screen.filmTop.admin.FilmListItemAddScreen
 import com.example.kinopoisk.screen.filmTop.admin.FilmListItemScreen
 import kotlinx.serialization.ExperimentalSerializationApi
 
@@ -60,8 +60,9 @@ fun NavGraphBuilder.filmTopNavGraph(
                 )
             }
             composable(PlaylistScreenRoute.FilmListItemAdd.route){
-                FilmListItemAddScreen(
-                    navController = navController
+                PlaylistAddFilmsScreen(
+                    navController = navController,
+                    playlistAddFilmsViewModel = appComponent.playlistAddFilmsViewModel()
                 )
             }
             composable(

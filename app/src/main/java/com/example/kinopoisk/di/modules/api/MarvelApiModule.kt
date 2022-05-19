@@ -3,7 +3,7 @@ package com.example.kinopoisk.di.modules.api
 import com.example.core_network_data.api.MarvelApi
 import com.example.core_network_data.repository.MarvelRepositoryImpl
 import com.example.core_network_domain.repository.MarvelRepository
-import com.example.kinopoisk.utils.Constants.MARVEL_BASE_URL
+import com.example.kinopoisk.common.Constants.MARVEL_BASE_URL
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit

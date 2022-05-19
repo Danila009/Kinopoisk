@@ -48,6 +48,8 @@ object ConstantsUrl {
     const val RIAK_AND_MORTY_CHARACTER_URL = "/api/character"
     const val RIAK_AND_MORTY_LOCATION_URL = "/api/location"
     const val RIAK_AND_MORTY_EPISODES_URL = "/api/episode"
+    const val RIAK_AND_MORTY_CHARACTER_BY_ID_URL = "/api/character/{id}"
+    const val RIAK_AND_MORTY_EPISODES_BY_ID_URL = "/api/episode/{id}"
 
     const val MARVEL_CHARACTERS_URL = "/v1/public/characters"
     const val MARVEL_COMICS_URL = "/v1/public/comics"

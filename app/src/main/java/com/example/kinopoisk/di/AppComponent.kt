@@ -2,6 +2,7 @@ package com.example.kinopoisk.di
 
 import android.content.Context
 import com.example.feature_authorization.viewModel.AuthorizationViewModel
+import com.example.feature_character_info.viewModel.CharacterInfoViewModel
 import com.example.feature_cinema_add_review.viewModel.CinemaAddReviewViewModel
 import com.example.feature_cinema_info.viewModel.CinemaInfoViewModel
 import com.example.feature_cinema_map.viewModel.CinemaMapViewModel
@@ -14,6 +15,7 @@ import com.example.feature_genre.viewModel.GenreViewModel
 import com.example.feature_home.viewModel.HomeViewModel
 import com.example.feature_palylist_add.viewModel.PlaylistAddViewModel
 import com.example.feature_persons.viewModel.SearchViewModel
+import com.example.feature_playlist_add_films.viewModel.PlaylistAddFilmsViewModel
 import com.example.feature_profile.viewModel.ProfileViewModel
 import com.example.feature_registration.viewModel.RegistrationViewModel
 import com.example.feature_serial_info.viewModel.SerialInfoViewModel
@@ -27,7 +29,6 @@ import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
 import com.example.kinopoisk.screen.staffInfo.StaffInfoViewModel
-import com.google.firebase.FirebaseOptions
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -76,6 +77,8 @@ interface AppComponent {
     fun filmImagesViewModel():FilmImagesViewModel
     @ExperimentalSerializationApi
     fun playlistAddViewModel():PlaylistAddViewModel
+    fun playlistAddFilmsViewModel():PlaylistAddFilmsViewModel
+    fun characterInfoViewModel():CharacterInfoViewModel
 
     @Component.Builder
     interface Builder{

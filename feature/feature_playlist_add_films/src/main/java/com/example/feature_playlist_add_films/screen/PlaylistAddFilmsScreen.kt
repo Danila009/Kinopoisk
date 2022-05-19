@@ -1,6 +1,5 @@
-package com.example.kinopoisk.screen.filmTop.admin
+package com.example.feature_playlist_add_films.screen
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -15,35 +14,36 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import coil.compose.rememberImagePainter
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
+import com.example.core_network_domain.model.movie.FilmItem
 import com.example.core_ui.animation.FilmListShimmer
+import com.example.core_ui.animation.ImageShimmer
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.encodeToString
-import com.example.kinopoisk.api.model.FilmItem
-import com.example.kinopoisk.di.DaggerAppComponent
+import com.example.core_utils.common.rating
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.filmNavGraph.playlistNavGraph.PlaylistScreenRoute
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
+import com.example.feature_playlist_add_films.viewModel.PlaylistAddFilmsViewModel
 
 @Composable
-fun FilmListItemAddScreen(
-    navController: NavController
+fun PlaylistAddFilmsScreen(
+    navController: NavController,
+    playlistAddFilmsViewModel: PlaylistAddFilmsViewModel
 ) {
-    val context = LocalContext.current
-    val filmTopViewModel = DaggerAppComponent.builder()
-        .context(context = context)
-        .build()
-        .filmTopViewModel()
-
     val filmAddList = remember { mutableListOf<FilmItem>() }
-    val films = filmTopViewModel.getFilm().collectAsLazyPagingItems()
+    val films = playlistAddFilmsViewModel.getFilm(
+
+    ).collectAsLazyPagingItems()
 
     Scaffold(
         topBar = {
@@ -114,24 +114,54 @@ fun FilmListItemAddScreen(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Start
                             ) {
-                                Image(
-                                    painter = rememberImagePainter(
-                                        data = item?.posterUrl,
-                                        builder = {
-                                            crossfade(true)
+                                Box {
+                                    SubcomposeAsyncImage(
+                                        model = item?.posterUrlPreview,
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .padding(5.dp)
+                                            .height(180.dp)
+                                            .width(140.dp)
+                                    ) {
+                                        val state = painter.state
+                                        if (
+                                            state is AsyncImagePainter.State.Loading ||
+                                            state is AsyncImagePainter.State.Error
+                                        ) {
+                                            ImageShimmer(
+                                                imageHeight = 180.dp,
+                                                imageWidth = 140.dp
+                                            )
+                                        } else {
+                                            SubcomposeAsyncImageContent()
                                         }
-                                    ),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .padding(5.dp)
-                                        .width(100.dp)
-                                        .clip(AbsoluteRoundedCornerShape(10.dp))
-                                )
-                                Column {
+                                    }
+                                    Column {
+                                        Spacer(modifier = Modifier.height(150.dp))
+                                        Row {
+                                            Spacer(modifier = Modifier.width(100.dp))
+                                            Card(
+                                                shape = AbsoluteRoundedCornerShape(5.dp),
+                                                backgroundColor = rating(item?.ratingKinopoisk ?: 0f)
+                                            ) {
+                                                Text(
+                                                    text = item?.ratingKinopoisk.toString(),
+                                                    modifier = Modifier.padding(5.dp),
+                                                    color = Color.White,
+                                                    fontWeight = FontWeight.Bold
+                                                )
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Row {
                                     Text(
-                                        text = item?.nameRu.toString(),
-                                        modifier = Modifier.padding(5.dp)
+                                        text = "${item?.nameRu}, ${item?.year}",
+                                        modifier = Modifier.padding(5.dp),
+                                        fontWeight = FontWeight.Bold
                                     )
+
                                     Checkbox(
                                         checked = checkFilm.value,
                                         onCheckedChange = { checkFilm.value = it },

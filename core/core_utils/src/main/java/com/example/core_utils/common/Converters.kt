@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.core_utils.state.NameTopState
 import com.example.core_utils.state.StatePremiere
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
@@ -137,4 +138,25 @@ fun rating(rating: Float): Color {
     if (rating <= 6.9f || rating == 0f)
         return Color.White
     return Color.Green
+}
+
+
+
+fun getNameTop(
+    nameTopViewState: NameTopState
+):String{
+    return when(nameTopViewState){
+        NameTopState.TOP_250_BEST_FILMS -> "250 лучших фильмов"
+        NameTopState.TOP_100_POPULAR_FILMS -> "Популярные фильмы и сериалы"
+        NameTopState.TOP_AWAIT_FILMS -> "Ожидаемые фильмы"
+    }
+}
+
+fun fromStringToInt(
+    url:String
+):Int{
+    return url.dropWhile {
+        val result = it.digitToIntOrNull()
+        result == null
+    }.toInt()
 }

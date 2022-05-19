@@ -17,11 +17,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.kinopoisk.api.model.FilmItem
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.core_utils.navigation.shopNavGraph.ShopScreenRoute
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
-import com.example.kinopoisk.ui.theme.secondaryBackground
 
 @Composable
 fun DialogPriceFilmShopView(

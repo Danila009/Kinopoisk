@@ -3,7 +3,7 @@ package com.example.kinopoisk.di.modules.api
 import com.example.core_network_data.api.RickAndMortyApi
 import com.example.core_network_data.repository.RickAndMortyRepositoryImpl
 import com.example.core_network_domain.repository.RickAndMortyRepository
-import com.example.kinopoisk.utils.Constants.RICK_AND_MORTY_BASE_URL
+import com.example.kinopoisk.common.Constants.RICK_AND_MORTY_BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides

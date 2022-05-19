@@ -7,7 +7,7 @@ import com.example.core_network_data.repository.*
 import com.example.core_network_domain.repository.*
 import com.example.kinopoisk.di.annotationName.MyKinopoiskApi
 import com.example.kinopoisk.di.annotationName.UserOkHttpClient
-import com.example.kinopoisk.utils.Constants
+import com.example.kinopoisk.common.Constants
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -133,6 +133,7 @@ class MyKinopoiskApiModule {
     @[Singleton Provides]
     fun providerJson(): Json = Json {
         ignoreUnknownKeys = true
+        explicitNulls = false
     }
 
     @[Provides Singleton UserOkHttpClient]

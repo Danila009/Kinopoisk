@@ -3,11 +3,11 @@ package com.example.kinopoisk.api
 import com.example.kinopoisk.api.model.shop.Shop
 import com.example.kinopoisk.api.model.user.*
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
-import com.example.kinopoisk.utils.Constants.ADMIN_FILM_LIST_URL
-import com.example.kinopoisk.utils.Constants.ADMIN_SHOP_ADD_FILM_ITEM_URL
-import com.example.kinopoisk.utils.Constants.FILM_LIST_ID_URL
-import com.example.kinopoisk.utils.Constants.STAFF_USER_FAVORITE_CHECK_URL
-import com.example.kinopoisk.utils.Constants.STAFF_USER_FAVORITE_URL
+import com.example.kinopoisk.common.Constants.ADMIN_FILM_LIST_URL
+import com.example.kinopoisk.common.Constants.ADMIN_SHOP_ADD_FILM_ITEM_URL
+import com.example.kinopoisk.common.Constants.FILM_LIST_ID_URL
+import com.example.kinopoisk.common.Constants.STAFF_USER_FAVORITE_CHECK_URL
+import com.example.kinopoisk.common.Constants.STAFF_USER_FAVORITE_URL
 import retrofit2.Response
 import retrofit2.http.*
 

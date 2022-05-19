@@ -10,6 +10,7 @@
       <module name="Kinopoisk.core.core_ui" target="11" />
       <module name="Kinopoisk.core.core_utils" target="11" />
       <module name="Kinopoisk.feature.feature_authorization" target="11" />
+      <module name="Kinopoisk.feature.feature_character_info" target="11" />
       <module name="Kinopoisk.feature.feature_cinema_add_review" target="11" />
       <module name="Kinopoisk.feature.feature_cinema_info" target="11" />
       <module name="Kinopoisk.feature.feature_cinema_map" target="11" />
@@ -22,6 +23,7 @@
       <module name="Kinopoisk.feature.feature_home" target="11" />
       <module name="Kinopoisk.feature.feature_info" target="11" />
       <module name="Kinopoisk.feature.feature_palylist_add" target="11" />
+      <module name="Kinopoisk.feature.feature_playlist_add_films" target="11" />
       <module name="Kinopoisk.feature.feature_profile" target="11" />
       <module name="Kinopoisk.feature.feature_registration" target="11" />
       <module name="Kinopoisk.feature.feature_search" target="11" />

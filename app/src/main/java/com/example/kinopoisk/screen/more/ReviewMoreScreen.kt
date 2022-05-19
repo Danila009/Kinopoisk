@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.more
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -13,21 +14,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.core_network_domain.model.movie.FilmInfo
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_utils.common.launchWhenStarted
+import com.example.core_utils.common.replaceRange
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.filmNavGraph.reviewFilmNavGraph.ReviewFilmScreenRoute
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
-import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun ReviewMoreScreen(
     lifecycleScope: LifecycleCoroutineScope,
@@ -35,6 +38,9 @@ fun ReviewMoreScreen(
     filmId:Int
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val filmInfoViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -45,7 +51,7 @@ fun ReviewMoreScreen(
     filmInfoViewModel.getFilmInfo(id = filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
         filmInfo.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     val review = filmInfoViewModel.getReview(
         id = filmId
@@ -114,7 +120,7 @@ fun ReviewMoreScreen(
                                     modifier = Modifier.padding(5.dp)
                                 )
                                 Text(
-                                    text = Converters().replaceRange(item?.reviewDescription.toString(), 500),
+                                    text = replaceRange(item?.reviewDescription.toString(), 500),
                                     modifier = Modifier.padding(5.dp)
                                 )
                             }

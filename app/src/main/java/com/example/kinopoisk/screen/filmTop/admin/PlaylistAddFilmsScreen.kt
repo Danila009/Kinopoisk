@@ -1,5 +1,6 @@
 package com.example.kinopoisk.screen.filmTop.admin
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -17,18 +18,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_utils.common.launchWhenStarted
 import com.example.kinopoisk.api.model.user.admin.filmList.AdminFilmList
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.utils.launchWhenStarted
 import kotlinx.coroutines.flow.onEach
 
+@SuppressLint("FlowOperatorInvokedInComposition")
 @Composable
 fun FilmListItemScreen(
     navController:NavController,
@@ -36,6 +39,9 @@ fun FilmListItemScreen(
     adminListFilmId:Int
 ) {
     val context = LocalContext.current
+
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+
     val filmTopViewModel = DaggerAppComponent.builder()
         .context(context = context)
         .build()
@@ -46,7 +52,7 @@ fun FilmListItemScreen(
     filmTopViewModel.getFilmListItem(id = adminListFilmId)
     filmTopViewModel.responseFilmListItem.onEach {
         filmListItem.value = it
-    }.launchWhenStarted(lifecycleScope)
+    }.launchWhenStarted(lifecycleScope, lifecycle)
 
     Scaffold(
         topBar = {

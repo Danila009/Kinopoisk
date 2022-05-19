@@ -22,13 +22,13 @@ import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import coil.compose.rememberImagePainter
+import com.example.core_ui.ui.theme.primaryBackground
+import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_utils.common.getNameTop
 import com.example.kinopoisk.di.DaggerAppComponent
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.navigation.mainNavGraph.MainScreenConstants.Route.MAIN_ROUTE
 import com.example.core_utils.state.NameTopState
-import com.example.kinopoisk.ui.theme.primaryBackground
-import com.example.kinopoisk.ui.theme.secondaryBackground
-import com.example.kinopoisk.utils.Converters
 
 @Composable
 fun FilmTopScreen(
@@ -52,7 +52,7 @@ fun FilmTopScreen(
                 backgroundColor = primaryBackground,
                 elevation = 8.dp,
                 title = {
-                    Text(text = Converters().getNameTop(
+                    Text(text = getNameTop(
                         nameTopViewState = nameTopViewState
                     ))
                 }, navigationIcon = {

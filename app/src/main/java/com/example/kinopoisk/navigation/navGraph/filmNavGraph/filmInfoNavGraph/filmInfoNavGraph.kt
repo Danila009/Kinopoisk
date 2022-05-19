@@ -1,6 +1,7 @@
 package com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmInfoNavGraph
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.navigation.*
 import androidx.navigation.compose.composable
@@ -18,6 +19,7 @@ import com.example.kinopoisk.navigation.navGraph.filmNavGraph.reviewFilmNavGraph
 import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @ExperimentalSerializationApi
 @ExperimentalPagerApi

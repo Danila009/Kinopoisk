@@ -15,5 +15,8 @@ data class CharacterItem(
     val image:String,
     val url:String,
     @Serializable(with = DateTimeSerialization::class)
-    val created:String
+    val created:String,
+    val origin: Origin? = null,
+    val location: LocationCharacterById? = null,
+    val episode:List<String>? = null
 )
