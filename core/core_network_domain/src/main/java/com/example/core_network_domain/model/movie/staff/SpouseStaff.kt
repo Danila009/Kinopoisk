@@ -1,5 +1,8 @@
 package com.example.core_network_domain.model.movie.staff
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class SpouseStaff(
     val children: Int?,
     val divorced: Boolean?,

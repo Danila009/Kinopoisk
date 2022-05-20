@@ -1,6 +1,8 @@
 package com.example.core_network_data.repository
 
+import android.util.Log
 import com.example.core_network_data.api.MovieApi
+import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.movie.*
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
@@ -45,8 +47,8 @@ class MovieRepositoryImpl @Inject constructor(
         return movieApi.getFilter().body() ?: Filter()
     }
 
-    override suspend fun getFilmInfo(id: Int): FilmInfo {
-        return movieApi.getFilmInfo(id).body() ?: FilmInfo()
+    override suspend fun getFilmInfo(id: Int): retrofit2.Response<FilmInfo> {
+        return movieApi.getFilmInfo(id)
     }
 
     override suspend fun getSeason(id: Int): Season {

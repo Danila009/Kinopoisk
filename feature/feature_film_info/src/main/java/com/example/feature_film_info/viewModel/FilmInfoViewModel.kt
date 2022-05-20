@@ -92,9 +92,12 @@ class FilmInfoViewModel @Inject constructor(
 
     val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
 
-    fun getFilmInfo(id:Int) = viewModelScope.launch {
-        val response = getFilmInfoUseCase.invoke(id)
-        _responseFilmInfo.value = response
+    fun getFilmInfo(id:Int){
+        getFilmInfoUseCase.invoke(id).onEach {
+            it.data?.let { filmInfo ->
+                _responseFilmInfo.value = filmInfo
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun getBudget(id: Int) = viewModelScope.launch {

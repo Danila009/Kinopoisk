@@ -101,7 +101,7 @@ fun PlaylistAddFilmsScreen(
                                 .clickable {
                                     navController.navigate(
                                         FilmScreenRoute.FilmInfo.base(
-                                            item?.kinopoiskId.toString()
+                                            item?.kinopoiskId!!
                                         )
                                     )
                                 },

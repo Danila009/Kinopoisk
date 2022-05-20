@@ -21,6 +21,8 @@ import com.example.feature_registration.viewModel.RegistrationViewModel
 import com.example.feature_serial_info.viewModel.SerialInfoViewModel
 import com.example.feature_settings.viewModel.SettingViewModel
 import com.example.feature_sorting.viewModel.SortingViewModel
+import com.example.feature_staff_info.viewModel.StaffInfoViewModel
+import com.example.feature_staff_info_more.viewModel.StaffInfoMoreViewModel
 import com.example.feature_update_user_password.viewModel.UpdateUserPasswordViewModel
 import com.example.kinopoisk.di.modules.api.*
 import com.example.kinopoisk.di.modules.database.UserDatabaseModule
@@ -28,7 +30,6 @@ import com.example.kinopoisk.di.modules.firebase.AuthFirebaseModule
 import com.example.kinopoisk.screen.filmTop.viewModel.FilmTopViewModel
 import com.example.kinopoisk.screen.review.ReviewViewModel
 import com.example.kinopoisk.screen.shop.shopViewModel.ShopViewModel
-import com.example.kinopoisk.screen.staffInfo.StaffInfoViewModel
 import dagger.BindsInstance
 import dagger.Component
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -53,7 +54,6 @@ interface AppComponent {
     fun filmTopViewModel():FilmTopViewModel
     fun reviewViewModel():ReviewViewModel
     fun shopViewModel():ShopViewModel
-    fun staffInfoViewModel():StaffInfoViewModel
 
     fun authorizationViewModel():AuthorizationViewModel
     fun registrationViewModel():RegistrationViewModel
@@ -79,6 +79,8 @@ interface AppComponent {
     fun playlistAddViewModel():PlaylistAddViewModel
     fun playlistAddFilmsViewModel():PlaylistAddFilmsViewModel
     fun characterInfoViewModel():CharacterInfoViewModel
+    fun staffInfoViewModel():StaffInfoViewModel
+    fun staffInfoMoreViewModel(): StaffInfoMoreViewModel
 
     @Component.Builder
     interface Builder{

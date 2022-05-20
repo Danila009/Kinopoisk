@@ -31,7 +31,7 @@
 - Firebase Cloud Messaging
 - Firebase Crashlytics
 - Firebase Analytics
-- Paging
+- Jetpack Paging 3
 - Coil
 - Mockito
 - Pager

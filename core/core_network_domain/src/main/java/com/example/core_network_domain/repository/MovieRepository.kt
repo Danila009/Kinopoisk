@@ -1,5 +1,6 @@
 package com.example.core_network_domain.repository
 
+import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.movie.*
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
@@ -31,7 +32,7 @@ interface MovieRepository {
 
     suspend fun getFilter():Filter
 
-    suspend fun getFilmInfo(id:Int):FilmInfo
+    suspend fun getFilmInfo(id:Int):retrofit2.Response<FilmInfo>
 
     suspend fun getSeason(id:Int):Season
 

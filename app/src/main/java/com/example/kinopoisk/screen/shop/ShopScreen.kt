@@ -108,7 +108,7 @@ fun ShopScreen(
                                 .clickable {
                                     navController.navigate(
                                         FilmScreenRoute.FilmInfo.base(
-                                            item?.kinopoiskId.toString()
+                                            item?.kinopoiskId!!
                                         )
                                     )
                                 },

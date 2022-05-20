@@ -8,7 +8,7 @@ sealed class StaffInfoScreenRoute(val route:String) {
     }
     object MoreStaff:StaffInfoScreenRoute("more_staff?staffId={staffId}"){
         fun base(
-            staffIf: String
+            staffIf: Int
         ):String = "more_staff?staffId=$staffIf"
     }
 }

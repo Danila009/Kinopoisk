@@ -30,6 +30,8 @@
       <module name="Kinopoisk.feature.feature_serial_info" target="11" />
       <module name="Kinopoisk.feature.feature_settings" target="11" />
       <module name="Kinopoisk.feature.feature_sorting" target="11" />
+      <module name="Kinopoisk.feature.feature_staff_info" target="11" />
+      <module name="Kinopoisk.feature.feature_staff_info_more" target="11" />
       <module name="Kinopoisk.feature.feature_update_user_password" target="11" />
       <module name="Kinopoisk.feature.feature_web" target="11" />
     </bytecodeTargetLevel>

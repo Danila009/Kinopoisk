@@ -60,7 +60,7 @@ internal fun HistoryMovieView(
                         modifier = Modifier.clickable {
                             navController.navigate(
                                 FilmScreenRoute.FilmInfo.base(
-                                    filmId = item.movie.kinopoiskId.toString()
+                                    filmId = item.movie.kinopoiskId!!
                                 )
                             )
                         }

@@ -81,7 +81,7 @@ fun FilmTopScreen(
                                 .clickable {
                                     navController.navigate(
                                         FilmScreenRoute.FilmInfo.base(
-                                            item?.filmId.toString()
+                                            item?.filmId!!
                                         )
                                     )
                                 },

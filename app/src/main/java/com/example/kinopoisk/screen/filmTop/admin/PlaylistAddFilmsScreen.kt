@@ -85,7 +85,7 @@ fun FilmListItemScreen(
                                 .clickable {
                                     navController.navigate(
                                         FilmScreenRoute.FilmInfo.base(
-                                            item.kinopoiskId.toString()
+                                            item.kinopoiskId
                                         )
                                     )
                                 },

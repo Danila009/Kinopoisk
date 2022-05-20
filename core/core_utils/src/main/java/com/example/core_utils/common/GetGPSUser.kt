@@ -20,9 +20,9 @@ fun getGPSUser(
             location = lm.getLastKnownLocation(providers[i])
             if (location != null) break
         }
-        location.let {
+        location?.let {
             return LatLng(
-                location!!.latitude,
+                location.latitude,
                 location.longitude
             )
         }

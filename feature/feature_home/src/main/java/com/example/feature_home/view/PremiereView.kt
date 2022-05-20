@@ -54,7 +54,7 @@ internal fun PremiereView(
                     modifier = Modifier.clickable {
                         navController.navigate(
                             FilmScreenRoute.FilmInfo.base(
-                                filmId = item.kinopoiskId.toString()
+                                filmId = item.kinopoiskId
                             )
                         )
                     }

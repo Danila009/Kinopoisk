@@ -29,6 +29,7 @@ object ConstantsUrl {
     const val PLAYLIST_URL = "/kinopoisk/Playlist"
 
     const val SEARCH_PERSON_URL = "/api/v1/persons"
+    const val STAFF_INF0_ID_URL = "/api/v1/staff/{id}"
 
     const val HISTORY_MOVIE_URL = "/kinopoisk/User/History/Movie"
     const val HISTORY_SEARCH_URL = "/kinopoisk/User/History/Search"

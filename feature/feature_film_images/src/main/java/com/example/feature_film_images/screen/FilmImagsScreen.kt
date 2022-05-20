@@ -17,7 +17,6 @@ import androidx.navigation.NavController
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_utils.common.launchWhenStarted
-import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.core_utils.state.ImageState
 import com.example.feature_film_images.view.ImageView
 import com.example.feature_film_images.view.TabImageView
@@ -62,8 +61,8 @@ fun FilmImagesScreen(
                         Text(text = filmInfo.value.nameRu)
                     }, navigationIcon = {
                         IconButton(onClick = {
-                            navController.navigate(FilmScreenRoute.FilmInfo.base(
-                                filmId = filmId.toString()))}
+                            navController.navigateUp()
+                        }
                         ) {
                             Icon(
                                 imageVector = Icons.Default.KeyboardArrowLeft,

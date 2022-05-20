@@ -45,13 +45,13 @@ fun NavGraphBuilder.filmInfoNavGraph(
                 FilmScreenRoute.FilmInfo.route,
                 arguments = listOf(
                     navArgument(FILM_ID_ARGUMENT){
-                        type = NavType.StringType
+                        type = NavType.IntType
                     }
                 )
             ){
                 FilmInfoScreen(
                     navController = navController,
-                    filmId = it.arguments?.getString(FILM_ID_ARGUMENT)!!.toInt(),
+                    filmId = it.arguments?.getInt(FILM_ID_ARGUMENT)!!,
                     filmInfoViewModel = appComponent.filmInfoViewModel()
                 )
             }

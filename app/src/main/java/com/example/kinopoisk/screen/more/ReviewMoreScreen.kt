@@ -65,7 +65,7 @@ fun ReviewMoreScreen(
                 title = {
                     Text(text = filmInfo.value.nameRu)
                 }, navigationIcon = {
-                    IconButton(onClick = { navController.navigate(FilmScreenRoute.FilmInfo.base(filmId = filmId.toString())) }) {
+                    IconButton(onClick = { navController.navigate(FilmScreenRoute.FilmInfo.base(filmId = filmId)) }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowLeft,
                             contentDescription = null

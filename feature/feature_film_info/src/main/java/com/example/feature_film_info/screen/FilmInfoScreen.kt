@@ -31,6 +31,7 @@ import com.example.core_network_domain.model.movie.staff.Staff
 import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
+import com.example.core_ui.view.BaseBackdropScaffold
 import com.example.core_utils.common.getDate
 import com.example.core_utils.common.launchWhenStarted
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
@@ -41,6 +42,7 @@ import com.example.core_utils.state.ImageState
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalMaterialApi
 @ExperimentalSerializationApi
 @SuppressLint("CoroutineCreationDuringComposition", "FlowOperatorInvokedInComposition")
 @Composable
@@ -66,6 +68,8 @@ fun FilmInfoScreen(
     var faq by remember { mutableStateOf(FAQ()) }
     var wikipediaFilmInfo by remember { mutableStateOf(Wikipedia()) }
     var movieVide by remember { mutableStateOf(Video()) }
+
+    val backdropScaffoldState =  rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
 
     filmInfoViewModel.getFilmInfo(filmId)
     filmInfoViewModel.responseFilmInfo.onEach {
@@ -212,19 +216,23 @@ fun FilmInfoScreen(
                         }
                     )
                 }, content = {
-                    Scaffold(
-                        modifier = Modifier.fillMaxSize(),
-                        backgroundColor = primaryBackground
-                    ) {
-                        LazyColumn(content = {
-                            item {
-                                Column {
-                                    FilmInfoView(
-                                        filmInfo = filmInfo,
-                                        filmId = filmId,
-                                        navController = navController,
-                                        season = season
-                                    )
+                    BaseBackdropScaffold(
+                        scaffoldState = backdropScaffoldState,
+                        peekHeight = 50.dp,
+                        backLayerContent = {
+                            Scaffold(
+                                modifier = Modifier.fillMaxSize(),
+                                backgroundColor = primaryBackground
+                            ) {
+                                LazyColumn(content = {
+                                    item {
+                                        Column {
+                                            FilmInfoView(
+                                                filmInfo = filmInfo,
+                                                filmId = filmId,
+                                                navController = navController,
+                                                season = season
+                                            )
 
 //                                    if (shopCheck.value){
 //                                        ShopView(
@@ -235,87 +243,93 @@ fun FilmInfoScreen(
 //                                    }
 
 
-                                    MovieVideoView(
-                                        video = movieVide
-                                    )
-
-                                    RatingView(
-                                        filmInfo = filmInfo
-                                    )
-
-                                    StaffView(
-                                        staff = staff,
-                                        navController = navController,
-                                        filmId = filmId.toString()
-                                    )
-
-                                    AwardView(
-                                        award = award
-                                    )
-
-                                    ReviewView(
-                                        navController = navController,
-                                        review = review,
-                                        filmId = filmId.toString()
-                                    )
-
-                                    ImageView(
-                                        navController = navController,
-                                        image = image,
-                                        filmId = filmId.toString()
-                                    )
-
-                                    FAQView(
-                                        faq = faq
-                                    )
-
-                                    FactView(
-                                        fact = fact
-                                    )
-
-                                    BudgetView(
-                                        budget = budget,
-                                        distribution = distribution
-                                    )
-
-                                    SequelAndPrequelView(
-                                        navController = navController,
-                                        sequelAndPrequel = sequelAndPrequel
-                                    )
-
-                                    SimilarView(
-                                        navController = navController,
-                                        similar = similar
-                                    )
-
-                                    WikipediaFilmInfoView(
-                                        wikipedia = wikipediaFilmInfo
-                                    )
-
-                                    filmInfo.value.webUrl?.let {
-                                        TextButton(
-                                            modifier = Modifier.padding(5.dp),
-                                            onClick = { checkWeb.value = true }
-                                        ) {
-                                            Text(
-                                                text = "КиноПоиск ->",
-                                                color = secondaryBackground,
-                                                fontWeight = FontWeight.Bold
+                                            MovieVideoView(
+                                                video = movieVide
                                             )
+
+                                            RatingView(
+                                                filmInfo = filmInfo
+                                            )
+
+                                            StaffView(
+                                                staff = staff,
+                                                navController = navController,
+                                                filmId = filmId.toString()
+                                            )
+
+                                            AwardView(
+                                                award = award
+                                            )
+
+                                            ReviewView(
+                                                navController = navController,
+                                                review = review,
+                                                filmId = filmId.toString()
+                                            )
+
+                                            ImageView(
+                                                navController = navController,
+                                                image = image,
+                                                filmId = filmId.toString()
+                                            )
+
+                                            FAQView(
+                                                faq = faq
+                                            )
+
+                                            FactView(
+                                                fact = fact
+                                            )
+
+                                            BudgetView(
+                                                budget = budget,
+                                                distribution = distribution,
+                                                scaffoldState = backdropScaffoldState
+                                            )
+
+                                            SequelAndPrequelView(
+                                                navController = navController,
+                                                sequelAndPrequel = sequelAndPrequel
+                                            )
+
+                                            SimilarView(
+                                                navController = navController,
+                                                similar = similar
+                                            )
+
+                                            WikipediaFilmInfoView(
+                                                wikipedia = wikipediaFilmInfo
+                                            )
+
+                                            filmInfo.value.webUrl?.let {
+                                                TextButton(
+                                                    modifier = Modifier.padding(5.dp),
+                                                    onClick = { checkWeb.value = true }
+                                                ) {
+                                                    Text(
+                                                        text = "КиноПоиск ->",
+                                                        color = secondaryBackground,
+                                                        fontWeight = FontWeight.Bold
+                                                    )
+                                                }
+                                            }
                                         }
                                     }
-                                }
-                            }
 
-                            item {
-                                Spacer(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .height(60.dp)
-                                )
+                                    item {
+                                        Spacer(
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(60.dp)
+                                        )
+                                    }
+                                })
                             }
-                        })
-                    }
+                        },
+                        frontLayerContent = {
+
+                        }
+                    )
                 }
             )
         }

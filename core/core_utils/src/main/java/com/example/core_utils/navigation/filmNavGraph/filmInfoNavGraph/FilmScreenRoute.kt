@@ -3,7 +3,7 @@ package com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph
 sealed class FilmScreenRoute(val route:String){
     object FilmInfo: FilmScreenRoute("film_info_screen?filmId={filmId}"){
         fun base(
-            filmId:String
+            filmId:Int
         ):String = "film_info_screen?filmId=$filmId"
     }
     object SerialInfoSeason: FilmScreenRoute("serial_info_season?filmId={filmId}" +

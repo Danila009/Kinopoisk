@@ -1,6 +1,6 @@
-package com.example.kinopoisk.screen.staffInfo.viewState
+package com.example.core_utils.state
 
-enum class ProfessionKeyViewState {
+enum class ProfessionState {
     ACTOR,
     PRODUCER,
     HIMSELF,

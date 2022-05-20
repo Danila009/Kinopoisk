@@ -13,8 +13,8 @@ fun BaseBackdropScaffold(
     peekHeight: Dp = 300.dp,
     backLayerContent: @Composable () -> Unit,
     frontLayerContent: @Composable () -> Unit,
-    gesturesEnabled:Boolean = false,
-    scaffoldState: BackdropScaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
+    scaffoldState: BackdropScaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed),
+    gesturesEnabled:Boolean = scaffoldState.isConcealed,
 ) {
     BackdropScaffold(
         headerHeight = headerHeight,

@@ -4,11 +4,10 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -16,12 +15,17 @@ import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_utils.common.getTime
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 internal fun BudgetView(
     budget:MutableState<Budget>,
-    distribution:MutableState<Distribution>
+    distribution:MutableState<Distribution>,
+    scaffoldState: BackdropScaffoldState
 ) {
+    val scope = rememberCoroutineScope()
+
     if (budget.value.items.isNotEmpty()){
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -36,7 +40,11 @@ internal fun BudgetView(
 
 
             TextButton(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    scope.launch {
+                        scaffoldState.conceal()
+                    }
+                },
                 modifier = Modifier.padding(5.dp)
             ) {
                 Text(

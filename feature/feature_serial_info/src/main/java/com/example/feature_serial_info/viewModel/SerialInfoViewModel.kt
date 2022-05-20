@@ -16,10 +16,7 @@ import com.example.core_network_domain.useCase.rickAndMorty.GetCharactersUseCase
 import com.example.core_network_domain.useCase.rickAndMorty.GetLocationsUseCase
 import com.example.core_network_domain.source.CharactersRickAndMortySource
 import com.example.core_network_domain.source.LocationsRickAndMortySource
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -36,9 +33,12 @@ class SerialInfoViewModel @Inject constructor(
     private val _responseSeason:MutableStateFlow<Season> = MutableStateFlow(Season())
     val responseSeason:StateFlow<Season> = _responseSeason.asStateFlow()
 
-    fun getFilmInfo(id:Int) = viewModelScope.launch {
-        val response = getFilmInfoUseCase.invoke(id)
-        _responseFilmInfo.value = response
+    fun getFilmInfo(id:Int){
+        getFilmInfoUseCase.invoke(id).onEach {
+            it.data?.let { filmInfo ->
+                _responseFilmInfo.value = filmInfo
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun getSeason(id: Int) = viewModelScope.launch {

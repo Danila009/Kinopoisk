@@ -51,7 +51,7 @@ internal fun SequelAndPrequelView(
                     modifier = Modifier.clickable {
                         navController.navigate(
                             FilmScreenRoute.FilmInfo.base(
-                                filmId = item.filmId.toString()
+                                filmId = item.filmId!!
                             )
                         )
                     }

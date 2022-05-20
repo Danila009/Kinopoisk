@@ -11,10 +11,7 @@ import com.example.core_network_domain.model.movie.ImageMovieItem
 import com.example.core_network_domain.source.ImageMoviePagingSource
 import com.example.core_network_domain.useCase.movie.GetFilmInfoUseCase
 import com.example.core_network_domain.useCase.movie.GetImageUseCase
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,9 +23,12 @@ class FilmImagesViewModel @Inject constructor(
     private val _responseFilmInfo:MutableStateFlow<FilmInfo?> = MutableStateFlow(null)
     val responseFilmInfo = _responseFilmInfo.asStateFlow().filterNotNull()
 
-    fun getFilmInfo(id:Int) = viewModelScope.launch {
-        val response = getFilmInfoUseCase.invoke(id)
-        _responseFilmInfo.value = response
+    fun getFilmInfo(id:Int){
+        getFilmInfoUseCase.invoke(id).onEach {
+            it.data?.let { filmInfo ->
+                _responseFilmInfo.value = filmInfo
+            }
+        }.launchIn(viewModelScope)
     }
 
     fun getFilmImages(

@@ -68,7 +68,7 @@ fun NavGraphBuilder.mainNavGraph(
             )
             staffInfoNavGraph(
                 navController = navController,
-                lifecycleScope = lifecycleScope
+                appComponent = appComponent
             )
             loginNavGraph(
                 navController = navController,
