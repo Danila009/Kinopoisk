@@ -7,6 +7,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.core_database_domain.useCase.user.GetStatusRegistrationUseCase
+import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
 import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
@@ -20,6 +21,7 @@ import com.example.core_network_domain.model.movie.fact.Fact
 import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.movie.review.ReviewItem
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.trailer.Trailer
 import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.source.ImageMoviePagingSource
@@ -51,6 +53,7 @@ class FilmInfoViewModel @Inject constructor(
     private val getFilmFAQUseCase: GetFilmFAQUseCase,
     private val getFilmWikipediaInfoUseCase: GetFilmWikipediaInfoUseCase,
     private val getMovieVideoUseCase: GetMovieVideoUseCase,
+    private val getTrailerUseCase: GetTrailerUseCase,
     getStatusRegistrationUseCase: GetStatusRegistrationUseCase
 ):ViewModel() {
 
@@ -90,7 +93,11 @@ class FilmInfoViewModel @Inject constructor(
     private val _responseMovieVideo:MutableStateFlow<Video?> = MutableStateFlow(null)
     val responseMovieVideo = _responseMovieVideo.asStateFlow().filterNotNull()
 
+    private val _responseTrailer:MutableStateFlow<Response<Trailer>> = MutableStateFlow(Response.Loading())
+    val responseTrailer = _responseTrailer.asStateFlow()
+
     val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
 
     fun getFilmInfo(id:Int){
         getFilmInfoUseCase.invoke(id).onEach {
@@ -193,5 +200,11 @@ class FilmInfoViewModel @Inject constructor(
     fun getMovieVideo(id: Int) = viewModelScope.launch {
         val response = getMovieVideoUseCase.invoke(id)
         _responseMovieVideo.value = response
+    }
+
+    fun getTrailer(id: Int){
+        getTrailerUseCase.invoke(id).onEach {
+            _responseTrailer.value = it
+        }.launchIn(viewModelScope)
     }
 }

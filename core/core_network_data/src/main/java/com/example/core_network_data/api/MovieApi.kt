@@ -14,6 +14,7 @@ import com.example.core_network_data.common.ConstantsUrl.SEASONS_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.SEQUEL_AND_PREQUEL_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.SIMILAR_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.STAFF_URL
+import com.example.core_network_data.common.ConstantsUrl.TRAILER_URL
 import com.example.core_network_domain.model.movie.*
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
@@ -22,6 +23,7 @@ import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.core_network_domain.model.movie.review.Review
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.trailer.Trailer
 import com.example.core_network_domain.model.serial.Season
 import retrofit2.Response
 import retrofit2.http.GET
@@ -112,4 +114,9 @@ interface MovieApi {
         @Query("filmId") id:Int,
         @Query("page") page:Int
     ):Response<Review>
+
+    @GET(TRAILER_URL)
+    suspend fun getTrailer(
+        @Path("id") id: Int
+    ):Response<Trailer>
 }

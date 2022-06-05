@@ -7,11 +7,15 @@ import androidx.navigation.*
 import androidx.navigation.compose.composable
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.CHARACTERS
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.FILM_ID_ARGUMENT
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.VIDEO_STATE
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.WEB_URL_ARGUMENT
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.YOU_TUBE_URL
+import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Argument.YOU_TUBE_TITLE
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenConstants.Route.FILM_INFO_ROUTE
 import com.example.core_utils.navigation.filmNavGraph.filmInfoNavGraph.FilmScreenRoute
 import com.example.feature_film_info.screen.FilmInfoScreen
 import com.example.feature_serial_info.screen.SerialInfoScreen
+import com.example.feature_video_player.screen.VideoPlayerScreen
 import com.example.feature_web.screen.WebScreen
 import com.example.kinopoisk.di.AppComponent
 import com.example.kinopoisk.navigation.navGraph.filmNavGraph.filmMoreNavGraph.filmMoreNavGraph
@@ -84,6 +88,28 @@ fun NavGraphBuilder.filmInfoNavGraph(
                 WebScreen(
                     navController = navController,
                     webUrl = it.arguments?.getString(WEB_URL_ARGUMENT).toString(),
+                )
+            }
+            composable(
+                route = FilmScreenRoute.VideoPlayer.route,
+                arguments = listOf(
+                    navArgument(VIDEO_STATE){
+                        type = NavType.StringType
+                    }, navArgument(YOU_TUBE_URL){
+                        type = NavType.StringType
+                        nullable = true
+                    }, navArgument(YOU_TUBE_TITLE){
+                        type = NavType.StringType
+                        nullable = true
+                    }
+                )
+            ){
+                VideoPlayerScreen(
+                    videoPlayerState = enumValueOf(
+                        it.arguments!!.getString(VIDEO_STATE, "")
+                    ),
+                    youtubeUrl = it.arguments!!.getString(YOU_TUBE_URL, ""),
+                    youtubeTitle = it.arguments!!.getString(YOU_TUBE_TITLE, "")
                 )
             }
         }

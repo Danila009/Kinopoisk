@@ -10,5 +10,8 @@ object FilmScreenConstants {
         const val WEB_URL_ARGUMENT = "webUrl"
         const val ADMIN_FILM_LIST_ITEM_ID = "adminFilmListItemId"
         const val CHARACTERS = "characters"
+        const val VIDEO_STATE = "videoState"
+        const val YOU_TUBE_URL = "youtubeUrl"
+        const val YOU_TUBE_TITLE = "youtubeTitle"
     }
 }

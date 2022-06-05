@@ -1,8 +1,6 @@
 package com.example.core_network_data.repository
 
-import android.util.Log
 import com.example.core_network_data.api.MovieApi
-import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.movie.*
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
@@ -11,8 +9,10 @@ import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.core_network_domain.model.movie.review.Review
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.trailer.Trailer
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.repository.MovieRepository
+import retrofit2.Response
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
@@ -85,6 +85,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getReview(id: Int, page: Int): Review {
         return movieApi.getReview(id, page).body() ?: Review()
+    }
+
+    override suspend fun getTrailer(id: Int): Response<Trailer> {
+        return movieApi.getTrailer(id)
     }
 
 }

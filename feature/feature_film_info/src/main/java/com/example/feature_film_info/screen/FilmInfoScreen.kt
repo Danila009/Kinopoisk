@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
 import com.example.core_network_domain.model.IMDb.award.Award
 import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
@@ -28,6 +29,7 @@ import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.trailer.Trailer
 import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
@@ -39,9 +41,11 @@ import com.example.core_utils.navigation.mainNavGraph.MainScreenRoute
 import com.example.feature_film_info.view.*
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
 import com.example.core_utils.state.ImageState
+import com.google.accompanist.pager.ExperimentalPagerApi
 import kotlinx.coroutines.flow.onEach
 import kotlinx.serialization.ExperimentalSerializationApi
 
+@ExperimentalPagerApi
 @ExperimentalMaterialApi
 @ExperimentalSerializationApi
 @SuppressLint("CoroutineCreationDuringComposition", "FlowOperatorInvokedInComposition")
@@ -68,6 +72,7 @@ fun FilmInfoScreen(
     var faq by remember { mutableStateOf(FAQ()) }
     var wikipediaFilmInfo by remember { mutableStateOf(Wikipedia()) }
     var movieVide by remember { mutableStateOf(Video()) }
+    var trailer:Response<Trailer> by remember { mutableStateOf(Response.Loading()) }
 
     val backdropScaffoldState =  rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
 
@@ -120,6 +125,11 @@ fun FilmInfoScreen(
         movieVide = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    filmInfoViewModel.getTrailer(filmId)
+    filmInfoViewModel.responseTrailer.onEach {
+        trailer = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
     val image = filmInfoViewModel.getImage(
         id = filmId,
         type = ImageState.STILL.name
@@ -165,8 +175,8 @@ fun FilmInfoScreen(
                             posterUrlPreview = filmInfo.value.posterUrlPreview,
                             ratingImdb = filmInfo.value.ratingImdb,
                             ratingKinopoisk = filmInfo.value.ratingKinopoisk,
-                            type = filmInfo.value.type,
-                            year = filmInfo.value.year,
+                            type = filmInfo.value.type.name,
+                            year = filmInfo.value.year
                         )
                     )
                 )
@@ -242,6 +252,10 @@ fun FilmInfoScreen(
 //                                        )
 //                                    }
 
+                                            TrailerView(
+                                                navController = navController,
+                                                trailer = trailer
+                                            )
 
                                             MovieVideoView(
                                                 video = movieVide

@@ -7,8 +7,8 @@ data class FilmInfo(
     val kinopoiskId:Int = 0,
     val imdbId:String? = "",
     val nameRu:String = "",
-    val nameEn:String = "",
-    val nameOriginal:String = "",
+    val nameEn:String? = "",
+    val nameOriginal:String? = "",
     val posterUrl:String? = null,
     val posterUrlPreview:String = "",
     val reviewsCount:Int = 0,
@@ -30,10 +30,10 @@ data class FilmInfo(
     val slogan:String? = null,
     val description:String? = null,
     val shortDescription:String = "",
-    val editorAnnotation:String = "",
+    val editorAnnotation:String? = "",
     val isTicketsAvailable:Boolean = false,
     val productionStatus:String = "",
-    val type:String ="",
+    val type:FilmType = FilmType.FILM,
     val ratingMpaa:String = "",
     val ratingAgeLimits:String = "",
     val hasImax:Boolean = false,
@@ -47,3 +47,8 @@ data class FilmInfo(
     val shortFilm:Boolean = false,
     val completed:Boolean = false
 )
+
+enum class FilmType(val nameRu:String){
+    FILM("Фильм"),
+    TV_SERIES("ТВ шоу")
+}

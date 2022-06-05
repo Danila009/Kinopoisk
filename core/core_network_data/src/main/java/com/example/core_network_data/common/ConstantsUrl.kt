@@ -16,6 +16,7 @@ object ConstantsUrl {
     const val FILM_DISTRIBUTION_ID_URL = "/api/v2.2/films/{id}/distributions"
     const val IMAGE_ID_URL = "/api/v2.2/films/{id}/images"
     const val REVIEW_URL = "/api/v1/reviews"
+    const val TRAILER_URL = "/api/v2.2/films/{id}/videos"
 
     const val SHOP_URL = "/kinopoisk/Shop"
 

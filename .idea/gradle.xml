@@ -43,6 +43,7 @@
             <option value="$PROJECT_DIR$/feature/feature_staff_info" />
             <option value="$PROJECT_DIR$/feature/feature_staff_info_more" />
             <option value="$PROJECT_DIR$/feature/feature_update_user_password" />
+            <option value="$PROJECT_DIR$/feature/feature_video_player" />
             <option value="$PROJECT_DIR$/feature/feature_web" />
           </set>
         </option>

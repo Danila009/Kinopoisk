@@ -61,4 +61,11 @@ dependencies {
 
     //Paging
     implementation ("androidx.paging:paging-compose:1.0.0-alpha14")
+
+    //You Tube Player
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:core:11.0.1'
+    implementation 'com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.26'
+
+    //Fragment
+    implementation 'androidx.fragment:fragment-ktx:1.4.1'
 }

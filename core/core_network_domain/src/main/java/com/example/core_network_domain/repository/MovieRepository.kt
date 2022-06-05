@@ -1,6 +1,5 @@
 package com.example.core_network_domain.repository
 
-import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.movie.*
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
@@ -9,7 +8,9 @@ import com.example.core_network_domain.model.movie.premiere.Premiere
 import com.example.core_network_domain.model.movie.premiere.Release
 import com.example.core_network_domain.model.movie.review.Review
 import com.example.core_network_domain.model.movie.staff.Staff
+import com.example.core_network_domain.model.movie.trailer.Trailer
 import com.example.core_network_domain.model.serial.Season
+import retrofit2.Response
 
 interface MovieRepository {
 
@@ -51,4 +52,6 @@ interface MovieRepository {
     suspend fun getImage(id:Int,type:String,page:Int):ImageMovie
 
     suspend fun getReview(id: Int,page: Int):Review
+
+    suspend fun getTrailer(id: Int): Response<Trailer>
 }

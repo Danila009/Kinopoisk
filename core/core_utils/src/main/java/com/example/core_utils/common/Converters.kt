@@ -1,6 +1,9 @@
 package com.example.core_utils.common
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.text.Html
 import androidx.compose.ui.graphics.Color
@@ -159,4 +162,9 @@ fun fromStringToInt(
         val result = it.digitToIntOrNull()
         result == null
     }.toInt()
+}
+
+fun String.startActivityActionView(context: Context){
+    val uri = Uri.parse(this)
+    context.startActivity(Intent(Intent.ACTION_VIEW, uri))
 }

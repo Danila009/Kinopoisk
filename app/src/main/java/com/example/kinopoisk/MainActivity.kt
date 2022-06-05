@@ -33,7 +33,8 @@ class MainActivity: ComponentActivity() {
                 BaseNavHost(
                     navHostController = rememberNavController(),
                     lifecycleScope = lifecycleScope,
-                    appComponent = appComponent
+                    appComponent = appComponent,
+                    activity = this
                 )
             }
         }
