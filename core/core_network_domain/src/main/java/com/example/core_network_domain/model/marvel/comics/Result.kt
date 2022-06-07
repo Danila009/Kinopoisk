@@ -6,7 +6,7 @@ data class Result(
     val collections: List<Collection>?,
     val creators: Creators?,
     val dates: List<Date>?,
-    val description: Any?,
+    val description: String?,
     val diamondCode: String?,
     val digitalId: Int?,
     val ean: String?,

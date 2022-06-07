@@ -1,5 +1,6 @@
 package com.example.feature_home.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.material.Text
@@ -66,7 +67,15 @@ internal fun ComicsView(
         items(comicsMarvel){ item ->
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.clickable {
+                    navController.navigate(
+                        ComicsScreenRoute.ComicInfoScreen.arguments(
+                            comicId = item?.id!!,
+                            comicsState = ComicsState.MARVEL
+                        )
+                    )
+                }
             ) {
                 SubcomposeAsyncImage(
                     model = "${item?.thumbnail?.path}.${item?.thumbnail?.extension}",

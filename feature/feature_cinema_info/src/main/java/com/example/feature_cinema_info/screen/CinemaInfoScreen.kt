@@ -40,12 +40,10 @@ import com.example.feature_cinema_info.view.ReviewView
 import com.example.feature_cinema_info.view.ScheduleView
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.HorizontalPagerIndicator
-import com.google.accompanist.pager.rememberPagerState
 import kotlinx.coroutines.flow.onEach
 
 @ExperimentalMaterialApi
-@SuppressLint("FlowOperatorInvokedInComposition")
+@SuppressLint("FlowOperatorInvokedInComposition", "UnusedMaterialScaffoldPaddingParameter")
 @ExperimentalPagerApi
 @Composable
 fun CinemaInfoScreen(
@@ -62,8 +60,6 @@ fun CinemaInfoScreen(
     var cinemaPhone by remember { mutableStateOf(listOf<Phone>()) }
     var cinemaSchedule by remember { mutableStateOf(listOf<Schedule>()) }
     var cinemaReview:Response<Review> by remember { mutableStateOf(Response.Loading()) }
-
-    val pagerStateImage = rememberPagerState(pageCount = cinemaPhotos.size)
 
     var statusRegistration by remember { mutableStateOf(false) }
 
@@ -164,7 +160,7 @@ fun CinemaInfoScreen(
                             LazyColumn(content = {
                                 item {
                                     HorizontalPager(
-                                        state = pagerStateImage,
+                                        count = cinemaPhotos.size,
                                         modifier = Modifier
                                             .fillMaxWidth()
                                     ) {

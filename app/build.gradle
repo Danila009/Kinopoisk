@@ -80,6 +80,7 @@ dependencies {
     implementation project(":feature:feature_web")
     implementation project(":feature:feature_staff_info")
     implementation project(":feature:feature_comics")
+    implementation project(":feature:feature_comics_info")
     implementation project(":feature:feature_cinema_add_review")
     implementation project(":feature:feature_film_info")
     implementation project(":feature:feature_playlist_add_films")

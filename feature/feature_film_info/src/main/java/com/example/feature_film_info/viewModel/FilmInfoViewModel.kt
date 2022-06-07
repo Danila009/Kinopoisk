@@ -9,12 +9,13 @@ import androidx.paging.cachedIn
 import com.example.core_database_domain.useCase.user.GetStatusRegistrationUseCase
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
-import com.example.core_network_domain.model.IMDb.award.Award
+import com.example.core_network_domain.model.IMDb.externalSite.ExternalSite
 import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.ImageMovieItem
 import com.example.core_network_domain.model.movie.SequelAndPrequel
 import com.example.core_network_domain.model.movie.Similar
+import com.example.core_network_domain.model.movie.award.Award
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.fact.Fact
@@ -26,7 +27,7 @@ import com.example.core_network_domain.model.movie.video.Video
 import com.example.core_network_domain.model.serial.Season
 import com.example.core_network_domain.source.ImageMoviePagingSource
 import com.example.core_network_domain.source.ReviewMoviePagingSource
-import com.example.core_network_domain.useCase.IMDb.GetFilmAwardUseCase
+import com.example.core_network_domain.useCase.IMDb.GetExternalSitesUseCase
 import com.example.core_network_domain.useCase.IMDb.GetFilmFAQUseCase
 import com.example.core_network_domain.useCase.IMDb.GetFilmWikipediaInfoUseCase
 import com.example.core_network_domain.useCase.history.PostHistoryMovieUseCase
@@ -49,11 +50,12 @@ class FilmInfoViewModel @Inject constructor(
     private val getImageMovieUseCase: GetImageUseCase,
     private val getReviewMovieUseCase: GetReviewMovieUseCase,
     private val postHistoryMovieUseCase: PostHistoryMovieUseCase,
-    private val getFilmAwardUseCase: GetFilmAwardUseCase,
+    private val getFilmAwardUseCase: GetMovieAwardsUseCase,
     private val getFilmFAQUseCase: GetFilmFAQUseCase,
     private val getFilmWikipediaInfoUseCase: GetFilmWikipediaInfoUseCase,
     private val getMovieVideoUseCase: GetMovieVideoUseCase,
     private val getTrailerUseCase: GetTrailerUseCase,
+    private val getExternalSitesUseCase: GetExternalSitesUseCase,
     getStatusRegistrationUseCase: GetStatusRegistrationUseCase
 ):ViewModel() {
 
@@ -81,8 +83,8 @@ class FilmInfoViewModel @Inject constructor(
     private val _responseDistribution:MutableStateFlow<Distribution> = MutableStateFlow(Distribution())
     val responseDistribution:StateFlow<Distribution> = _responseDistribution.asStateFlow()
 
-    private val _responseFilmAward:MutableStateFlow<Award?> = MutableStateFlow(null)
-    val responseFilmAward = _responseFilmAward.asStateFlow().filterNotNull()
+    private val _responseFilmAward:MutableStateFlow<Response<Award>> = MutableStateFlow(Response.Loading())
+    val responseFilmAward = _responseFilmAward.asStateFlow()
 
     private val _responseFilmFAQ:MutableStateFlow<FAQ?> = MutableStateFlow(null)
     val responseFilmFAQ = _responseFilmFAQ.asStateFlow().filterNotNull()
@@ -98,6 +100,10 @@ class FilmInfoViewModel @Inject constructor(
 
     val responseStatusRegistration = getStatusRegistrationUseCase.invoke()
         .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+
+    private val _responseExternalSites:MutableStateFlow<Response<ExternalSite>> =
+        MutableStateFlow(Response.Loading())
+    val responseExternalSites = _responseExternalSites.asStateFlow()
 
     fun getFilmInfo(id:Int){
         getFilmInfoUseCase.invoke(id).onEach {
@@ -173,11 +179,9 @@ class FilmInfoViewModel @Inject constructor(
         postHistoryMovieUseCase.invoke(historyMovieItem)
     }
 
-    fun getFilmAward(id:String){
+    fun getFilmAward(id:Int){
         getFilmAwardUseCase.invoke(id).onEach {
-            it.data?.let { award ->
-                _responseFilmAward.value = award
-            }
+            _responseFilmAward.value = it
         }.launchIn(viewModelScope)
     }
 
@@ -205,6 +209,12 @@ class FilmInfoViewModel @Inject constructor(
     fun getTrailer(id: Int){
         getTrailerUseCase.invoke(id).onEach {
             _responseTrailer.value = it
+        }.launchIn(viewModelScope)
+    }
+
+    fun getExternalSites(id: String){
+        getExternalSitesUseCase.invoke(id).onEach {
+            _responseExternalSites.value = it
         }.launchIn(viewModelScope)
     }
 }

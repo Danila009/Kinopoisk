@@ -23,7 +23,7 @@ import com.google.accompanist.pager.HorizontalPager
 
 @ExperimentalPagerApi
 @Composable
-fun TrailerView(
+internal fun TrailerView(
     navController: NavController,
     trailer:Response<Trailer>
 ) {

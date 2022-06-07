@@ -17,7 +17,7 @@ import androidx.navigation.NavController
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.IMDb.FAQ.FAQ
-import com.example.core_network_domain.model.IMDb.award.Award
+import com.example.core_network_domain.model.IMDb.externalSite.ExternalSite
 import com.example.core_network_domain.model.IMDb.wikipedia.Wikipedia
 import com.example.core_network_domain.model.movie.FilmInfo
 import com.example.core_network_domain.model.movie.MovieItem
@@ -25,6 +25,7 @@ import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.fact.Fact
 import com.example.core_network_domain.model.movie.SequelAndPrequel
 import com.example.core_network_domain.model.movie.Similar
+import com.example.core_network_domain.model.movie.award.Award
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.history.HistoryMovieItem
 import com.example.core_network_domain.model.serial.Season
@@ -67,12 +68,13 @@ fun FilmInfoScreen(
     val distribution = remember { mutableStateOf(Distribution()) }
     val sequelAndPrequel = remember { mutableStateOf(listOf<SequelAndPrequel>()) }
     val season = remember { mutableStateOf(Season()) }
-    var award by remember { mutableStateOf(Award()) }
+    var award:Response<Award> by remember { mutableStateOf(Response.Loading()) }
     var statusRegistration by remember { mutableStateOf(false) }
     var faq by remember { mutableStateOf(FAQ()) }
     var wikipediaFilmInfo by remember { mutableStateOf(Wikipedia()) }
     var movieVide by remember { mutableStateOf(Video()) }
     var trailer:Response<Trailer> by remember { mutableStateOf(Response.Loading()) }
+    var externalSites:Response<ExternalSite> by remember { mutableStateOf(Response.Loading()) }
 
     val backdropScaffoldState =  rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
 
@@ -139,10 +141,16 @@ fun FilmInfoScreen(
         id = filmId
     ).collectAsLazyPagingItems()
 
+    filmInfoViewModel.getFilmAward(filmId)
+    filmInfoViewModel.responseFilmAward.onEach {
+        award = it
+    }.launchWhenStarted(lifecycleScope, lifecycle)
+
     filmInfo.value.imdbId?.let { imdbId ->
-        filmInfoViewModel.getFilmAward(imdbId)
-        filmInfoViewModel.responseFilmAward.onEach {
-            award = it
+
+        filmInfoViewModel.getExternalSites(imdbId)
+        filmInfoViewModel.responseExternalSites.onEach {
+            externalSites = it
         }.launchWhenStarted(lifecycleScope, lifecycle)
 
         filmInfoViewModel.getFilmFAQ(imdbId)
@@ -315,18 +323,9 @@ fun FilmInfoScreen(
                                                 wikipedia = wikipediaFilmInfo
                                             )
 
-                                            filmInfo.value.webUrl?.let {
-                                                TextButton(
-                                                    modifier = Modifier.padding(5.dp),
-                                                    onClick = { checkWeb.value = true }
-                                                ) {
-                                                    Text(
-                                                        text = "КиноПоиск ->",
-                                                        color = secondaryBackground,
-                                                        fontWeight = FontWeight.Bold
-                                                    )
-                                                }
-                                            }
+                                            ExternalSitesView(
+                                                externalSites = externalSites
+                                            )
                                         }
                                     }
 

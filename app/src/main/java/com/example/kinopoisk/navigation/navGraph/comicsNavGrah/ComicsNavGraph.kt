@@ -7,8 +7,11 @@ import com.example.core_utils.navigation.comicsNavGraph.COMICS_ROUTE
 import com.example.core_utils.navigation.comicsNavGraph.COMICS_STATE_ARGUMENT
 import com.example.core_utils.navigation.comicsNavGraph.ComicsScreenRoute
 import com.example.feature_comics.screen.ComicsScreen
+import com.example.feature_comics_info.navigation.comicInfoNavigation
 import com.example.kinopoisk.di.AppComponent
+import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalPagerApi
 @ExperimentalFoundationApi
 fun NavGraphBuilder.comicsNavGraph(
     navController: NavController,
@@ -37,6 +40,11 @@ fun NavGraphBuilder.comicsNavGraph(
                         )
                     )
                 }
+            )
+
+            comicInfoNavigation(
+                viewModel = appComponent.comicInfoViewModel(),
+                navController = navController
             )
         }
     )

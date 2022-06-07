@@ -2,6 +2,7 @@ package com.example.core_network_data.repository
 
 import com.example.core_network_data.api.MovieApi
 import com.example.core_network_domain.model.movie.*
+import com.example.core_network_domain.model.movie.award.Award
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.fact.Fact
@@ -89,6 +90,10 @@ class MovieRepositoryImpl @Inject constructor(
 
     override suspend fun getTrailer(id: Int): Response<Trailer> {
         return movieApi.getTrailer(id)
+    }
+
+    override suspend fun getAwards(id: Int): Response<Award> {
+        return movieApi.getAwards(id)
     }
 
 }

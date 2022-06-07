@@ -1,5 +1,8 @@
 package com.example.core_network_domain.model.person
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class PersonItem(
     val kinopoiskId:Int,
     val webUrl:String,

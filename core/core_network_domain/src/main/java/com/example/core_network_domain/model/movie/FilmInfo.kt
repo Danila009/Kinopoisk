@@ -11,6 +11,8 @@ data class FilmInfo(
     val nameOriginal:String? = "",
     val posterUrl:String? = null,
     val posterUrlPreview:String = "",
+    val logoUrl:String? = null,
+    val coverUrl:String? = null,
     val reviewsCount:Int = 0,
     val ratingGoodReview:Float = 0f,
     val ratingGoodReviewVoteCount:Int = 0,

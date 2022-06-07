@@ -7,6 +7,7 @@ import com.example.core_network_data.common.ConstantsUrl.FILM_INFO_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.FILM_URL
 import com.example.core_network_data.common.ConstantsUrl.FILTER_URL
 import com.example.core_network_data.common.ConstantsUrl.IMAGE_ID_URL
+import com.example.core_network_data.common.ConstantsUrl.MOVIE_AWARDS_URL
 import com.example.core_network_data.common.ConstantsUrl.PREMIERE_URL
 import com.example.core_network_data.common.ConstantsUrl.RELEASE_URL
 import com.example.core_network_data.common.ConstantsUrl.REVIEW_URL
@@ -16,6 +17,7 @@ import com.example.core_network_data.common.ConstantsUrl.SIMILAR_ID_URL
 import com.example.core_network_data.common.ConstantsUrl.STAFF_URL
 import com.example.core_network_data.common.ConstantsUrl.TRAILER_URL
 import com.example.core_network_domain.model.movie.*
+import com.example.core_network_domain.model.movie.award.Award
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.fact.Fact
@@ -119,4 +121,9 @@ interface MovieApi {
     suspend fun getTrailer(
         @Path("id") id: Int
     ):Response<Trailer>
+
+    @GET(MOVIE_AWARDS_URL)
+    suspend fun getAwards(
+        @Path("id") id: Int
+    ):Response<Award>
 }

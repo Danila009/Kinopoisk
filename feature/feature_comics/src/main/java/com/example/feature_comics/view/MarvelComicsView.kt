@@ -2,6 +2,7 @@ package com.example.feature_comics.view
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.*
 import androidx.compose.material.*
@@ -21,6 +22,8 @@ import com.example.core_ui.ui.theme.primaryBackground
 import com.example.core_ui.ui.theme.secondaryBackground
 import com.example.core_ui.view.SearchView
 import com.example.core_utils.common.replaceRange
+import com.example.core_utils.navigation.comicsNavGraph.ComicsScreenRoute
+import com.example.core_utils.state.ComicsState
 import com.example.feature_comics.viewModel.ComicsViewModel
 
 @ExperimentalFoundationApi
@@ -65,7 +68,15 @@ fun MarvelComicsView(
                         items(comicsMarvel){ item ->
                             Column(
                                 horizontalAlignment = Alignment.CenterHorizontally,
-                                verticalArrangement = Arrangement.Center
+                                verticalArrangement = Arrangement.Center,
+                                modifier = Modifier.clickable {
+                                    navController.navigate(
+                                        ComicsScreenRoute.ComicInfoScreen.arguments(
+                                            comicId = item?.id!!,
+                                            comicsState = ComicsState.MARVEL
+                                        )
+                                    )
+                                }
                             ) {
                                 Image(
                                     painter = rememberImagePainter(

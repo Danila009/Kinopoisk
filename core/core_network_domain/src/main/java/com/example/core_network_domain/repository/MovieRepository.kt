@@ -1,6 +1,7 @@
 package com.example.core_network_domain.repository
 
 import com.example.core_network_domain.model.movie.*
+import com.example.core_network_domain.model.movie.award.Award
 import com.example.core_network_domain.model.movie.budget.Budget
 import com.example.core_network_domain.model.movie.distribution.Distribution
 import com.example.core_network_domain.model.movie.fact.Fact
@@ -54,4 +55,6 @@ interface MovieRepository {
     suspend fun getReview(id: Int,page: Int):Review
 
     suspend fun getTrailer(id: Int): Response<Trailer>
+
+    suspend fun getAwards(id: Int):Response<Award>
 }

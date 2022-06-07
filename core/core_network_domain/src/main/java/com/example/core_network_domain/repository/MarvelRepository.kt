@@ -2,6 +2,7 @@ package com.example.core_network_domain.repository
 
 import com.example.core_network_domain.model.marvel.character.MarvelCharacter
 import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
+import retrofit2.Response
 
 interface MarvelRepository {
 
@@ -13,4 +14,8 @@ interface MarvelRepository {
         search: String?,
         offset:Int
     ):ComicsMarvel?
+
+    suspend fun getComicById(
+        comicId:Int
+    ): Response<ComicsMarvel>
 }

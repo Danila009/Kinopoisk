@@ -7,6 +7,7 @@ import com.example.feature_cinema_add_review.viewModel.CinemaAddReviewViewModel
 import com.example.feature_cinema_info.viewModel.CinemaInfoViewModel
 import com.example.feature_cinema_map.viewModel.CinemaMapViewModel
 import com.example.feature_comics.viewModel.ComicsViewModel
+import com.example.feature_comics_info.viewModel.ComicInfoViewModel
 import com.example.feature_countries.viewModel.CountriesViewModel
 import com.example.feature_film_images.viewModel.FilmImagesViewModel
 import com.example.feature_film_info.viewModel.FilmInfoViewModel
@@ -81,6 +82,7 @@ interface AppComponent {
     fun characterInfoViewModel():CharacterInfoViewModel
     fun staffInfoViewModel():StaffInfoViewModel
     fun staffInfoMoreViewModel(): StaffInfoMoreViewModel
+    fun comicInfoViewModel(): ComicInfoViewModel
 
     @Component.Builder
     interface Builder{
