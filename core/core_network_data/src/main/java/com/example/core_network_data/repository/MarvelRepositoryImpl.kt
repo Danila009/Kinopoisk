@@ -21,4 +21,8 @@ class MarvelRepositoryImpl @Inject constructor(
     override suspend fun getComicById(comicId: Int): Response<ComicsMarvel> {
         return marvelApi.getComicById(comicId = comicId)
     }
+
+    override suspend fun getComicCharacters(comicId: Int, offset:Int): MarvelCharacter {
+        return marvelApi.getComicCharacters(comicId, offset = offset)
+    }
 }

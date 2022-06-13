@@ -1,6 +1,6 @@
 package com.example.core_network_domain.model.rickAndMorty
 
-import com.example.core_network_domain.enum.StatusCharacterRickAndMorty
+import com.example.core_network_domain.enums.StatusCharacterRickAndMorty
 import com.example.core_network_domain.serialization.DateTimeSerialization
 import kotlinx.serialization.Serializable
 

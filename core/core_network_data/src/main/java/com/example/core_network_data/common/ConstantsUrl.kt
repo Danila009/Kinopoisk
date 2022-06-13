@@ -56,6 +56,7 @@ object ConstantsUrl {
 
     const val MARVEL_CHARACTERS_URL = "/v1/public/characters"
     const val MARVEL_COMICS_URL = "/v1/public/comics"
+    const val MARVEL_COMIC_CHARACTERS_URL = "/v1/public/comics/{comicId}/characters "
 
     const val IMDb_FILM_WIKIPEDIA_URL = "/{lang}/API/Wikipedia/{apiKey}/{id}"
     const val IMDb_FILM_FAQ_URL = "/{lang}/API/FAQ/{apiKey}/{id}"

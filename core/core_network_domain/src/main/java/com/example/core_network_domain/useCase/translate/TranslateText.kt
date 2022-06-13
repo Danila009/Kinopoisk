@@ -1,6 +1,6 @@
 package com.example.core_network_domain.useCase.translate
 
-import com.example.core_network_domain.enum.TranslateState
+import com.example.core_network_domain.enums.TranslateState
 import com.google.mlkit.common.model.DownloadConditions
 import com.google.mlkit.nl.translate.TranslateLanguage
 import com.google.mlkit.nl.translate.Translation

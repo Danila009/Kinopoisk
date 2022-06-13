@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.AbsoluteRoundedCornerShape
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -25,7 +24,7 @@ import coil.compose.AsyncImagePainter
 import coil.compose.SubcomposeAsyncImage
 import coil.compose.SubcomposeAsyncImageContent
 import com.example.core_network_domain.common.Response
-import com.example.core_network_domain.enum.StatusCharacterRickAndMorty
+import com.example.core_network_domain.enums.StatusCharacterRickAndMorty
 import com.example.core_network_domain.model.rickAndMorty.CharacterItem
 import com.example.core_network_domain.model.rickAndMorty.EpisodeItem
 import com.example.core_ui.animation.FilmListShimmer

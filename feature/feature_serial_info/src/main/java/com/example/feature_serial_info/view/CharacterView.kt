@@ -16,7 +16,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
-import com.example.core_network_domain.enum.StatusCharacterRickAndMorty
+import com.example.core_network_domain.enums.StatusCharacterRickAndMorty
 import com.example.core_network_domain.model.rickAndMorty.CharacterItem
 import com.example.core_utils.navigation.characterNavGraph.CharacterScreenRoute
 import com.example.core_utils.state.CharacterInfoState

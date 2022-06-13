@@ -18,4 +18,9 @@ interface MarvelRepository {
     suspend fun getComicById(
         comicId:Int
     ): Response<ComicsMarvel>
+
+    suspend fun getComicCharacters(
+        comicId: Int,
+        offset:Int
+    ):MarvelCharacter
 }

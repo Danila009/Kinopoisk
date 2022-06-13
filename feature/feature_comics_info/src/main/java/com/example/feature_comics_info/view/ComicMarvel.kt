@@ -17,12 +17,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.lifecycleScope
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.example.core_network_domain.common.Response
 import com.example.core_network_domain.model.marvel.comics.ComicsMarvel
 import com.example.core_network_domain.model.marvel.comics.Result
 import com.example.core_ui.animation.CinemaInfoScreenShimmer
 import com.example.core_ui.view.Image
 import com.example.core_utils.common.launchWhenStarted
+import com.example.feature_comics_info.view.marvel.Characters
 import com.example.feature_comics_info.viewModel.ComicInfoViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -45,6 +48,10 @@ internal fun ComicMarvel(
         comic = it
     }.launchWhenStarted(lifecycleScope, lifecycle)
 
+    val characters = viewModel.getComicCharacters(
+        comicId
+    ).collectAsLazyPagingItems()
+
     LazyColumn(
         horizontalAlignment = Alignment.CenterHorizontally,
         content = {
@@ -53,9 +60,13 @@ internal fun ComicMarvel(
                 is Response.Loading -> item { CinemaInfoScreenShimmer() }
                 is Response.Success -> {
                     itemsIndexed(comic.data?.data?.results ?: emptyList()) { index, item ->
-                        if (index == 0){ ComicsMarvelItem(item) }
+                        if (index == 0){ ComicsMarvelItem(item, characters) }
                     }
                 }
+            }
+
+            item {
+                Spacer(modifier = Modifier.height(80.dp))
             }
         }
     )
@@ -64,7 +75,8 @@ internal fun ComicMarvel(
 @ExperimentalPagerApi
 @Composable
 private fun ComicsMarvelItem(
-    result: Result
+    result: Result,
+    characters: LazyPagingItems<com.example.core_network_domain.model.marvel.character.Result>
 ) {
     if (result.images != null){
         HorizontalPager(count = result.images?.size ?: 0) { page ->
@@ -322,5 +334,7 @@ private fun ComicsMarvelItem(
                 }
             }
         })
+
+        Characters(characters = characters)
     }
 }

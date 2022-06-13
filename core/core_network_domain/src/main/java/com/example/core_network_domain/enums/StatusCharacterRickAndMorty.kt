@@ -1,4 +1,4 @@
-package com.example.core_network_domain.enum
+package com.example.core_network_domain.enums
 
 enum class StatusCharacterRickAndMorty {
     Alive,

@@ -1,6 +1,6 @@
 package com.example.core_network_domain.model.cinema
 
-import com.example.core_network_domain.enum.Week
+import com.example.core_network_domain.enums.Week
 import com.example.core_network_domain.serialization.TimeSerialization
 import kotlinx.serialization.Serializable
 
